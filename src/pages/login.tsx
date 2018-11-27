@@ -1,10 +1,10 @@
 import * as React from 'react';
 
 export default class Login extends React.Component {
-  public render() {
+  render() {
     return (
-      <div className="row">
-        aaa       
+      <div className="container">
+        <h1>Logowanie</h1>
       </div>
     );
   }

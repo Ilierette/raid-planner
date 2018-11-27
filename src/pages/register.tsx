@@ -1,10 +1,10 @@
 import * as React from 'react';
 
 export default class Register extends React.Component {
-  public render() {
+  render() {
     return (
-     <div className="row">
-        aaa       
+      <div className="container">
+        <h1>Rejesteracja</h1>
       </div>
     );
   }
