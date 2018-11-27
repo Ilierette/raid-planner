@@ -11,6 +11,7 @@ import Register from './register';
 import Clan from './clan';
 import Schedule from './schedule';
 import Gear from './upgradeGear';
+import Marketplace from './marketplace';
 
 class MasterPage extends React.Component {
   render() {
@@ -38,6 +39,9 @@ class MasterPage extends React.Component {
               <li>
                 <Link to="/upgrade-gear">Gear upgrade chart</Link>
               </li>
+              <li>
+                <Link to="/market">Marketplace</Link>
+              </li>
             </ul>
 
             <Route exact path="/" component={Home} />
@@ -46,6 +50,7 @@ class MasterPage extends React.Component {
             <Route path="/find-clan" component={Clan} />
             <Route path="/raid-schedule" component={Schedule} />
             <Route path="/upgrade-gear" component={Gear} />
+            <Route path="/market" component={Marketplace} />
           </div>
         </Router>
       </div>
