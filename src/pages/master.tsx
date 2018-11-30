@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { 
+import {
   BrowserRouter as Router,
   Route,
-  Link 
+  Link
 } from 'react-router-dom';
 
 import Home from './home';
@@ -13,13 +13,14 @@ import Schedule from './schedule';
 import Gear from './upgradeGear';
 import Marketplace from './marketplace';
 
-class MasterPage extends React.Component {
-  render() {
+//import "../scss/sidebar.scss"
 
+export default class MasterPage extends React.Component {
+  render() {
     return (
-      <div>
-        <Router>
-          <div className="container">
+      <Router>
+        <div className="container-fluid">
+          <div className="sidebar">
             <ul>
               <li>
                 <Link to="/">Home</Link>
@@ -43,7 +44,8 @@ class MasterPage extends React.Component {
                 <Link to="/market">Marketplace</Link>
               </li>
             </ul>
-
+          </div>
+          <div className="content">
             <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
@@ -52,10 +54,8 @@ class MasterPage extends React.Component {
             <Route path="/upgrade-gear" component={Gear} />
             <Route path="/market" component={Marketplace} />
           </div>
-        </Router>
-      </div>
+        </div>
+      </Router>
     );
   }
 }
-
-export default MasterPage;
