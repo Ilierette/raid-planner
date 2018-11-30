@@ -16,7 +16,7 @@ export default class Schedule extends React.Component<RaidState> {
     return (
       <div className="container">
         <h1>Kalendarz</h1>
-        {this.state.raid.type}
+        {this.state.raid.type +" - "+ this.state.raid.timestamp }
         <ul>
           {this.state.raid.members.map((member: any, index: any) => (
             <li key={index}>

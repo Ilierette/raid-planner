@@ -1,5 +1,6 @@
 const raid = {
     type: "TT", //BT, VT, TT, ET
+    timestamp: "28.11.2018 - 05.15.2018",
     members:[
         {
             id: 1,
