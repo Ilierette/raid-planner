@@ -1,0 +1,12 @@
+.sidebar-sticky {
+    position: sticky;
+    top: 0;
+    height: calc(100vh - 48px);
+    padding-top: 48px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+[role="main"] {
+    padding-top: 48px;
+}

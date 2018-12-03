@@ -13,46 +13,55 @@ import Schedule from './schedule';
 import Gear from './upgradeGear';
 import Marketplace from './marketplace';
 
-//import "../scss/sidebar.scss"
+import SiteNav from '../components/navbar';
+
+import "../scss/navigation.scss"
 
 export default class MasterPage extends React.Component {
   render() {
     return (
       <Router>
-        <div className="container-fluid">
-          <div className="sidebar">
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/login">Login</Link>
-              </li>
-              <li>
-                <Link to="/register">Register</Link>
-              </li>
-              <li>
-                <Link to="/find-clan">Find clan</Link>
-              </li>
-              <li>
-                <Link to="/raid-schedule">Raid schedule</Link>
-              </li>
-              <li>
-                <Link to="/upgrade-gear">Gear upgrade chart</Link>
-              </li>
-              <li>
-                <Link to="/market">Marketplace</Link>
-              </li>
-            </ul>
-          </div>
-          <div className="content">
-            <Route exact path="/" component={Home} />
-            <Route path="/login" component={Login} />
-            <Route path="/register" component={Register} />
-            <Route path="/find-clan" component={Clan} />
-            <Route path="/raid-schedule" component={Schedule} />
-            <Route path="/upgrade-gear" component={Gear} />
-            <Route path="/market" component={Marketplace} />
+        <div>
+          <SiteNav />
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-md-2 sidebar">
+                <div className="sidebar-sticky">
+                  <ul className="nav flex-column">
+                    <li className="nav-item">
+                      <Link to="/" className="nav-link active">Home</Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link to="/login" className="nav-link">Login</Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link to="/register" className="nav-link">Register</Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link to="/find-clan" className="nav-link">Find clan</Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link to="/raid-schedule" className="nav-link">Raid schedule</Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link to="/upgrade-gear" className="nav-link">Gear upgrade chart</Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link to="/market" className="nav-link">Marketplace</Link>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <main role="main" className="col">
+                <Route exact path="/" component={Home} />
+                <Route path="/login" component={Login} />
+                <Route path="/register" component={Register} />
+                <Route path="/find-clan" component={Clan} />
+                <Route path="/raid-schedule" component={Schedule} />
+                <Route path="/upgrade-gear" component={Gear} />
+                <Route path="/market" component={Marketplace} />
+              </main>
+            </div>
           </div>
         </div>
       </Router>

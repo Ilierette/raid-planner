@@ -1,4 +1,4 @@
-// Your variable overrides
+// Variables
 
 $font-family-sans-serif: "Roboto", Arial, sans-serif;
 $font-family-base:       $font-family-sans-serif;
@@ -7,7 +7,7 @@ $headings-font-family:   "Roboto", Arial, sans-serif;
 $h1-font-size: 1.75rem;
 
 $theme-colors: (
-//className colors
+//class colors
 	"warlock": 		#dcf3ff, //1
 	"blade_dancer": #F6BF26, //2
 	"blade_master": #D81B60, //3
@@ -20,7 +20,7 @@ $theme-colors: (
 	"summoner": 	#33B679, //10
 );
 
-// Bootstrap and its default variables
+// Imports
 @import "node_modules/bootstrap/scss/bootstrap";
 
 //Other styles
