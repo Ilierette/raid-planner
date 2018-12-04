@@ -14,7 +14,7 @@ export default class Marketplace extends React.Component<MarketplaceState> {
 
     render() {
         return (
-            <div className="container">
+            <div className="container-fluid">
                 <h1>Marketplace</h1>
                 
                 <ul>

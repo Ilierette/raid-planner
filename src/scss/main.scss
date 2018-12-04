@@ -6,7 +6,12 @@ $headings-font-family:   "Roboto", Arial, sans-serif;
 
 $h1-font-size: 1.75rem;
 
+$breadcrumb-border-radius: 0;
+$breadcrumb-bg: #fafafa;
+$breadcrumb-margin-bottom: 0;  
+
 $theme-colors: (
+	"dark": #212529,
 //class colors
 	"warlock": 		#dcf3ff, //1
 	"blade_dancer": #F6BF26, //2
@@ -27,4 +32,8 @@ $theme-colors: (
 
 li {
   list-style: none;
+}
+
+body{
+	background: url(../images/background.jpg) no-repeat;
 }

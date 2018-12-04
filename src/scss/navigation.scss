@@ -1,12 +1,31 @@
 .sidebar-sticky {
     position: sticky;
     top: 0;
-    height: calc(100vh - 48px);
-    padding-top: 48px;
+    height: 100vh;
+    padding-top: 80px;
     overflow-x: hidden;
     overflow-y: auto;
 }
 
 [role="main"] {
-    padding-top: 48px;
+    padding-top: 55px;
+    background: #f5f5f5;
+}
+
+.brand-name {
+    font-size: 17px;
+}
+
+.navbar-bar{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.dropdown-item {
+    font-size: 14px;
+}
+
+.sidebar{
+    background: #212529a8;
 }

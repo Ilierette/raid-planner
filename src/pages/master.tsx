@@ -13,9 +13,26 @@ import Schedule from './schedule';
 import Gear from './upgradeGear';
 import Marketplace from './marketplace';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import {
+  faPowerOff, faBars, faCaretDown,
+  faUser, faComments, faCogs,
+  faHome, faTable, faHeadphones,
+  faChalkboard, faBalanceScale
+} from '@fortawesome/free-solid-svg-icons'
+
 import SiteNav from '../components/navbar';
 
 import "../scss/navigation.scss"
+
+library.add(
+  fab, faPowerOff, faBars, faCaretDown,
+  faUser, faComments, faCogs, faPowerOff,
+  faHome, faTable, faHeadphones,
+  faChalkboard, faBalanceScale
+)
 
 export default class MasterPage extends React.Component {
   render() {
@@ -29,30 +46,39 @@ export default class MasterPage extends React.Component {
                 <div className="sidebar-sticky">
                   <ul className="nav flex-column">
                     <li className="nav-item">
-                      <Link to="/" className="nav-link active">Home</Link>
+                      <Link to="/" className="nav-link active text-light">
+                        <FontAwesomeIcon icon="home" className="mr-3" />
+                        Home
+                      </Link>
                     </li>
                     <li className="nav-item">
-                      <Link to="/login" className="nav-link">Login</Link>
+                      <Link to="/find-clan" className="nav-link text-light">
+                        <FontAwesomeIcon icon="headphones" className="mr-3" />
+                        Find clan
+                      </Link>
                     </li>
                     <li className="nav-item">
-                      <Link to="/register" className="nav-link">Register</Link>
+                      <Link to="/raid-schedule" className="nav-link text-light">
+                        <FontAwesomeIcon icon="table" className="mr-3" />
+                        Raid schedule
+                      </Link>
                     </li>
                     <li className="nav-item">
-                      <Link to="/find-clan" className="nav-link">Find clan</Link>
+                      <Link to="/upgrade-gear" className="nav-link text-light">
+                        <FontAwesomeIcon icon="chalkboard" className="mr-3" />
+                        Gear upgrade chart
+                      </Link>
                     </li>
                     <li className="nav-item">
-                      <Link to="/raid-schedule" className="nav-link">Raid schedule</Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link to="/upgrade-gear" className="nav-link">Gear upgrade chart</Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link to="/market" className="nav-link">Marketplace</Link>
+                      <Link to="/market" className="nav-link text-light">
+                        <FontAwesomeIcon icon="balance-scale" className="mr-3" />
+                        Marketplace
+                      </Link>
                     </li>
                   </ul>
                 </div>
               </div>
-              <main role="main" className="col">
+              <main role="main" className="col px-0">
                 <Route exact path="/" component={Home} />
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Register} />

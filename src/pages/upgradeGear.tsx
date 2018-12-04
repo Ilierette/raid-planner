@@ -13,7 +13,7 @@ export default class Gear extends React.Component<GearState> {
   }
   render() {
     return (
-      <div className="container">
+      <div className="container-fluid">
         <h1>Gear</h1>
         
         <ul>
