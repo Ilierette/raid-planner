@@ -43,7 +43,7 @@ export default class Schedule extends React.Component<RaidState> {
             <CardBody>
               <h5 className="card-title">{this.state.raid.type}</h5>
               <div className="table-responsive">
-                <table className="table table-bordered">
+                <table className="table table-bordered table-sm">
                   <thead>
                     <tr>
                       <td>Nick</td>

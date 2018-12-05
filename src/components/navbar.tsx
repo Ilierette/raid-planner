@@ -1,25 +1,9 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Badge } from 'reactstrap';
+import { UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, Badge } from 'reactstrap';
 
-interface NavbarState {
-    dropdownOpen: boolean
-}
 
-export default class Navbar extends React.Component<NavbarState> {
-    constructor(props: any) {
-        super(props);
-
-        this.toggle = this.toggle.bind(this);
-        this.state = {
-            dropdownOpen: false
-        };
-    }
-    toggle() {
-        this.setState(prevState => ({
-            dropdownOpen: !prevState.dropdownOpen
-        }));
-    }
+export default class Navbar extends React.Component {
     render() {
         return (
             <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap">
@@ -35,7 +19,7 @@ export default class Navbar extends React.Component<NavbarState> {
                             </a>
                         </li>
                     </ul>
-                    <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                    <UncontrolledDropdown>
                         <DropdownToggle color="dark">
                             Letty
                             <FontAwesomeIcon icon="caret-down" className="text-white ml-3" />
@@ -60,7 +44,7 @@ export default class Navbar extends React.Component<NavbarState> {
                                 Logout
                             </DropdownItem>
                         </DropdownMenu>
-                    </Dropdown>
+                    </UncontrolledDropdown>
                 </div>
             </nav>
         );
