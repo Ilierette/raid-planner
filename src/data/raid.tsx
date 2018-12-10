@@ -1,142 +1,122 @@
 const raid = {
     type: "TT", //BT, VT, TT, ET
-    timestamp: "28.11.2018 - 05.15.2018",
+    ratio: "28.11.2018 - 05.15.2018",
+    timestamp: "17:00 29.11.2018",
+    maxMembers: 12,
     members:[
         {
             id: 1,
             characterName: "Letty",
             class: "SF",
             region: "EU",
+            isFounder: true,
+            isLeader: true,
+            isStatic: true,
             isMain: true,
-            days:[
+            
+            isConfirmed: true,
+            days: [
                 //Wednesday
                 {
                     date: "28.11.2018",
                     min: "18:00",
-                    max: "23:00",
-                    note: ""
+                    max: "23:00"
                 },
                 //Thursday
                 {
                     date: "29.11.2018",
                     min: "21:00",
-                    max: "23:00",
-                    note: ""
+                    max: "23:00"
                 },
                 //Friday
                 {
                     date: "30.11.2018",
                     min: "21:00",
-                    max: "23:00",
-                    note:""
+                    max: "23:00"
                 },
                 //Saturday
                 {
                     date: "01.12.2018",
                     min: "12:00",
-                    max: "23:00",
-                    note:""
+                    max: "23:00"
                 },
                 //Sunday
                 {
                     date: "02.12.2018",
                     min: "12:00",
-                    max: "23:00",
-                    note:""
+                    max: "23:00"
                 },
                 //Monday
                 {
                     date: "03.12.2018",
                     min: "18:00",
-                    max: "23:00",
-                    note:""
+                    max: "23:00"
                 },
                 //Tuesday
                 {
                     date: "04.12.2018",
                     min: "18:00",
-                    max: "23:00",
-                    note:""
+                    max: "23:00"
                 }
             ],
-            isFounder: true,
-            isLeader: true,
-            isStatic: true,
-
-            //Mutli raid types
-            isConfirmedET: true,
-            isConfirmedTT: true,
-            isConfirmedVT: true,
-            isConfirmedBT: true,
-           
+            notes: ""
         },
         {
             id: 2,
             characterName: "Letty",
             class: "SF",
             region: "EU",
-            isMain: true,
-            days:[
+            isFounder: true,
+            isLeader: true,
+            isStatic: true,
+            isMain:false,
+            
+            isConfirmed: true,
+            days: [
                 //Wednesday
                 {
                     date: "28.11.2018",
                     min: "18:00",
-                    max: "23:00",
-                    note: ""
+                    max: "23:00"
                 },
                 //Thursday
                 {
                     date: "29.11.2018",
                     min: "21:00",
-                    max: "23:00",
-                    note: ""
+                    max: "23:00"
                 },
                 //Friday
                 {
                     date: "30.11.2018",
                     min: "21:00",
-                    max: "23:00",
-                    note:""
+                    max: "23:00"
                 },
                 //Saturday
                 {
                     date: "01.12.2018",
                     min: "12:00",
-                    max: "23:00",
-                    note:""
+                    max: "23:00"
                 },
                 //Sunday
                 {
                     date: "02.12.2018",
                     min: "12:00",
-                    max: "23:00",
-                    note:""
+                    max: "23:00"
                 },
                 //Monday
                 {
                     date: "03.12.2018",
                     min: "18:00",
-                    max: "23:00",
-                    note:""
+                    max: "23:00"
                 },
                 //Tuesday
                 {
                     date: "04.12.2018",
                     min: "18:00",
-                    max: "23:00",
-                    note:""
+                    max: "23:00"
                 }
             ],
-            isFounder: true,
-            isLeader: true,
-            isStatic: true,
-
-            //Mutli raid types
-            isConfirmedET: true,
-            isConfirmedTT: true,
-            isConfirmedVT: true,
-            isConfirmedBT: true,
-           
+            notes: ""
         }
     ]
 }

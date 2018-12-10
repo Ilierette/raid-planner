@@ -9,6 +9,7 @@ $h1-font-size: 1.75rem;
 $breadcrumb-border-radius: 0;
 $breadcrumb-bg: #fafafa;
 $breadcrumb-margin-bottom: 0;  
+$table-cell-padding-sm: 0 5px;
 
 $theme-colors: (
 	"dark": #212529,
@@ -36,4 +37,9 @@ li {
 
 body{
 	background: url(../images/background.jpg) no-repeat;
+}
+
+.table th, .table td {
+	vertical-align: middle;
+	line-height: 25px;
 }
