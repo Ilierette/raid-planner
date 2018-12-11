@@ -20,7 +20,7 @@ import {
   faPowerOff, faBars, faCaretDown,
   faUser, faComments, faCogs,
   faHome, faTable, faHeadphones,
-  faChalkboard, faBalanceScale, 
+  faChalkboard, faBalanceScale,
   faBan, faPlus, faPencilAlt
 } from '@fortawesome/free-solid-svg-icons'
 
@@ -54,15 +54,15 @@ export default class MasterPage extends React.Component {
                       </Link>
                     </li>
                     <li className="nav-item">
-                      <Link to="/find-clan" className="nav-link text-light">
-                        <FontAwesomeIcon icon="headphones" className="mr-3" />
-                        Find clan
-                      </Link>
-                    </li>
-                    <li className="nav-item">
                       <Link to="/raid-schedule" className="nav-link text-light">
                         <FontAwesomeIcon icon="table" className="mr-3" />
                         Raid schedule
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link to="/market" className="nav-link text-light">
+                        <FontAwesomeIcon icon="balance-scale" className="mr-3" />
+                        Marketplace
                       </Link>
                     </li>
                     <li className="nav-item">
@@ -72,9 +72,9 @@ export default class MasterPage extends React.Component {
                       </Link>
                     </li>
                     <li className="nav-item">
-                      <Link to="/market" className="nav-link text-light">
-                        <FontAwesomeIcon icon="balance-scale" className="mr-3" />
-                        Marketplace
+                      <Link to="/find-clan" className="nav-link text-light">
+                        <FontAwesomeIcon icon="headphones" className="mr-3" />
+                        Find clan
                       </Link>
                     </li>
                   </ul>

@@ -21,7 +21,7 @@ export default class Schedule extends React.Component<RaidState> {
   render() {
     return (
       <div className="content-wrapper">
-        <PageHeader title="Kalendarz" />
+        <PageHeader title="Raid schedule" />
         <div className="content">
           <RaidTable raid={this.state.raid}/>
         </div>

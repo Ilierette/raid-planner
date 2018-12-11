@@ -1,12 +1,10 @@
 import * as React from 'react';
-import { Card, CardBody } from 'reactstrap';
-import { Input, Button } from 'reactstrap';
+import { Card, CardBody, CardFooter, Input, Button } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { RaidTableHeader as Header } from './raidTableHeader';
 
-import '../scss/raidTable.scss'
-import CardFooter from 'reactstrap/lib/CardFooter';
+import '../scss/table.scss'
 
 interface RaidState {
     raid: []
@@ -19,7 +17,7 @@ export class RaidTable extends React.Component<RaidState> {
                 <CardBody>
                     <h5 className="card-title">{this.props.raid.type}</h5>
                     <div className="table-responsive">
-                        <table className="table table-sm raid-table text-center">
+                        <table className="table table-sm text-center">
                             <Header />
                             <tbody>
                                 {this.props.raid.members.map((member: any, index: any) => (
@@ -68,8 +66,8 @@ export class RaidTable extends React.Component<RaidState> {
                             {this.props.raid.members.length}/{this.props.raid.maxMembers}
                         </div>
                         <div className="col text-right">
-                            <Button color="primary" >Ustal czas rajdu</Button>
-                            <Button color="success" className="ml-1">Zapisz</Button>
+                            <Button color="primary" >Set raid time</Button>
+                            <Button color="success" className="ml-1">Save changes</Button>
                         </div>
                     </div>
                 </CardFooter>

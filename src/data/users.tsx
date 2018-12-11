@@ -47,7 +47,55 @@ const members = {
                     min: "18:00",
                     max: "23:00"
                 }
+            ],
+            mats:[
+                {
+                    id: "elysian",
+                    amount: 346,
+                },
+                {
+                    id: "sacred",
+                    amount: 1200,
+                },
+                {
+                    id: "moonstone",
+                    amount: 508,
+                },
+                {
+                    id: "soulstone",
+                    amount: 1784,
+                },
+                {
+                    id: "petPod",
+                    amount: 7,
+                },
+                {
+                    id: "sacredOil",
+                    amount: 2,
+                },
+                {
+                    id: "PTS",
+                    amount: 3,
+                },
+                {
+                    id: "TS",
+                    amount: 0,
+                },
+                {
+                    id: "empyrean",
+                    amount: 0,
+                },
+                {
+                    id: "jewel",
+                    amount: 121,
+                },
+                {
+                    id: "element",
+                    amount: 80,
+                }
             ]
         }
     ]
 }
+
+export default members
