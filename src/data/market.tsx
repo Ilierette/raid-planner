@@ -69,6 +69,11 @@ const market = {
     ],
     untradeable: [
         {
+            id: "naryu",
+            tier: "other",
+            name: "Naryu Tablet"
+        },
+        {
             id: "bCrux",
             tier: "other",
             name: "Blue Crux"

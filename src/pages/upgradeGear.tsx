@@ -3,7 +3,7 @@ import { Card, CardBody } from 'reactstrap';
 import { PageHeader } from '../components/pageHeader';
 import { GearTable } from '../components/gearTable';
 
-import upgrade from '../data/upgrade';
+import upgrade from '../data/upgradeBelt';
 
 interface GearState {
   gear: [],
@@ -13,7 +13,7 @@ export default class Gear extends React.Component<GearState> {
   constructor(props: any) {
     super(props)
 
-    this.state = { weapon: upgrade.weapon }
+    this.state = { weapon: upgrade.belt }
   }
   render() {
     return (
