@@ -52,13 +52,12 @@ const upgrade = {
                 {
                     name: "Stage - 1",
                     isActive: true,
-                    gold: 0,
                     bCrux: 1
                 },
                 {
                     name: "Stage - 3",
                     isActive: true,
-                    gold: 0
+                    jewel: 40,
                 },
                 {
                     name: "Stage - 6",
@@ -69,7 +68,8 @@ const upgrade = {
                     soulstone: 560,
                     moonstone: 160,
                     sacred: 400,
-                    elysian: 100
+                    elysian: 100,
+                    jewel: 40,
                 },
                 {
                     name: "Stage - 9",
@@ -80,7 +80,8 @@ const upgrade = {
                     soulstone: 560,
                     moonstone: 160,
                     sacred: 400,
-                    elysian: 100
+                    elysian: 100,
+                    jewel: 40,
                 },
                 {
                     name: "Stage - 10",
@@ -92,7 +93,6 @@ const upgrade = {
                     moonstone: 160,
                     sacred: 400,
                     elysian: 100,
-                    jewel: 120,
                     pristine: 1
                 },
                 {
@@ -126,7 +126,7 @@ const upgrade = {
                 {
                     name: "Stage - 3",
                     isActive: true,
-                    gold: 0,
+                    jewel: 40,
                 },
                 {
                     name: "Stage - 6",
@@ -137,7 +137,8 @@ const upgrade = {
                     soulstone: 260,
                     moonstone: 60,
                     sacred: 170,
-                    elysian: 40
+                    elysian: 40,
+                    jewel: 40,
                 },
                 {
                     name: "Stage - 9",
@@ -161,7 +162,6 @@ const upgrade = {
                     sacred: 170,
                     elysian: 40,
                     pristine: 1,
-                    jewel: 120
                 },
                 {
                     name: "Awakened - 1",
@@ -196,14 +196,13 @@ const upgrade = {
                 {
                     name: "Stage - 1",
                     isActive: true,
-                    gold: 0,
                     rCrux: 1,
                     bloodstone: 1
                 },
                 {
                     name: "Stage - 3",
                     isActive: true,
-                    gold: 0,
+                    jewel: 40,
                 },
                 {
                     name: "Stage - 6",
@@ -213,7 +212,8 @@ const upgrade = {
                     soulstone: 185,
                     moonstone: 55,
                     sacred: 130,
-                    elysian: 35
+                    elysian: 35,
+                    jewel: 40,
                 },
                 {
                     name: "Stage - 9",
@@ -223,7 +223,8 @@ const upgrade = {
                     soulstone: 185,
                     moonstone: 55,
                     sacred: 130,
-                    elysian: 35
+                    elysian: 35,
+                    jewel: 40,
                 },
                 {
                     name: "Stage - 10",
