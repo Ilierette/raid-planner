@@ -18,10 +18,14 @@
             font-size: 15px
         }
     }
-    .tab-button{
+    .tab-button, .tab-data{
         width: 100%;
+        display: flex;
+        justify-content: space-between;
+        background: transparent;
+        color: #fff;
+        padding: 10px 5px;
     }
-    
 }
 
 .character-stats.attack{

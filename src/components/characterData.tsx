@@ -51,43 +51,54 @@ export class CharacterData extends React.Component<CharacterDataProps, Character
                   <h4>Attack Power</h4>
                   <h3>{items.ap}</h3>
                 </CardHeader>
-                <CardBody>
-                  <div>
-                    <Button className="tab-button" id="piercing">
-                      Piercing: {items.piercing} <FontAwesomeIcon icon="caret-down" />
-                    </Button>
-                    <UncontrolledCollapse toggler="#piercing">
-                      Piercing Rate: {items.piercingDefRate}
-                    </UncontrolledCollapse>
-                  </div>
-                  <div>
-                    <Button className="tab-button" id="accu">
-                      Accuracy {items.accuracy} <FontAwesomeIcon icon="caret-down" />
-                    </Button>
-                    <UncontrolledCollapse toggler="#accu">
-                      Accuracy Rate {items.accuracyRate}
-                    </UncontrolledCollapse>
-                  </div>
-                  <div>
-                    <Button className="tab-button" id="crit">
-                      Critical {items.crit} <FontAwesomeIcon icon="caret-down" />
-                    </Button>
-                    <UncontrolledCollapse toggler="#crit">
-                      Critical Rate {items.crit}
-                    </UncontrolledCollapse>
-                  </div>
-                  <div>
-                    <Button className="tab-button" id="critDmg">
-                      Critical Damage {items.critDamage} <FontAwesomeIcon icon="caret-down" />
-                    </Button>
-                    <UncontrolledCollapse toggler="#critDmg">
-                      Critical Damage Rate {items.critDamageRate}
-                    </UncontrolledCollapse>
-                  </div>
-                  <div>
+                <div>
+                  <button className="btn tab-button" id="piercing">
+                    <span>
+                      Piercing:
+                    </span>
+                    <span>
+                      {items.piercing}
+                      <FontAwesomeIcon icon="caret-down" className="ml-2 my-auto" />
+                    </span>
+                  </button>
+                  <UncontrolledCollapse toggler="#piercing" className="tab-data">
+                    <span>
+                      Piercing Rate:
+                    </span>
+                    <span>
+                      {items.piercingDefRate}
+                    </span>
+                  </UncontrolledCollapse>
+                </div>
+                <div>
+                  <Button className="tab-button" id="accu">
+                    Accuracy {items.accuracy} <FontAwesomeIcon icon="caret-down" />
+                  </Button>
+                  <UncontrolledCollapse toggler="#accu">
+                    Accuracy Rate {items.accuracyRate}
+                  </UncontrolledCollapse>
+                </div>
+                <div>
+                  <Button className="tab-button" id="crit">
+                    Critical {items.crit} <FontAwesomeIcon icon="caret-down" />
+                  </Button>
+                  <UncontrolledCollapse toggler="#crit">
+                    Critical Rate {items.crit}
+                  </UncontrolledCollapse>
+                </div>
+                <div>
+                  <Button className="tab-button" id="critDmg">
+                    Critical Damage {items.critDamage} <FontAwesomeIcon icon="caret-down" />
+                  </Button>
+                  <UncontrolledCollapse toggler="#critDmg">
+                    Critical Damage Rate {items.critDamageRate}
+                  </UncontrolledCollapse>
+                </div>
+                <div>
+                  <Button className="tab-button" id="critDmg">
                     Additional damage {items.extraDmg}
-                  </div>
-                </CardBody>
+                  </Button>
+                </div>
               </div>
             </div>
             <div className="col">
@@ -187,7 +198,7 @@ export class CharacterData extends React.Component<CharacterDataProps, Character
             </div>
           </div>
         </CardBody>
-      </Card>
+      </Card >
     );
   }
 }
