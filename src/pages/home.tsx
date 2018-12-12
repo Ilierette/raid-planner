@@ -10,11 +10,7 @@ export default class Home extends React.Component {
       <div className="content-wrapper">
         <PageHeader title="Home" />
         <div className="content">
-          <Card>
-            <CardBody>
-              <CharacterData name="Letty"/>
-            </CardBody>
-          </Card>
+          <CharacterData name="Letty" />
         </div>
       </div>
     );

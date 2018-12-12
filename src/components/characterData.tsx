@@ -5,6 +5,8 @@ import axios from 'axios';
 import "../scss/characterData.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { CharacterDataRow } from './characterDataRow';
+
 interface CharacterDataProps {
   name: string
 }
@@ -51,53 +53,19 @@ export class CharacterData extends React.Component<CharacterDataProps, Character
                   <h4>Attack Power</h4>
                   <h3>{items.ap}</h3>
                 </CardHeader>
+                <CharacterDataRow id="piercing" title="Piercing" stat={items.piercing} rate={items.piercingDefRate} />
+                <CharacterDataRow id="accuracy" title="Accuracy" stat={items.accuracy} rate={items.accuracyRate} />
+                <CharacterDataRow id="critical" title="Critical" stat={items.crit} rate={items.crit} />
+                <CharacterDataRow id="critDmg" title="Critical Damage" stat={items.critDamage} rate={items.critDamageRate} />
                 <div>
-                  <button className="btn tab-button" id="piercing">
+                  <button className="btn tab-button">
                     <span>
-                      Piercing:
-                    </span>
+                      Additional damage
+                  </span>
                     <span>
-                      {items.piercing}
-                      <FontAwesomeIcon icon="caret-down" className="ml-2 my-auto" />
+                      {items.extraDmg}
                     </span>
                   </button>
-                  <UncontrolledCollapse toggler="#piercing" className="tab-data">
-                    <span>
-                      Piercing Rate:
-                    </span>
-                    <span>
-                      {items.piercingDefRate}
-                    </span>
-                  </UncontrolledCollapse>
-                </div>
-                <div>
-                  <Button className="tab-button" id="accu">
-                    Accuracy {items.accuracy} <FontAwesomeIcon icon="caret-down" />
-                  </Button>
-                  <UncontrolledCollapse toggler="#accu">
-                    Accuracy Rate {items.accuracyRate}
-                  </UncontrolledCollapse>
-                </div>
-                <div>
-                  <Button className="tab-button" id="crit">
-                    Critical {items.crit} <FontAwesomeIcon icon="caret-down" />
-                  </Button>
-                  <UncontrolledCollapse toggler="#crit">
-                    Critical Rate {items.crit}
-                  </UncontrolledCollapse>
-                </div>
-                <div>
-                  <Button className="tab-button" id="critDmg">
-                    Critical Damage {items.critDamage} <FontAwesomeIcon icon="caret-down" />
-                  </Button>
-                  <UncontrolledCollapse toggler="#critDmg">
-                    Critical Damage Rate {items.critDamageRate}
-                  </UncontrolledCollapse>
-                </div>
-                <div>
-                  <Button className="tab-button" id="critDmg">
-                    Additional damage {items.extraDmg}
-                  </Button>
                 </div>
               </div>
             </div>
