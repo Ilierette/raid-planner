@@ -1,5 +1,9 @@
 import * as React from 'react';
+import { Card, CardBody, CardImg, CardHeader, Button, UncontrolledCollapse } from 'reactstrap';
 import axios from 'axios';
+
+import "../scss/characterData.scss";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface CharacterDataProps {
   name: string
@@ -23,155 +27,167 @@ export class CharacterData extends React.Component<CharacterDataProps, Character
   render() {
     const { items } = this.state;
     return (
-      <div className="row">
-        <div className="col">
-          {console.log(items)}
-          <div>
-            <img src={items.characterImg} />
+      <Card body inverse color="dark">
+        <CardBody>
+          <div className="row text-light">
+            <div className="col-12">
+              {items.accountName} [ {items.characterName} ]
+              <p>
+                {items.playerClass}  |  Level {items.playerLevel} &bull; HM Level  {items.playerLevelHM}  |  {items.faction} {items.factionRank}  |  {items.server}  |  {items.guild}
+              </p>
+            </div>
           </div>
-          <div>
-            {items.characterName}
+          <div className="row mt-2">
+            <div className="col-3">
+              <div className="character-profile">
+                <Card outline color="dark">
+                  <CardImg src={items.characterImg} />
+                </Card>
+              </div>
+            </div>
+            <div className="col">
+              <div className="card bg-dark character-stats attack">
+                <CardHeader>
+                  <h4>Attack Power</h4>
+                  <h3>{items.ap}</h3>
+                </CardHeader>
+                <CardBody>
+                  <div>
+                    <Button className="tab-button" id="piercing">
+                      Piercing: {items.piercing} <FontAwesomeIcon icon="caret-down" />
+                    </Button>
+                    <UncontrolledCollapse toggler="#piercing">
+                      Piercing Rate: {items.piercingDefRate}
+                    </UncontrolledCollapse>
+                  </div>
+                  <div>
+                    <Button className="tab-button" id="accu">
+                      Accuracy {items.accuracy} <FontAwesomeIcon icon="caret-down" />
+                    </Button>
+                    <UncontrolledCollapse toggler="#accu">
+                      Accuracy Rate {items.accuracyRate}
+                    </UncontrolledCollapse>
+                  </div>
+                  <div>
+                    <Button className="tab-button" id="crit">
+                      Critical {items.crit} <FontAwesomeIcon icon="caret-down" />
+                    </Button>
+                    <UncontrolledCollapse toggler="#crit">
+                      Critical Rate {items.crit}
+                    </UncontrolledCollapse>
+                  </div>
+                  <div>
+                    <Button className="tab-button" id="critDmg">
+                      Critical Damage {items.critDamage} <FontAwesomeIcon icon="caret-down" />
+                    </Button>
+                    <UncontrolledCollapse toggler="#critDmg">
+                      Critical Damage Rate {items.critDamageRate}
+                    </UncontrolledCollapse>
+                  </div>
+                  <div>
+                    Additional damage {items.extraDmg}
+                  </div>
+                </CardBody>
+              </div>
+            </div>
+            <div className="col">
+              <div className="card bg-dark character-stats defense">
+                <CardHeader>
+                  <h4>Health</h4>
+                  <h3>{items.hp}</h3>
+                </CardHeader>
+                <div>
+                  Defence: {items.defence} <br />
+                  Damage Reduction: {items.defenceDmgReduction}
+                </div>
+                <div>
+                  Evasion: {items.evasion} <br />
+                  Evasion rate: {items.evasionRate}
+                </div>
+                <div>
+                  Block {items.block} <br />
+                  Block Rate {items.blockRate}<br />
+                  Block Damage Deduction {items.blockDmgReduction}
+                </div>
+                <div>
+                  Critical Defense {items.critDef} <br />
+                  Critical Reduction {items.critDefRate}<br />
+                  Critical Damage Reduction {items.critDmgReduction}
+                </div>
+                <div>
+                  Health Regen (in combat) {items.regenInCombat}
+                </div>
+              </div>
+            </div>
+            <div className="col">
+              <div>
+                {items.weaponName}<br />
+                {items.gem1}<br />
+                {items.gem2}<br />
+                {items.gem3}<br />
+                {items.gem4}<br />
+                {items.gem5}<br />
+                {items.gem6}<br />
+              </div>
+              <div>
+                <br />{items.ringName}
+              </div>
+              <div>
+                {items.earringName}
+              </div>
+              <div>
+                {items.necklaceName}
+              </div>
+              <div>
+                {items.beltName}
+              </div>
+              <div>
+                {items.braceletName}
+              </div>
+              <div>
+                {items.gloves}
+              </div>
+              <div>
+                {items.soulName}
+              </div>
+              <div>
+                {items.soulName2}
+              </div>
+              <div>
+                {items.petAuraName}
+              </div>
+              <div>
+                {items.soulBadgeName}
+              </div>
+              <div>
+                {items.mysticBadgeName}
+              </div>
+              <div>
+                {items.outfitName}
+              </div>
+              <div>
+                {items.clothesAccessoryName}
+              </div>
+              <div>
+                {items.hairName}
+              </div>
+              <div>
+                {items.faceDecorationName}
+              </div>
+              <div>
+                {items.soulshield1}<br />
+                {items.soulshield2}<br />
+                {items.soulshield3}<br />
+                {items.soulshield4}<br />
+                {items.soulshield5}<br />
+                {items.soulshield6}<br />
+                {items.soulshield7}<br />
+                {items.soulshield8}
+              </div>
+            </div>
           </div>
-          <div>
-            {items.accountName}
-          </div>
-          <div>
-            {items.playerClass}
-          </div>
-          <div>
-            Level {items.playerLevel} &bull; HM Level  {items.playerLevelHM}
-          </div>
-          <div>
-            {items.server}
-          </div>
-          <div>
-            {items.guild}
-          </div>
-        </div>
-        <div className="col">
-          <div>
-            Attack Power: {items.ap}
-          </div>
-          <div>
-            Piercing: {items.piercing} <br />
-            Piercing Rate: {items.piercingDefRate}
-          </div>
-          <div>
-            Accuracy {items.accuracy} <br />
-            Accuracy Rate {items.accuracyRate}
-          </div>
-          <div>
-            Critical {items.crit} <br />
-            Critical Rate {items.critRate}
-          </div>
-          <div>
-            Critical Damage {items.critDamage} <br />
-            Critical Damage Rate {items.critDamageRate}
-          </div>
-          <div>
-            Additional damage {items.extraDmg}
-          </div>
-          <div>
-
-          </div>
-          <div>
-            {items.activeElement} Damage {items.frost} <br />
-            {items.activeElement} Rate {items.frostRate}
-          </div>
-        </div>
-        <div className="col">
-          <div>
-            Health: {items.hp}
-          </div>
-          <div>
-            Defence: {items.defence} <br />
-            Damage Reduction: {items.defenceDmgReduction}
-          </div>
-          <div>
-            Evasion: {items.evasion} <br />
-            Evasion rate: {items.evasionRate}
-          </div>
-          <div>
-            Block {items.block} <br />
-            Block Rate {items.blockRate}<br />
-            Block Damage Deduction {items.blockDmgReduction}
-          </div>
-          <div>
-            Critical Defense {items.critDef} <br />
-            Critical Reduction {items.critDefRate}<br />
-            Critical Damage Reduction {items.critDmgReduction}
-          </div>
-          <div>
-            Health Regen (in combat) {items.regenInCombat}
-          </div>
-        </div>
-        <div className="col">
-          <div>
-            {items.weaponName}<br/>
-            {items.gem1}<br/>
-            {items.gem2}<br/>
-            {items.gem3}<br/>
-            {items.gem4}<br/>
-            {items.gem5}<br/>
-            {items.gem6}<br/>
-          </div>
-          <div>
-          <br/>{items.ringName}
-          </div>
-          <div>
-            {items.earringName}
-          </div>
-          <div>
-            {items.necklaceName}
-          </div>
-          <div>
-            {items.beltName}
-          </div>
-          <div>
-            {items.braceletName}
-          </div>
-          <div>
-            {items.gloves}
-          </div>
-          <div>
-            {items.soulName}
-          </div>
-          <div>
-            {items.soulName2}
-          </div>
-          <div>
-            {items.petAuraName}
-          </div>
-          <div>
-            {items.soulBadgeName}
-          </div>
-          <div>
-            {items.mysticBadgeName}
-          </div>
-          <div>
-            {items.outfitName}
-          </div>
-          <div>
-            {items.clothesAccessoryName}
-          </div>
-          <div>
-            {items.hairName}
-          </div>
-          <div>
-            {items.faceDecorationName}
-          </div>
-          <div>
-            {items.soulshield1}<br/>
-            {items.soulshield2}<br/>
-            {items.soulshield3}<br/>
-            {items.soulshield4}<br/>
-            {items.soulshield5}<br/>
-            {items.soulshield6}<br/>
-            {items.soulshield7}<br/>
-            {items.soulshield8}
-          </div>
-        </div>
-      </div>
+        </CardBody>
+      </Card>
     );
   }
 }

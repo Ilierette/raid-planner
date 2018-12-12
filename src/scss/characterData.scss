@@ -1,0 +1,37 @@
+.character-profile {
+    img{
+        width:100%;
+        height: auto;
+    }
+}
+
+.character-stats {
+    height: 100%;
+    .card-header{
+        text-align: center;
+        h3{
+            color: #19ec6f;
+            font-size: 20px;
+        }
+        h4{
+            color: #ddd;
+            font-size: 15px
+        }
+    }
+    .tab-button{
+        width: 100%;
+    }
+    
+}
+
+.character-stats.attack{
+    .card-header{
+        background: linear-gradient(0deg,rgba(200,60,60,.5) 20%,transparent);
+    }
+}
+
+.character-stats.defense{
+    .card-header{
+        background: linear-gradient(0deg,rgba(80,125,181,.5) 20%,transparent);
+    }
+}
