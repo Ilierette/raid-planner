@@ -1,9 +1,11 @@
-const members = {
+const users = {
     users: [
         {
+            id: "letty",
             name: "Letty",
             class: "SF",
             region: "EU",
+            isMain: true,
             days: [
                 //Wednesday
                 {
@@ -94,8 +96,49 @@ const members = {
                     amount: 80,
                 }
             ]
+        },
+        {
+            id: "angor",
+            name: "Angor Rot",
+            class: "WAR",
+            isMain: false,
+            days:[
+                {
+                    min: "",
+                    max: ""
+                },
+                {
+                    min: "",
+                    max: ""
+                },
+                {
+                    min: "",
+                    max: ""
+                },
+                {
+                    min: "",
+                    max: ""
+                },
+                {
+                    min: "",
+                    max: ""
+                },
+                {
+                    min: "",
+                    max: ""
+                },
+                {
+                    min: "",
+                    max: ""
+                }
+            ],
+            mats:[
+                {
+
+                }
+            ]
         }
     ]
 }
 
-export default members
+export default users
