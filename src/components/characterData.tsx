@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { Card, CardBody, CardImg, CardHeader, Button, UncontrolledCollapse } from 'reactstrap';
+import { Card, CardBody, CardImg, CardHeader } from 'reactstrap';
 import axios from 'axios';
 
 import "../scss/characterData.scss";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { CharacterDataRow } from './characterDataRow';
 
@@ -53,10 +52,42 @@ export class CharacterData extends React.Component<CharacterDataProps, Character
                   <h4>Attack Power</h4>
                   <h3>{items.ap}</h3>
                 </CardHeader>
-                <CharacterDataRow id="piercing" title="Piercing" stat={items.piercing} rate={items.piercingDefRate} />
-                <CharacterDataRow id="accuracy" title="Accuracy" stat={items.accuracy} rate={items.accuracyRate} />
-                <CharacterDataRow id="critical" title="Critical" stat={items.crit} rate={items.crit} />
-                <CharacterDataRow id="critDmg" title="Critical Damage" stat={items.critDamage} rate={items.critDamageRate} />
+                <CharacterDataRow
+                  id="piercing"
+                  title="Piercing"
+                  description="Rate"
+                  description2=""
+                  stat={items.piercing}
+                  rate={items.piercingDefRate}
+                  rate2=""
+                />
+                <CharacterDataRow
+                  id="accuracy"
+                  title="Accuracy"
+                  description="Rate"
+                  description2=""
+                  stat={items.accuracy}
+                  rate={items.accuracyRate}
+                  rate2=""
+                />
+                <CharacterDataRow
+                  id="critical"
+                  title="Critical"
+                  description="Rate"
+                  description2=""
+                  stat={items.crit}
+                  rate={items.crit}
+                  rate2=""
+                />
+                <CharacterDataRow
+                  id="critDmg"
+                  title="Critical Damage"
+                  description="Rate"
+                  description2=""
+                  stat={items.critDamage}
+                  rate={items.critDamageRate}
+                  rate2=""
+                />
                 <div>
                   <button className="btn tab-button">
                     <span>
@@ -75,26 +106,51 @@ export class CharacterData extends React.Component<CharacterDataProps, Character
                   <h4>Health</h4>
                   <h3>{items.hp}</h3>
                 </CardHeader>
+                <CharacterDataRow
+                  id="defense"
+                  title="Defence"
+                  description="Reduction"
+                  description2=""
+                  stat={items.defence}
+                  rate={items.defenceDmgReduction}
+                  rate2=""
+                />
+                <CharacterDataRow
+                  id="evasion"
+                  title="Evasion"
+                  description="Rate"
+                  description2=""
+                  stat={items.evasion}
+                  rate={items.evasionRate}
+                  rate2=""
+                />
+                <CharacterDataRow
+                  id="block"
+                  title="Block"
+                  description="Rate"
+                  description2="Damage Reduction"
+                  stat={items.block}
+                  rate={items.blockRate}
+                  rate2={items.blockDmgReduction}
+                />
+                <CharacterDataRow
+                  id="critDef"
+                  title="Critical Defense"
+                  description="Reduction"
+                  description2="Damage Reduction"
+                  stat={items.critDef}
+                  rate={items.critDefRate}
+                  rate2={items.critDmgReduction}
+                />
                 <div>
-                  Defence: {items.defence} <br />
-                  Damage Reduction: {items.defenceDmgReduction}
-                </div>
-                <div>
-                  Evasion: {items.evasion} <br />
-                  Evasion rate: {items.evasionRate}
-                </div>
-                <div>
-                  Block {items.block} <br />
-                  Block Rate {items.blockRate}<br />
-                  Block Damage Deduction {items.blockDmgReduction}
-                </div>
-                <div>
-                  Critical Defense {items.critDef} <br />
-                  Critical Reduction {items.critDefRate}<br />
-                  Critical Damage Reduction {items.critDmgReduction}
-                </div>
-                <div>
-                  Health Regen (in combat) {items.regenInCombat}
+                  <button className="btn tab-button">
+                    <span>
+                      Health Regen (in combat)
+                  </span>
+                    <span>
+                      {items.regenInCombat}
+                    </span>
+                  </button>
                 </div>
               </div>
             </div>
