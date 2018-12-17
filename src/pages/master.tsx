@@ -21,8 +21,7 @@ import {
   faUser, faComments, faCogs,
   faHome, faTable, faHeadphones,
   faChalkboard, faBalanceScale,
-  faBan, faPlus, faPencilAlt,
-  faCaretDown
+  faBan, faPlus, faPencilAlt, faTimes
 } from '@fortawesome/free-solid-svg-icons'
 
 import SiteNav from '../components/navbar';
@@ -34,8 +33,7 @@ library.add(
   faUser, faComments, faCogs, faPowerOff,
   faHome, faTable, faHeadphones,
   faChalkboard, faBalanceScale,
-  faBan, faPlus, faPencilAlt,
-  faCaretDown
+  faBan, faPlus, faPencilAlt, faTimes
 )
 
 export default class MasterPage extends React.Component {

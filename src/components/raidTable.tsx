@@ -6,22 +6,34 @@ import { RaidTableHeader as Header } from './raidTableHeader';
 import users from '../data/users';
 
 import '../scss/table.scss'
+import RaidCharacterData from './raidCharacterData';
 
 interface RaidProps {
     raid: []
 }
 
 interface RaidState {
-    users: []
+    users: [],
+    selected: string,
+    modal: boolean
 }
 
-export class RaidTable extends React.Component<RaidProps> {
+export class RaidTable extends React.Component<RaidProps, RaidState> {
     constructor(props: any) {
         super(props)
 
         this.state = {
-            users: users.users
+            users: users.users,
+            selected: "",
+            modal: false
         }
+    }
+    toogle = (e:any, user:any) => {
+        e.preventDefault;
+        this.setState({
+            modal: !this.state.modal,
+            selected: user
+        });
     }
     render() {
         return (
@@ -36,7 +48,6 @@ export class RaidTable extends React.Component<RaidProps> {
                                 {this.props.raid.members.map((member: any) => (
                                     this.state.users.map((user: any, index: any) => {
                                         if (member.id == user.id) {
-                                            console.log(user.id)
                                             return (
                                                 <tr key={user.id}>
                                                     <td>
@@ -51,7 +62,9 @@ export class RaidTable extends React.Component<RaidProps> {
                                                         <label htmlFor={"conf-" + index}></label>
                                                     </td>
                                                     <td className="text-left">
-                                                        {user.name}
+                                                        <a href="#" className="text-dark" onClick={(e:any) => this.toogle(e, user.name)}>
+                                                            {user.name}
+                                                        </a>
                                                     </td>
                                                     <td className="text-left">
                                                         {user.class}
@@ -89,6 +102,8 @@ export class RaidTable extends React.Component<RaidProps> {
                         </div>
                     </div>
                 </CardFooter>
+
+                <RaidCharacterData modal={this.state.modal} toogle={this.toogle} name={this.state.selected} />
             </Card>
         );
     }

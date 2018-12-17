@@ -22,30 +22,32 @@ export class CharacterDataRow extends React.Component<CharacterDataRowProps> {
                     </span>
                     <span>
                         {this.props.stat}
-                        <FontAwesomeIcon icon="caret-down" className="ml-2 my-auto" />
+                        {this.props.rate && <FontAwesomeIcon icon="caret-down" className="ml-2 my-auto" />}
                     </span>
                 </button>
-                <UncontrolledCollapse toggler={"#" + this.props.id}>
-                    <div className="tab-data">
-                        <span>
-                            {this.props.title} {this.props.description}
-                        </span>
-                        <span>
-                            {this.props.rate}
-                        </span>
-                    </div>
-                    { this.props.rate2 &&
+                {
+                    this.props.rate &&
+                    <UncontrolledCollapse toggler={"#" + this.props.id}>
                         <div className="tab-data">
                             <span>
-                                {this.props.title} {this.props.description2}
+                                {this.props.title} {this.props.description}
                             </span>
                             <span>
-                                {this.props.rate2}
-                            </span>
+                                {Math.floor(this.props.rate * 100)} %
+                        </span>
                         </div>
-                    }
-
-                </UncontrolledCollapse>
+                        {this.props.rate2 &&
+                            <div className="tab-data">
+                                <span>
+                                    {this.props.title} {this.props.description2}
+                                </span>
+                                <span>
+                                    {this.props.rate2}
+                                </span>
+                            </div>
+                        }
+                    </UncontrolledCollapse>
+                }
             </div>
         );
     }

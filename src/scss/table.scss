@@ -95,3 +95,18 @@
   
     }
   }
+  .modal-body{
+    position: relative;
+  }
+
+  .modal-button-container{
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    top: 0;
+    padding: 20px;
+    .modal-toogle-button{
+      font-size: 25px;
+      color: #fff;
+    }
+  }
