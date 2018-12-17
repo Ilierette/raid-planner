@@ -21,9 +21,15 @@ export default class Home extends React.Component<HomeState> {
   }
 
   changeName = (e: any) => {
+    e.preventDefault;
     this.setState({
       name: e.target.value
     })
+    if (e.key == 'Enter') {
+      this.setState({
+        modal: !this.state.modal,
+      });
+    }
   }
   toogle = (e: any) => {
     e.preventDefault;
@@ -41,7 +47,7 @@ export default class Home extends React.Component<HomeState> {
             <CardBody>
               <Form className="form-inline">
                 <FormGroup>
-                  <Input placeholder="Character name" className="mr-3" onChange={(e) => this.changeName(e)} />
+                  <Input placeholder="Character name" className="mr-3" onKeyPress={(e) => this.changeName(e)} />
                 </FormGroup>
                 <Button color="primary" onClick={(e: any) => this.toogle(e)}>
                   Search
