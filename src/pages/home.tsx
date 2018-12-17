@@ -21,7 +21,6 @@ export default class Home extends React.Component<HomeState> {
   }
 
   changeName = (e: any) => {
-    e.preventDefault;
     this.setState({
       name: e.target.value
     })
@@ -45,9 +44,9 @@ export default class Home extends React.Component<HomeState> {
         <div className="content">
           <Card>
             <CardBody>
-              <Form className="form-inline">
+              <Form className="form-inline" onSubmit={e => { e.preventDefault(); }}>
                 <FormGroup>
-                  <Input placeholder="Character name" className="mr-3" onKeyPress={(e) => this.changeName(e)} />
+                  <Input placeholder="Character name" className="mr-3" onKeyPress={(e:any) => this.changeName(e)} />
                 </FormGroup>
                 <Button color="primary" onClick={(e: any) => this.toogle(e)}>
                   Search
