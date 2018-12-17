@@ -4,4 +4,3 @@ package-lock.json
 tmp
 dist
 npm-debug.log
-*.cache
