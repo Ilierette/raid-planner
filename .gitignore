@@ -1,6 +1,5 @@
 node_modules
 *bundle*
 package-lock.json
-tmp
-dist
 npm-debug.log
+public
