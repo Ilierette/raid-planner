@@ -86,21 +86,10 @@ module.exports = function (env) {
                         }
                     }
                 ]
-            },
-            {
-                test: require.resolve('jquery'),
-                use: [{
-                    loader: 'expose-loader',
-                    options: 'jQuery'
-                },{
-                    loader: 'expose-loader',
-                    options: '$'
-                }]
             }
         ]
     },
     plugins: [
-        new webpack.ProvidePlugin({ jQuery: 'jquery', $: 'jquery', jquery: 'jquery' }),
         new ExtractTextPlugin("[name].css"),
         new HtmlWebpackPlugin({
             filename: 'index.html',
