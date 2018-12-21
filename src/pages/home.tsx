@@ -2,7 +2,6 @@ import * as React from 'react';
 import { PageHeader } from '../components/pageHeader';
 import { Form, FormGroup, Input, Card, CardBody, Button } from 'reactstrap';
 
-import RaidCharacterData from '../components/raidCharacterData'
 import { CharacterData } from '../components/characterData'
 
 interface HomeState {
@@ -16,25 +15,21 @@ export default class Home extends React.Component<HomeState> {
 
     this.state = {
       name: "Letty",
-      modal: false
+      reload: true,
     };
   }
 
   changeName = (e: any) => {
     this.setState({
+      reload: false,
       name: e.target.value
     })
     if (e.key == 'Enter') {
       this.setState({
-        modal: !this.state.modal,
-      });
+        reload: true,
+        name: e.target.value
+      })
     }
-  }
-  toogle = (e: any) => {
-    e.preventDefault;
-    this.setState({
-      modal: !this.state.modal,
-    });
   }
 
   render() {
@@ -54,9 +49,13 @@ export default class Home extends React.Component<HomeState> {
               </Form>
 
 
-              <CharacterData name={this.state.name} />
-              <RaidCharacterData modal={this.state.modal} toogle={this.toogle} name={this.state.name} />
-
+              {this.state.reload ?
+                <CharacterData name={this.state.name} /> :
+                <div className="card bg-dark text-white char-data mx-auto">
+                  <div className="loader"></div>
+                </div>
+              }
+              
             </CardBody>
           </Card>
         </div>
