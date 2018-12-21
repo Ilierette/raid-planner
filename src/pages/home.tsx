@@ -32,22 +32,28 @@ export default class Home extends React.Component<HomeState> {
     }
   }
 
+  handleSubmit = (e: any) => {
+    e.preventDefault();
+    this.setState({
+      reload: true,
+    })
+  }
+
   render() {
     return (
       <div className="content-wrapper">
         <PageHeader title="Home" />
         <div className="content">
-          <Card>
-            <CardBody>
-              <Form className="form-inline mb-5" onSubmit={e => { e.preventDefault(); }}>
-                <FormGroup>
-                  <Input placeholder="Character name" className="mr-3" onKeyPress={(e: any) => this.changeName(e)} />
-                </FormGroup>
-                <Button color="primary" onClick={(e: any) => this.toogle(e)}>
-                  Search
-                </Button>
-              </Form>
-
+          <div className="card bg-dark">
+            <div className="card-body">
+              <div className="char-data mx-auto px-5">
+                <Form className="form-inline mb-2" onSubmit={e => this.handleSubmit(e)}>
+                  <FormGroup>
+                    <Input placeholder="Character name" className="col mr-3 bg-dark text-light" onKeyUp={(e: any) => this.changeName(e)} />
+                  </FormGroup>
+                  <Button color="outline-primary">Search</Button>
+                </Form>
+              </div>
 
               {this.state.reload ?
                 <CharacterData name={this.state.name} /> :
@@ -55,11 +61,10 @@ export default class Home extends React.Component<HomeState> {
                   <div className="loader"></div>
                 </div>
               }
-              
-            </CardBody>
-          </Card>
+            </div>
+          </div>
         </div>
-      </div>
+      </div >
     );
   }
 }
