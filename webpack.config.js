@@ -1,19 +1,21 @@
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+const AssetsPlugin = require('assets-webpack-plugin');
+const assetsPluginInstance = new AssetsPlugin();
 
 module.exports = function (env) {
     return {
         entry: {
             index: "./src/app.tsx"
         },
-        
+
         mode: 'development',
 
         output: {
-            filename: "[name].js",
             path: path.join(__dirname, 'public'),
-            libraryTarget: 'window'
+            filename: '[hash].js',
+            chunkFilename: '[chunkhash].js',
         },
 
         resolve: {
@@ -71,7 +73,8 @@ module.exports = function (env) {
             new HtmlWebpackPlugin({
                 filename: 'index.html',
                 template: 'src/tpl/index.html'
-            })
+            }),
+            assetsPluginInstance
         ],
         devServer: {
             contentBase: path.join(__dirname, 'tmp'),
