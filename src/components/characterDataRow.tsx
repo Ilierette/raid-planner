@@ -15,14 +15,18 @@ interface CharacterDataRowProps {
 export class CharacterDataRow extends React.Component<CharacterDataRowProps> {
     render() {
         return (
-            <div>
+            <div className="skill-tab">
                 <button className="btn tab-button" id={this.props.id}>
                     <span>
                         {this.props.title}:
                     </span>
                     <span>
-                        {this.props.stat}
-                        {this.props.rate && <FontAwesomeIcon icon="caret-down" className="ml-2 my-auto" />}
+                        <span className="accent">
+                            {this.props.stat}
+                        </span>
+                        <span className="skill-more">
+                            {this.props.rate && <FontAwesomeIcon icon="caret-down" className="ml-2 my-auto" />}
+                        </span>
                     </span>
                 </button>
                 {

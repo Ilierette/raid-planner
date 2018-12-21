@@ -224,31 +224,38 @@ export class CharacterData extends React.Component<CharacterDataProps, Character
   render() {
     const { char, isLoadingData, isLoadingEQ } = this.state;
     return (
-      <Card body inverse color="dark">
+      <div className="card bg-dark text-white char-data mx-auto">
         {isLoadingData ? (
           <div className="loader"></div>
         ) :
-          <CardBody>
+          <div className="card-body">
             <div className="row text-light">
-              <div className="col-12">
-                {char.name} [ {char.displayName} ]
-                <p>{char.class} | Level {char.lvl} &bull; {char.lvlHM} HM | {char.faction} {char.factionRank} | {char.server} | {char.guild}  </p>
+              <div className={"class ml-3 " + char.class.toLowerCase().replace(/ /g, '')}></div>
+              <div className="col">
+                <span className="char-name"><strong>{char.name}</strong></span>
+                <ul className="list-inline char-data-list">
+                  <li className="list-inline-item pl-0">{char.class}</li>
+                  <li className="list-inline-item">Level {char.lvl} &bull; {char.lvlHM} HM</li>
+                  <li className="list-inline-item">{char.server}</li>
+                  <li className="list-inline-item">{char.faction} {char.factionRank}</li>
+                  <li className="list-inline-item last">{char.guild}</li>
+                </ul>
               </div>
             </div>
-            <div className="row mt-2">
-              <div className="col-2">
-                <div className="character-profile">
-                  <Card outline color="dark">
-                    <CardImg src={char.img} />
-                  </Card>
-                </div>
+
+            <div className="row mt-1">
+              <div className="col pr-0 character-profile border-dark">
+                <img src={char.img} className="card-img" />
               </div>
-              <div className="col">
-                <div className="card bg-dark character-stats attack">
-                  <CardHeader>
-                    <h4>Attack Power</h4>
-                    <h3>{char.ap}</h3>
-                  </CardHeader>
+              <div className="col px-1">
+                <div className="character-stats attack">
+                  <div className="stats-header">
+                    <h3>
+                      Attack Power <br />
+                      <span className="accent">{char.ap}</span>
+                    </h3>
+                  </div>
+                  <div className="split-point"></div>
                   {char.offensive && char.offensive.map((o: any) => (
                     <CharacterDataRow
                       key={o.id}
@@ -263,12 +270,15 @@ export class CharacterData extends React.Component<CharacterDataProps, Character
                   ))}
                 </div>
               </div>
-              <div className="col">
-                <div className="card bg-dark character-stats defense">
-                  <CardHeader>
-                    <h4>Health</h4>
-                    <h3>{char.hp}</h3>
-                  </CardHeader>
+              <div className="col px-1">
+                <div className="character-stats defense">
+                  <div className="stats-header">
+                    <h3>
+                      Health <br />
+                      <span className="accent">{char.hp}</span>
+                    </h3>
+                  </div>
+                  <div className="split-point"></div>
                   {char.defensive && char.defensive.map((o: any) => (
                     <CharacterDataRow
                       key={o.id}
@@ -283,7 +293,7 @@ export class CharacterData extends React.Component<CharacterDataProps, Character
                   ))}
                 </div>
               </div>
-              <div className="col">
+              <div className="col-4 pl-4">
                 {isLoadingEQ ? (
                   <div className="loader"></div>
                 ) : (
@@ -304,9 +314,9 @@ export class CharacterData extends React.Component<CharacterDataProps, Character
                   )}
               </div>
             </div>
-          </CardBody>
+          </div>
         }
-      </Card >
+      </div >
     );
   }
 }

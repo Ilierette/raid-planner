@@ -44,19 +44,21 @@ export default class Home extends React.Component<HomeState> {
         <div className="content">
           <Card>
             <CardBody>
-              <Form className="form-inline" onSubmit={e => { e.preventDefault(); }}>
+              <Form className="form-inline mb-5" onSubmit={e => { e.preventDefault(); }}>
                 <FormGroup>
-                  <Input placeholder="Character name" className="mr-3" onKeyPress={(e:any) => this.changeName(e)} />
+                  <Input placeholder="Character name" className="mr-3" onKeyPress={(e: any) => this.changeName(e)} />
                 </FormGroup>
                 <Button color="primary" onClick={(e: any) => this.toogle(e)}>
                   Search
                 </Button>
               </Form>
+
+
+              <CharacterData name={this.state.name} />
+              <RaidCharacterData modal={this.state.modal} toogle={this.toogle} name={this.state.name} />
+
             </CardBody>
           </Card>
-
-          <CharacterData name={this.state.name} />
-          <RaidCharacterData modal={this.state.modal} toogle={this.toogle} name={this.state.name} />
         </div>
       </div>
     );

@@ -1,22 +1,32 @@
+.char-data{
+    max-width: 1250px;
+}
+
 .character-profile {
     img{
-        width:100%;
+        width: 250px;
         height: auto;
     }
 }
 
 .character-stats {
     height: 100%;
-    .card-header{
+    .stats-header {
         text-align: center;
-        h3{
-            color: #19ec6f;
-            font-size: 30px;
-        }
-        h4{
+        padding: 4px 5px 0;
+        height: 83px;
+        h3 {
+            margin-top: 20px;
             color: #ddd;
-            font-size: 15px
+            font-size: 15px;
+
+            span {
+                font-size: 30px;
+            }
         }
+    }
+    .split-point {
+        height: 10px;
     }
     .tab-button, .tab-data{
         width: 100%;
@@ -25,20 +35,18 @@
         background: transparent;
         color: #fff;
         padding: 5px;
-        font-size: 15px;
+        font-size: 13px;
     }
 }
 
-.character-stats.attack{
-    .card-header{
-        background: linear-gradient(0deg,rgba(200,60,60,.5) 20%,transparent);
-    }
+.character-stats.attack {
+    background: url("../images/chardata/stat-attack.png") no-repeat;
+    background-size: contain;
 }
 
-.character-stats.defense{
-    .card-header{
-        background: linear-gradient(0deg,rgba(80,125,181,.5) 20%,transparent);
-    }
+.character-stats.defense {
+    background: url("../images/chardata/stat-defense.png") no-repeat;
+    background-size: contain;
 }
 
 
@@ -92,4 +100,93 @@
 .equip-item.weapon .item-img{
     width: 40px;
     height: 40px;
+}
+
+.skill-tab{
+    border: 1px solid var(--dark);
+    background-image: linear-gradient(to left, transparent, #1b1d1e52);
+    padding: 0 25px 0 10px;
+}
+
+.skill-more{
+    position: absolute;
+    right: 15px;
+}
+
+.accent{
+    color: #19ec6f;
+}
+
+.char-data-list .list-inline-item{
+    border-right: 1px solid #3f3f3f;
+    padding: 0 10px 0px 5px;
+    font-size: 13px;
+    &.last{
+        border-right:0;
+    }
+}
+
+.char-name {
+    font-size: 20px;
+}
+
+.soulfighter{
+    background:
+        url("../images/chardata/class/SF.png") no-repeat,
+        url("../images/chardata/class/class-holder.png") no-repeat;
+}
+.bladedancer{
+    background: 
+        url("../images/chardata/class/BD.png") no-repeat,
+        url("../images/chardata/class/class-holder.png") no-repeat;
+}
+.blademaster{
+    background: 
+        url("../images/chardata/class/BM.png") no-repeat,
+        url("../images/chardata/class/class-holder.png") no-repeat;
+}
+.destroyer{
+    background: 
+        url("../images/chardata/class/Des.png") no-repeat,
+        url("../images/chardata/class/class-holder.png") no-repeat;
+}
+.forcemaster{
+    background: 
+        url("../images/chardata/class/FM.png") no-repeat,
+        url("../images/chardata/class/class-holder.png") no-repeat;
+}
+.gunslinger{
+    background: 
+        url("../images/chardata/class/Gun.png") no-repeat,
+        url("../images/chardata/class/class-holder.png") no-repeat;
+}
+.kungfumaster{
+    background: 
+        url("../images/chardata/class/KFM.png") no-repeat,
+        url("../images/chardata/class/class-holder.png") no-repeat;
+}
+.assasin{
+    background: 
+        url("../images/chardata/class/Sin.png") no-repeat,
+        url("../images/chardata/class/class-holder.png") no-repeat;
+}
+.summoner{
+    background: 
+        url("../images/chardata/class/Sum.png") no-repeat,
+        url("../images/chardata/class/class-holder.png") no-repeat;
+}
+.warlock{
+    background: 
+        url("../images/chardata/class/WL.png") no-repeat,
+        url("../images/chardata/class/class-holder.png") no-repeat;
+}
+.warden{
+    background: 
+        url("../images/chardata/class/WR.png") no-repeat,
+        url("../images/chardata/class/class-holder.png") no-repeat;
+}
+.class {
+    width: 45px;
+    height: 45px;
+    background-size: contain;
 }
