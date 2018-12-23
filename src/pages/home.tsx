@@ -127,6 +127,16 @@ export default class Home extends React.Component<HomeState> {
                     </div>
                   </div>
                 </div>
+                <div className="col-12 mt-2">
+                  <div className="card text-center text-white bg-dark border-primary">
+                    <div className="card-body">
+                      <h5>Timetable</h5>
+                      <ul className="list-unstyled">
+                        <li><a href="" ><FontAwesomeIcon icon="plus" className="mr-1" /> Edit timetable</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

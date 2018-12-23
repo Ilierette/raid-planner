@@ -110,3 +110,12 @@
       color: #fff;
     }
   }
+
+
+  .name-col {
+    cursor: pointer;
+    width:100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }

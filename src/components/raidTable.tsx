@@ -5,7 +5,7 @@ import { RaidTableHeader as Header } from './raidTableHeader';
 
 import users from '../data/users';
 
-import '../scss/table.scss'
+import '../scss/table.scss';
 import RaidCharacterData from './raidCharacterData';
 
 interface RaidProps {
@@ -32,7 +32,7 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
             modal: false
         }
     }
-    toogle = (e:any, user:any) => {
+    toogle = (e: any, user: any) => {
         e.preventDefault;
         this.setState({
             modal: !this.state.modal,
@@ -43,7 +43,17 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
         return (
             <Card>
                 <CardBody>
-                    <h5 className="card-title">{this.props.raid.type}</h5>
+                    <div className="row">
+                        <div className="col offset-sm-5">
+                            <div className="form-group row">
+                                <label htmlFor="token" className="col-2 col-form-label px-0 text-right">{this.props.raid.type} - Raid Token</label>
+                                <div className="col-10">
+                                    <input type="text" readOnly id="token" className="form-control" value="1273t21tguy6" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div className="table-responsive">
                         <table className="table table-sm text-center">
                             <Header />
@@ -65,9 +75,10 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                                                         <label htmlFor={"conf-" + index}></label>
                                                     </td>
                                                     <td className="text-left">
-                                                        <a href="#" className="text-dark" onClick={(e:any) => this.toogle(e, user.name)}>
+                                                        <div className="name-col" onClick={(e: any) => this.toogle(e, user.name)}>
                                                             {user.name}
-                                                        </a>
+                                                            <FontAwesomeIcon icon="caret-down" className="ml-3" />
+                                                        </div>
                                                     </td>
                                                     <td className="text-left">
                                                         {user.class}
@@ -106,8 +117,8 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                     </div>
                 </CardFooter>
 
-                <RaidCharacterData 
-                    modal={this.state.modal} toogle={this.toogle} 
+                <RaidCharacterData
+                    modal={this.state.modal} toogle={this.toogle}
                     name={this.state.selected} region={this.state.region} isMain={this.state.isMain} isBadge={true}
                 />
             </Card>
