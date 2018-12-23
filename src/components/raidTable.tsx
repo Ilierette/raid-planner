@@ -15,7 +15,9 @@ interface RaidProps {
 interface RaidState {
     users: [],
     selected: string,
-    modal: boolean
+    modal: boolean,
+    isMain: boolean,
+    region: string
 }
 
 export class RaidTable extends React.Component<RaidProps, RaidState> {
@@ -24,7 +26,9 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
 
         this.state = {
             users: users.users,
+            region: "eu",
             selected: "",
+            isMain: true,
             modal: false
         }
     }
@@ -44,7 +48,6 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                         <table className="table table-sm text-center">
                             <Header />
                             <tbody>
-
                                 {this.props.raid.members.map((member: any) => (
                                     this.state.users.map((user: any, index: any) => {
                                         if (member.id == user.id) {
@@ -103,7 +106,10 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                     </div>
                 </CardFooter>
 
-                <RaidCharacterData modal={this.state.modal} toogle={this.toogle} name={this.state.selected} />
+                <RaidCharacterData 
+                    modal={this.state.modal} toogle={this.toogle} 
+                    name={this.state.selected} region={this.state.region} isMain={this.state.isMain} isBadge={true}
+                />
             </Card>
         );
     }

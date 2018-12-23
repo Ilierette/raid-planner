@@ -8,7 +8,10 @@ import { CharacterDataRow } from './characterDataRow';
 import { CharacterDataGearRow } from './characterDataGearRow';
 
 interface CharacterDataProps {
-  name: string
+  name: string,
+  region: string,
+  isMain: boolean,
+  isBadge: boolean
 }
 
 interface CharacterDataState {
@@ -28,7 +31,11 @@ export class CharacterData extends React.Component<CharacterDataProps, Character
     }
   }
   componentDidMount() {
-    let getCharacter = axios.get('https://api.silveress.ie/bns/v3/character/full/eu/' + this.props.name).then(res => {
+    let getCharacter = axios.get('https://api.silveress.ie/bns/v3/character/full/' + this.props.region + '/' + this.props.name).then(res => {
+      let activeElement = res.data.activeElement;
+      if (activeElement == "Ice") {
+        activeElement = "Frost";
+      }
       const char = {
         ap: res.data.ap,
         hp: res.data.hp,
@@ -42,6 +49,7 @@ export class CharacterData extends React.Component<CharacterDataProps, Character
         server: res.data.server,
         guild: res.data.guild,
         img: res.data.characterImg,
+        activeElement: activeElement,
         offensive: [
           {
             id: "piercing",
@@ -230,20 +238,33 @@ export class CharacterData extends React.Component<CharacterDataProps, Character
         ) :
           <div className="card-body">
             <div className="row text-light">
-              <div className={"class ml-3 " + char.class.toLowerCase().replace(/ /g, '')}></div>
+              {char.class && <div className={"class ml-3 " + char.class.toLowerCase().replace(/ /g, '')}></div>}
               <div className="col">
                 <span className="char-name"><strong>{char.name}</strong></span>
-                <ul className="list-inline char-data-list">
+                {this.props.isBadge &&
+                  <span>
+                    {this.props.isMain ? (
+                      <span className="badge badge-primary ml-2 my-auto">Main</span>
+                    ) : (
+                        <span className="badge badge-secondary ml-2 my-auto">Alt</span>
+                      )}
+                  </span>}
+                <ul className="list-inline char-data-list mt-1">
                   <li className="list-inline-item pl-0">{char.class}</li>
                   <li className="list-inline-item">Level {char.lvl} &bull; {char.lvlHM} HM</li>
                   <li className="list-inline-item">{char.server}</li>
-                  <li className="list-inline-item">{char.faction} {char.factionRank}</li>
-                  <li className="list-inline-item last">{char.guild}</li>
+                  {char.faction && <li className="list-inline-item">{char.faction} {char.factionRank}</li>}
+                  {char.guild && <li className="list-inline-item">{char.guild}</li>}
+                  <li className="list-inline-item last">
+                    <span className={"elements " + char.activeElement.toLowerCase()} >
+                      {char.activeElement}
+                    </span>
+                  </li>
                 </ul>
               </div>
             </div>
 
-            <div className="row mt-1">
+            <div className="row">
               <div className="col pr-0 character-profile border-dark">
                 <img src={char.img} className="card-img" />
               </div>

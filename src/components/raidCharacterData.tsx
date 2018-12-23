@@ -6,6 +6,9 @@ import { CharacterData } from './characterData'
 interface RaidCharacterDataProps {
     modal: boolean,
     name: string,
+    region: string,
+    isMain: boolean,
+    isBadge: boolean,
     toogle: (e: any, user: any) => void
 }
 
@@ -21,7 +24,10 @@ export default class RaidCharacterData extends React.Component<RaidCharacterData
                                 <FontAwesomeIcon icon="times" />
                             </a>
                         </div>
-                        <CharacterData name={this.props.name} />
+                        <CharacterData 
+                            name={this.props.name} region={this.props.region} 
+                            isMain={this.props.isMain} isBadge={this.props.isBadge}
+                        />
                     </ModalBody>
                 </Modal>
             </div>
