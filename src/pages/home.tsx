@@ -88,6 +88,7 @@ export default class Home extends React.Component<HomeState> {
                     <div className="card-body">
                       <h5>DPS Parse</h5>
                       <h6 className="card-subtitle mb-2 text-muted">{this.state.dpsCount}</h6>
+                      <a href="" ><FontAwesomeIcon icon="plus" className="mr-1" /> Update parse</a>
                     </div>
                     <img className="card-img-bottom" src={this.state.dpsImg} />
                   </div>
