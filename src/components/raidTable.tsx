@@ -131,7 +131,7 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                                                             </Nav>
                                                             <TabContent activeTab={this.state.activeTab}>
                                                                 <TabPane tabId="1" className="bg-dark">
-                                                                    <CharacterData name={user.name} region={this.state.region} isMain={this.state.isMain} isBadge={this.state.isBadge} />
+                                                                    <CharacterData name={user.name} region={this.state.region} isMain={user.isMain} isBadge={this.state.isBadge} />
                                                                 </TabPane>
                                                                 <TabPane tabId="2">
                                                                     {member.notes} <br />
