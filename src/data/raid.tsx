@@ -10,6 +10,7 @@ const raid = {
             isLeader: true,
             isStatic: true,
             isConfirmed: true,
+            isExpanded: false,
             notes: ""
         },
         {
@@ -18,6 +19,7 @@ const raid = {
             isLeader: false,
             isStatic: true,
             isConfirmed: false,
+            isExpanded: false,
             notes:""
         }
     ]

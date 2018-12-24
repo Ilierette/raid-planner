@@ -1,23 +1,30 @@
 import * as React from 'react';
 import { Card, CardBody, CardFooter, Input, Button } from 'reactstrap';
+import { TabContent, TabPane, Nav, NavItem, NavLink, CardTitle, CardText, Row, Col } from 'reactstrap';
+import classnames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { RaidTableHeader as Header } from './raidTableHeader';
+import { CharacterData } from '../components/characterData';
 
 import users from '../data/users';
 
 import '../scss/table.scss';
-import RaidCharacterData from './raidCharacterData';
 
 interface RaidProps {
-    raid: []
+    type: string,
+    ratio: string,
+    timestamp: string,
+    maxMembers: any,
+    members: [],
+    toogle: any
 }
 
 interface RaidState {
     users: [],
-    selected: string,
-    modal: boolean,
     isMain: boolean,
-    region: string
+    isBadge: boolean,
+    region: string,
+    activeTab: string
 }
 
 export class RaidTable extends React.Component<RaidProps, RaidState> {
@@ -27,18 +34,19 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
         this.state = {
             users: users.users,
             region: "eu",
-            selected: "",
             isMain: true,
-            modal: false
+            isBadge: true,
+            activeTab: '1'
         }
     }
-    toogle = (e: any, user: any) => {
-        e.preventDefault;
-        this.setState({
-            modal: !this.state.modal,
-            selected: user
-        });
+    changeTab = (tab: any) => {
+        if (this.state.activeTab !== tab) {
+            this.setState({
+                activeTab: tab
+            });
+        }
     }
+
     render() {
         return (
             <Card>
@@ -46,7 +54,7 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                     <div className="row">
                         <div className="col offset-sm-5">
                             <div className="form-group row">
-                                <label htmlFor="token" className="col-2 col-form-label px-0 text-right">{this.props.raid.type} - Raid Token</label>
+                                <label htmlFor="token" className="col-2 col-form-label px-0 text-right">{this.props.type} - Raid Token</label>
                                 <div className="col-10">
                                     <input type="text" readOnly id="token" className="form-control" value="1273t21tguy6" />
                                 </div>
@@ -57,12 +65,13 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                     <div className="table-responsive">
                         <table className="table table-sm text-center">
                             <Header />
-                            <tbody>
-                                {this.props.raid.members.map((member: any) => (
-                                    this.state.users.map((user: any, index: any) => {
-                                        if (member.id == user.id) {
-                                            return (
-                                                <tr key={user.id}>
+
+                            {this.props.members.map((member: any) => (
+                                this.state.users.map((user: any, index: any) => {
+                                    if (member.id == user.id) {
+                                        return (
+                                            <tbody key={user.id}>
+                                                <tr >
                                                     <td>
                                                         <button
                                                             className="btn btn-outline-danger">
@@ -75,7 +84,7 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                                                         <label htmlFor={"conf-" + index}></label>
                                                     </td>
                                                     <td className="text-left">
-                                                        <div className="name-col" onClick={(e: any) => this.toogle(e, user.name)}>
+                                                        <div className="name-col" onClick={() => this.props.toogle(user.id)}>
                                                             {user.name}
                                                             <FontAwesomeIcon icon="caret-down" className="ml-3" />
                                                         </div>
@@ -95,20 +104,57 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                                                     <td className="form-group">
                                                         {user.isMain ? "Main" : "Alt"}
                                                     </td>
-                                                    <td>{member.notes}</td>
+                                                    
                                                 </tr>
-                                            )
-                                        }
-                                    })
-                                ))}
-                            </tbody>
+                                                {
+                                                    member.isExpanded &&
+                                                    <tr>
+                                                        <td colSpan={2}></td>
+                                                        <td colSpan={10} className="text-left">
+                                                            <Nav tabs className="my-1">
+                                                                <NavItem>
+                                                                    <NavLink
+                                                                        className={classnames({ active: this.state.activeTab === '1' })}
+                                                                        onClick={() => { this.changeTab('1'); }}>
+                                                                        Character Data
+                                                                    </NavLink>
+                                                                </NavItem>
+                                                                <NavItem>
+                                                                    <NavLink
+                                                                        className={classnames({ active: this.state.activeTab === '2' })}
+                                                                        onClick={() => { this.changeTab('2'); }}>
+                                                                        Info
+                                                                    </NavLink>
+                                                                </NavItem>
+                                                            </Nav>
+                                                            <TabContent activeTab={this.state.activeTab}>
+                                                                <TabPane tabId="1" className="bg-dark">  
+                                                                    <CharacterData name={user.name} region={this.state.region} isMain={this.state.isMain} isBadge={this.state.isBadge} />   
+                                                                </TabPane>
+                                                                <TabPane tabId="2">
+                                                                    {member.notes} <br/>
+                                                                    User additional message <br/>
+                                                                    Warnings
+                                                                </TabPane>
+                                                            </TabContent>
+
+                                                        </td>
+                                                        <td colSpan={2}></td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        )
+                                    }
+                                })
+                            ))}
+
                         </table>
                     </div>
                 </CardBody>
                 <CardFooter>
                     <div className="row">
                         <div className="col-2 my-auto">
-                            {this.props.raid.members.length}/{this.props.raid.maxMembers}
+                            {this.props.members.length}/{this.props.maxMembers}
                         </div>
                         <div className="col text-right">
                             <Button color="primary" >Set raid time</Button>
@@ -116,11 +162,6 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                         </div>
                     </div>
                 </CardFooter>
-
-                <RaidCharacterData
-                    modal={this.state.modal} toogle={this.toogle}
-                    name={this.state.selected} region={this.state.region} isMain={this.state.isMain} isBadge={true}
-                />
             </Card>
         );
     }

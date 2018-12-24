@@ -18,7 +18,6 @@ export class RaidTableHeader extends React.Component {
                     <th rowSpan={2} className="text-left">Class</th>
                     <th colSpan={7}>Sign up</th>
                     <th colSpan={2}>Activity Status</th>
-                    <th rowSpan={2}> Notes</th>
                 </tr>
                 <tr>
                     <th>Wednesday</th>
