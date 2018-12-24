@@ -85,7 +85,9 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                                                     </td>
                                                     <td className="text-left">
                                                         <div className="name-col" onClick={() => this.props.toogle(user.id)}>
-                                                            {user.name}
+                                                            <abbr title="Click to check character data">
+                                                                {user.name}
+                                                            </abbr>
                                                             <FontAwesomeIcon icon="caret-down" className="ml-3" />
                                                         </div>
                                                     </td>
@@ -104,7 +106,7 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                                                     <td className="form-group">
                                                         {user.isMain ? "Main" : "Alt"}
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 {
                                                     member.isExpanded &&
@@ -128,12 +130,12 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                                                                 </NavItem>
                                                             </Nav>
                                                             <TabContent activeTab={this.state.activeTab}>
-                                                                <TabPane tabId="1" className="bg-dark">  
-                                                                    <CharacterData name={user.name} region={this.state.region} isMain={this.state.isMain} isBadge={this.state.isBadge} />   
+                                                                <TabPane tabId="1" className="bg-dark">
+                                                                    <CharacterData name={user.name} region={this.state.region} isMain={this.state.isMain} isBadge={this.state.isBadge} />
                                                                 </TabPane>
                                                                 <TabPane tabId="2">
-                                                                    {member.notes} <br/>
-                                                                    User additional message <br/>
+                                                                    {member.notes} <br />
+                                                                    User additional message <br />
                                                                     Warnings
                                                                 </TabPane>
                                                             </TabContent>
