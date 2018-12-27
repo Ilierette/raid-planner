@@ -20,6 +20,8 @@ export default class Marketplace extends React.Component<MarketplaceState> {
             untradeable: market.untradeable,
             userMats: members.users[0].mats
         }
+
+        console.log(this.state.userMats);
     }
 
     render() {

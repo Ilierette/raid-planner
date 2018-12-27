@@ -59,9 +59,7 @@ export class MarketTable extends React.Component<MarketProps> {
                         this.props.mats.map((mat: any) => {
                           if (item.id == mat.id) {
                             return (
-                              <span key={mat.id}>
-                                {mat.amount}
-                              </span>
+                              <input type="number" name={item.id} key={mat.id} defaultValue={mat.amount} className="form-control"/>
                             )
                           }
                         })
