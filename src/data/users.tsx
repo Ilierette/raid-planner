@@ -50,7 +50,7 @@ const users = {
                     max: "23:00"
                 }
             ],
-            mats:[
+            mats: [
                 {
                     id: "elysian",
                     amount: 346,
@@ -102,7 +102,7 @@ const users = {
             name: "Angor Rot",
             class: "WAR",
             isMain: false,
-            days:[
+            days: [
                 {
                     min: "",
                     max: ""
@@ -132,7 +132,89 @@ const users = {
                     max: ""
                 }
             ],
-            mats:[
+            mats: [
+                {
+
+                }
+            ]
+        },
+        {
+            id: "fumi",
+            name: "Fumi Yuki",
+            class: "FM",
+            isMain: true,
+            days: [
+                {
+                    min: "",
+                    max: ""
+                },
+                {
+                    min: "",
+                    max: ""
+                },
+                {
+                    min: "",
+                    max: ""
+                },
+                {
+                    min: "",
+                    max: ""
+                },
+                {
+                    min: "",
+                    max: ""
+                },
+                {
+                    min: "",
+                    max: ""
+                },
+                {
+                    min: "",
+                    max: ""
+                }
+            ],
+            mats: [
+                {
+
+                }
+            ]
+        },
+        {
+            id: "miiyuit",
+            name: "MiiYuit",
+            class: "BD",
+            isMain: true,
+            days: [
+                {
+                    min: "",
+                    max: ""
+                },
+                {
+                    min: "",
+                    max: ""
+                },
+                {
+                    min: "",
+                    max: ""
+                },
+                {
+                    min: "",
+                    max: ""
+                },
+                {
+                    min: "",
+                    max: ""
+                },
+                {
+                    min: "",
+                    max: ""
+                },
+                {
+                    min: "",
+                    max: ""
+                }
+            ],
+            mats: [
                 {
 
                 }

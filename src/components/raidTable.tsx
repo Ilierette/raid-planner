@@ -49,7 +49,7 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
 
     render() {
         return (
-            <Card>
+            <Card className="mb-3">
                 <CardBody>
                     <div className="row">
                         <div className="col offset-sm-5">

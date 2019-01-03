@@ -3,16 +3,12 @@ import * as React from 'react';
 import { PageHeader } from '../components/pageHeader';
 import { RaidTable } from '../components/raidTable'
 
-import raid from '../data/raid';
+import { raid } from '../data/raid';
 
 import '../scss/content.scss'
 
 interface RaidState {
-  type: string,
-  ratio: string,
-  timestamp: string,
-  maxMembers: any,
-  members: []
+  raids: any
 }
 
 export default class Schedule extends React.Component<RaidState> {
@@ -20,35 +16,34 @@ export default class Schedule extends React.Component<RaidState> {
     super(props)
 
     this.state = {
-      type: raid.type,
-      ratio: raid.ratio,
-      timestamp: raid.timestamp,
-      maxMembers: raid.maxMembers,
-      members: raid.members
+      raids: raid
     }
   }
   toogle = (id: any) => {
 
-    let raidList = this.state.members.map((item: any) => {
-      if (item.id == id) {
-        return ({
-          ...item,
-          isExpanded: !item.isExpanded
+    let raidList = this.state.raids.map((raid: any) => {
+      return ({
+        ...raid,
+        members: raid.members.map((item: any) => {
+          if (item.id == id) {
+            return ({
+              ...item,
+              isExpanded: !item.isExpanded
+            })
+          }
+          else {
+            return ({
+              ...item,
+              isExpanded: false
+            })
+          }
         })
-      }
-      else {
-        return ({
-          ...item,
-          isExpanded: false
-        })
-      }
+      })
     })
-
-    console.log(raidList);
-
     this.setState({
-      members: raidList
+      raids: raidList
     })
+
   }
 
   render() {
@@ -56,14 +51,17 @@ export default class Schedule extends React.Component<RaidState> {
       <div className="content-wrapper">
         <PageHeader title="Raid schedule" />
         <div className="content">
-          <RaidTable
-            type={this.state.type}
-            ratio={this.state.ratio}
-            timestamp={this.state.timestamp}
-            maxMembers={this.state.maxMembers}
-            members={this.state.members}
-            toogle={this.toogle}
-          />
+          {this.state.raids.map((raid: any) => (
+            <RaidTable
+              key={raid.type}
+              type={raid.type}
+              ratio={raid.ratio}
+              timestamp={raid.timestamp}
+              maxMembers={raid.maxMembers}
+              members={raid.members}
+              toogle={this.toogle}
+            />
+          ))}
         </div>
       </div>
     );
