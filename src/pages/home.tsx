@@ -1,7 +1,5 @@
 import * as React from 'react';
 import { PageHeader } from '../components/pageHeader';
-import { Form } from 'reactstrap';
-
 import { CharacterData } from '../components/characterData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CharacterSelectDropdown } from '../components/characterSelectDropdown';
@@ -62,7 +60,7 @@ export default class Home extends React.Component<HomeState> {
           <div className="card bg-dark">
             <div className="card-body">
               <div className="char-data mx-auto px-5">
-                <Form className="form-inline mb-2" onSubmit={(e: any) => this.handleSubmit(e)}>
+                <form className="form-inline mb-2" onSubmit={(e: any) => this.handleSubmit(e)}>
                   <div className="form-group">
                     <CharacterSelectDropdown />
                     <input placeholder="Find other character" className="form-control ml-1 mr-1 bg-dark text-light" onKeyUp={(e: any) => this.changeName(e)} />
@@ -72,7 +70,7 @@ export default class Home extends React.Component<HomeState> {
                     </select>
                   </div>
                   <button className="btn btn-outline-primary">Search</button>
-                </Form>
+                </form>
               </div>
 
               {this.state.reload ?

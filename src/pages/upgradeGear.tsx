@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Card, CardBody } from 'reactstrap';
 import { PageHeader } from '../components/pageHeader';
 import { GearTable } from '../components/gearTable';
 

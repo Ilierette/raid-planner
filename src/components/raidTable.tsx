@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Card, CardBody, CardFooter, Input, Button } from 'reactstrap';
-import { TabContent, TabPane, Nav, NavItem, NavLink, CardTitle, CardText, Row, Col } from 'reactstrap';
+import { Input, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import classnames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { RaidTableHeader as Header } from './raidTableHeader';
@@ -49,8 +48,8 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
 
     render() {
         return (
-            <Card className="mb-3">
-                <CardBody>
+            <div className="card mb-3">
+                <div className="card-body">
                     <div className="row">
                         <div className="col offset-sm-5">
                             <div className="form-group row">
@@ -65,7 +64,6 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                     <div className="table-responsive">
                         <table className="table table-sm text-center">
                             <Header />
-
                             {this.props.members.map((member: any) => (
                                 this.state.users.map((user: any, index: any) => {
                                     if (member.id == user.id) {
@@ -95,7 +93,9 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                                                         {user.class}
                                                     </td>
                                                     {user.days.map((day: any, index: any) => (
-                                                        <td key={index}>{day.min} - {day.max}</td>
+                                                        <td key={index}>
+                                                            {day.min} - {day.max}
+                                                        </td>
                                                     ))}
                                                     <td className="form-group">
                                                         <Input type="select">
@@ -139,7 +139,6 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                                                                     Warnings
                                                                 </TabPane>
                                                             </TabContent>
-
                                                         </td>
                                                         <td colSpan={2}></td>
                                                     </tr>
@@ -152,19 +151,19 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
 
                         </table>
                     </div>
-                </CardBody>
-                <CardFooter>
+                </div>
+                <div className="card-footer">
                     <div className="row">
                         <div className="col-2 my-auto">
                             {this.props.members.length}/{this.props.maxMembers}
                         </div>
                         <div className="col text-right">
-                            <Button color="primary" >Set raid time</Button>
-                            <Button color="success" className="ml-1">Save changes</Button>
+                            <button className="btn btn-primary" >Set raid time</button>
+                            <button className="btn btn-success ml-1">Save changes</button>
                         </div>
                     </div>
-                </CardFooter>
-            </Card>
+                </div>
+            </div>
         );
     }
 }

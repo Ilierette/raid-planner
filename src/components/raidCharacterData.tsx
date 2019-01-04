@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Modal, ModalBody, Button } from 'reactstrap';
+import { Modal, ModalBody } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CharacterData } from './characterData'
 

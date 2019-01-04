@@ -1,10 +1,7 @@
 import * as React from 'react';
-
 import { PageHeader } from '../components/pageHeader';
 import { RaidTable } from '../components/raidTable'
-
 import { raid } from '../data/raid';
-
 import '../scss/content.scss'
 
 interface RaidState {
@@ -43,7 +40,6 @@ export default class Schedule extends React.Component<RaidState> {
     this.setState({
       raids: raidList
     })
-
   }
 
   render() {

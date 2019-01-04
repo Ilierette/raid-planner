@@ -1,9 +1,6 @@
 import * as React from 'react';
-import { Card, CardBody, CardImg, CardHeader } from 'reactstrap';
 import axios from 'axios';
-
 import "../scss/characterData.scss";
-
 import { CharacterDataRow } from './characterDataRow';
 import { CharacterDataGearRow } from './characterDataGearRow';
 

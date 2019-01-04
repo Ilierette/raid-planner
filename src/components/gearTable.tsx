@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Card, CardBody } from 'reactstrap';
 import market from '../data/market'
 
 interface GearProps {
@@ -24,8 +23,8 @@ export class GearTable extends React.Component<GearProps, GearState> {
 
   render() {
     return (
-      <Card>
-        <CardBody>
+      <div className="card">
+        <div className="card-body">
           <div className="table-responsive">
             <h5 className="card-title">{this.props.title}</h5>
             <table className="table table-sm text-center">
@@ -80,8 +79,8 @@ export class GearTable extends React.Component<GearProps, GearState> {
               </tbody>
             </table>
           </div>
-        </CardBody>
-      </Card>
+        </div>
+      </div>
     );
   }
 }

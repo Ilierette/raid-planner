@@ -80,14 +80,6 @@ const users = {
                     amount: 3,
                 },
                 {
-                    id: "TS",
-                    amount: 0,
-                },
-                {
-                    id: "empyrean",
-                    amount: 0,
-                },
-                {
                     id: "jewel",
                     amount: 121,
                 },
@@ -101,6 +93,7 @@ const users = {
             id: "angor",
             name: "Angor Rot",
             class: "WAR",
+            region: "EU",
             isMain: false,
             days: [
                 {
@@ -142,6 +135,7 @@ const users = {
             id: "fumi",
             name: "Fumi Yuki",
             class: "FM",
+            region: "EU",
             isMain: true,
             days: [
                 {
@@ -183,6 +177,7 @@ const users = {
             id: "miiyuit",
             name: "MiiYuit",
             class: "BD",
+            region: "EU",
             isMain: true,
             days: [
                 {

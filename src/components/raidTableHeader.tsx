@@ -16,7 +16,16 @@ export class RaidTableHeader extends React.Component {
                     <th rowSpan={2}>*</th>
                     <th rowSpan={2} className="text-left">Name</th>
                     <th rowSpan={2} className="text-left">Class</th>
-                    <th colSpan={7}>Sign up</th>
+                    <th colSpan={7}>
+                        <div className="row py-0">
+                            <div className="col">Sign up</div>
+                            <div className="col-1">
+                                <button className=" btn btn-outline-success">
+                                    <FontAwesomeIcon icon="pencil-alt" />
+                                </button>
+                            </div>
+                        </div>
+                    </th>
                     <th colSpan={2}>Activity Status</th>
                 </tr>
                 <tr>
