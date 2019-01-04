@@ -1,11 +1,13 @@
 .char-data{
     max-width: 1250px;
-    display: flex;
-    flex-direction: row-reverse;
 }
 .char-details{
     max-width: 1250px;
+}
+
+.reversed{
     display: flex;
+    flex-direction: row-reverse;
 }
 
 .character-profile {
