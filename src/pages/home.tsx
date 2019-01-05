@@ -26,11 +26,13 @@ export default class Home extends React.Component<HomeState> {
   }
 
   changeName = (e: any) => {
-    this.setState({
-      reload: false,
-      isBadge: false,
-      name: e.target.value
-    })
+    if (!(e.key == 'Shift' || e.key == 'Control' || e.key == 'Alt')) {
+      this.setState({
+        reload: false,
+        isBadge: false,
+        name: e.target.value
+      })
+    }
     if (e.key == 'Enter') {
       this.setState({
         reload: true,
@@ -57,9 +59,10 @@ export default class Home extends React.Component<HomeState> {
       reload: false,
       name: "Letty"
     })
-    setTimeout(()=>{
+    setTimeout(() => {
       this.setState({
         reload: true,
+        isBadge: true,
       })
     }, 1);
   }
@@ -73,7 +76,7 @@ export default class Home extends React.Component<HomeState> {
             <div className="card-body">
               <div className="char-data row mx-auto">
                 <div className="col-1">
-                  <button className="btn btn-outline-primary" onClick={()=>this.returnHome()}>
+                  <button className="btn btn-outline-primary" onClick={() => this.returnHome()}>
                     <FontAwesomeIcon icon="home" />
                   </button>
                 </div>
@@ -93,67 +96,66 @@ export default class Home extends React.Component<HomeState> {
               </div>
 
               {this.state.reload ?
-                <CharacterData name={this.state.name} region={this.state.region} isMain={this.state.isMain} isBadge={this.state.isBadge} /> :
+                <div>
+                  <CharacterData name={this.state.name} region={this.state.region} isMain={this.state.isMain} isBadge={this.state.isBadge} />
+                  <div className="char-details row mx-auto">
+                    <div className="col-6 mt-2">
+                      <div className="card text-center text-white bg-dark border-primary">
+                        <div className="card-body">
+                          <h5>DPS Parse</h5>
+                          <h6 className="card-subtitle mb-2 text-muted">{this.state.dpsCount}</h6>
+                          <a href="" ><FontAwesomeIcon icon="plus" className="mr-1" /> Update parse</a>
+                        </div>
+                        <img className="card-img-bottom" src={this.state.dpsImg} />
+                      </div>
+                    </div>
+                    <div className="col-6 mt-2">
+                      <div className="card text-center text-white bg-dark border-primary">
+                        <div className="card-body">
+                          <h5>Needs</h5>
+                          <ul className="list-unstyled">
+                            <li>TT Ring  <span className="badge badge-success ml-1 my-auto">awakened</span> </li>
+                            <li>TT Earring</li>
+                            <li><a href="" ><FontAwesomeIcon icon="plus" className="mr-1" /> Add EQ</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-6 mt-2">
+                      <div className="card text-center text-white bg-dark border-primary">
+                        <div className="card-body">
+                          <h5>Raid member</h5>
+                          <ul className="list-unstyled">
+                            <li><a href="" >TT Raid List <span className="badge badge-primary ml-1 my-auto">static</span> </a></li>
+                            <li><a href="" >VT Raid List <span className="badge badge-secondary ml-1 my-auto">sub</span> </a></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-6 mt-2">
+                      <div className="card text-center text-white bg-dark border-primary">
+                        <div className="card-body">
+                          <h5>Raid leader</h5>
+                          <ul className="list-unstyled">
+                            <li><a href="" ><FontAwesomeIcon icon="plus" className="mr-1" /> Add raid</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-12 mt-2">
+                      <div className="card text-center text-white bg-dark border-primary">
+                        <div className="card-body">
+                          <h5>Timetable</h5>
+                          <ul className="list-unstyled">
+                            <li><a href="" ><FontAwesomeIcon icon="plus" className="mr-1" /> Edit timetable</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div> :
                 <div className="card bg-dark text-white char-data mx-auto">
                   <div className="loader"></div>
-                </div>
-              }
-              {this.state.reload &&
-                <div className="char-details row mx-auto">
-                  <div className="col-6 mt-2">
-                    <div className="card text-center text-white bg-dark border-primary">
-                      <div className="card-body">
-                        <h5>DPS Parse</h5>
-                        <h6 className="card-subtitle mb-2 text-muted">{this.state.dpsCount}</h6>
-                        <a href="" ><FontAwesomeIcon icon="plus" className="mr-1" /> Update parse</a>
-                      </div>
-                      <img className="card-img-bottom" src={this.state.dpsImg} />
-                    </div>
-                  </div>
-                  <div className="col-6 mt-2">
-                    <div className="card text-center text-white bg-dark border-primary">
-                      <div className="card-body">
-                        <h5>Needs</h5>
-                        <ul className="list-unstyled">
-                          <li>TT Ring  <span className="badge badge-success ml-1 my-auto">awakened</span> </li>
-                          <li>TT Earring</li>
-                          <li><a href="" ><FontAwesomeIcon icon="plus" className="mr-1" /> Add EQ</a></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-6 mt-2">
-                    <div className="card text-center text-white bg-dark border-primary">
-                      <div className="card-body">
-                        <h5>Raid member</h5>
-                        <ul className="list-unstyled">
-                          <li><a href="" >TT Raid List <span className="badge badge-primary ml-1 my-auto">static</span> </a></li>
-                          <li><a href="" >VT Raid List <span className="badge badge-secondary ml-1 my-auto">sub</span> </a></li>
-                        </ul>
-
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-6 mt-2">
-                    <div className="card text-center text-white bg-dark border-primary">
-                      <div className="card-body">
-                        <h5>Raid leader</h5>
-                        <ul className="list-unstyled">
-                          <li><a href="" ><FontAwesomeIcon icon="plus" className="mr-1" /> Add raid</a></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-12 mt-2">
-                    <div className="card text-center text-white bg-dark border-primary">
-                      <div className="card-body">
-                        <h5>Timetable</h5>
-                        <ul className="list-unstyled">
-                          <li><a href="" ><FontAwesomeIcon icon="plus" className="mr-1" /> Edit timetable</a></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               }
             </div>
