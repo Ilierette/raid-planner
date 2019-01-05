@@ -56,6 +56,7 @@ export default class Schedule extends React.Component<RaidState> {
               maxMembers={raid.maxMembers}
               members={raid.members}
               toogle={this.toogle}
+              currentMemberID={"letty"}
             />
           ))}
         </div>

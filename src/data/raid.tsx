@@ -16,10 +16,10 @@ export const raid = [
             },
             {
                 id: "angor",
-                isFounder: false,
-                isLeader: false,
+                isFounder: true,
+                isLeader: true,
                 isStatic: true,
-                isConfirmed: false,
+                isConfirmed: true,
                 isExpanded: false,
                 notes: ""
             }
@@ -32,6 +32,15 @@ export const raid = [
         maxMembers: 12,
         members: [
             {
+                id: "letty",
+                isFounder: true,
+                isLeader: false,
+                isStatic: true,
+                isConfirmed: true,
+                isExpanded: false,
+                notes: ""
+            },
+            {
                 id: "fumi",
                 isFounder: true,
                 isLeader: true,
@@ -42,10 +51,10 @@ export const raid = [
             },
             {
                 id: "miiyuit",
-                isFounder: false,
-                isLeader: false,
+                isFounder: true,
+                isLeader: true,
                 isStatic: true,
-                isConfirmed: false,
+                isConfirmed: true,
                 isExpanded: false,
                 notes: ""
             }

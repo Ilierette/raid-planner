@@ -15,15 +15,17 @@ interface RaidProps {
     timestamp: string,
     maxMembers: any,
     members: [],
-    toogle: any
+    toogle: any,
+    currentMemberID: any
 }
 
 interface RaidState {
     users: [],
     isMain: boolean,
     isBadge: boolean,
+    currentMemberFlags: any,
     region: string,
-    activeTab: string
+    activeTab: string,
 }
 
 export class RaidTable extends React.Component<RaidProps, RaidState> {
@@ -35,9 +37,21 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
             region: "eu",
             isMain: true,
             isBadge: true,
-            activeTab: '1'
+            activeTab: '1',
+            isRaidLeader: false,
+            currentMemberFlags: {}
         }
     }
+    componentDidMount() {
+        const currentMember = this.props.members.filter((member: any) => {
+            return member.id == this.props.currentMemberID
+        })[0]
+        this.setState({
+            currentMemberFlags: currentMember
+        })
+
+    }
+
     changeTab = (tab: any) => {
         if (this.state.activeTab !== tab) {
             this.setState({
@@ -51,36 +65,49 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
             <div className="card mb-3">
                 <div className="card-body">
                     <div className="row">
-                        <div className="col offset-sm-5">
-                            <div className="form-group row">
-                                <label htmlFor="token" className="col-2 col-form-label px-0 text-right">{this.props.type} - Raid Token</label>
-                                <div className="col-10">
-                                    <input type="text" readOnly id="token" className="form-control" value="1273t21tguy6" />
+                        <div className="col-4 my-auto">
+                            {this.state.currentMemberFlags.isLeader &&
+                                <span>
+                                    <FontAwesomeIcon icon="crown" /> <strong>Raid leader </strong>
+                                </span>
+                            }
+                        </div>
+                        {this.state.currentMemberFlags.isLeader &&
+                            <div className="col-8">
+                                <div className="form-group row">
+                                    <label htmlFor="token" className="col-2 col-form-label px-0 text-right">{this.props.type} - Raid Token</label>
+                                    <div className="col-10">
+                                        <input type="text" readOnly id="token" className="form-control" value="1273t21tguy6" />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        }
                     </div>
 
                     <div className="table-responsive">
                         <table className="table table-sm text-center">
-                            <Header />
+                            <Header flags={this.state.currentMemberFlags} />
                             {this.props.members.map((member: any) => (
                                 this.state.users.map((user: any, index: any) => {
                                     if (member.id == user.id) {
                                         return (
                                             <tbody key={user.id}>
                                                 <tr >
-                                                    <td>
-                                                        <button
-                                                            className="btn btn-outline-danger">
-                                                            <FontAwesomeIcon icon="ban" />
-                                                        </button>
-                                                    </td>
+                                                    {this.state.currentMemberFlags.isLeader &&
+                                                        <td>
+                                                            <button
+                                                                className="btn btn-outline-danger">
+                                                                <FontAwesomeIcon icon="ban" />
+                                                            </button>
+                                                        </td>
+                                                    }
                                                     <td>{index + 1}</td>
-                                                    <td className="edit-checkbox" style={{ width: 31 }}>
-                                                        <Input type="checkbox" id={"conf-" + index} defaultChecked={member.isConfirmed} />
-                                                        <label htmlFor={"conf-" + index}></label>
-                                                    </td>
+                                                    {this.state.currentMemberFlags.isLeader &&
+                                                        <td className="edit-checkbox" style={{ width: 31 }}>
+                                                            <Input type="checkbox" id={"conf-" + index} defaultChecked={member.isConfirmed} />
+                                                            <label htmlFor={"conf-" + index}></label>
+                                                        </td>
+                                                    }
                                                     <td className="text-left">
                                                         <div className="name-col" onClick={() => this.props.toogle(user.id)}>
                                                             <abbr title="Click to check character data">
@@ -98,10 +125,15 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                                                         </td>
                                                     ))}
                                                     <td className="form-group">
-                                                        <Input type="select">
-                                                            <option value="-"> Static </option>
-                                                            <option value="Static"> Sub </option>
-                                                        </Input>
+                                                        {!this.state.currentMemberFlags.isLeader ?
+                                                            <span>
+                                                                {member.isStatic ? "Static" : "Sub"}
+                                                            </span> :
+                                                            <Input type="select">
+                                                                <option value="-"> Static </option>
+                                                                <option value="Static"> Sub </option>
+                                                            </Input>
+                                                        }
                                                     </td>
                                                     <td className="form-group">
                                                         {user.isMain ? "Main" : "Alt"}
@@ -158,7 +190,9 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                             {this.props.members.length}/{this.props.maxMembers}
                         </div>
                         <div className="col text-right">
-                            <button className="btn btn-primary" >Set raid time</button>
+                            {this.state.currentMemberFlags.isLeader &&
+                                <button className="btn btn-primary" >Set raid time</button>
+                            }
                             <button className="btn btn-success ml-1">Save changes</button>
                         </div>
                     </div>

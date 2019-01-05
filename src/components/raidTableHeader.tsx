@@ -1,19 +1,27 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-export class RaidTableHeader extends React.Component {
+interface RaidTableHeaderProps {
+    flags: any
+}
+
+export class RaidTableHeader extends React.Component<RaidTableHeaderProps>{
     render() {
         return (
             <thead>
                 <tr>
-                    <th rowSpan={2}>
-                        <button
-                            className="btn btn-outline-primary">
-                            <FontAwesomeIcon icon="plus" />
-                        </button>
-                    </th>
+                    {this.props.flags.isLeader &&
+                        <th rowSpan={2}>
+                            <button
+                                className="btn btn-outline-primary">
+                                <FontAwesomeIcon icon="plus" />
+                            </button>
+                        </th>
+                    }
                     <th rowSpan={2}>LP</th>
-                    <th rowSpan={2}>*</th>
+                    {this.props.flags.isLeader &&
+                        <th rowSpan={2}>*</th>
+                    }
                     <th rowSpan={2} className="text-left">Name</th>
                     <th rowSpan={2} className="text-left">Class</th>
                     <th colSpan={7}>
