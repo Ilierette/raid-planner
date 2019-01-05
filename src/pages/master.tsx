@@ -6,8 +6,8 @@ import {
 } from 'react-router-dom';
 
 import Home from './home';
-import Login from './auth/login';
-import Register from './auth/register';
+import Login from './login';
+import Register from './register';
 import Clan from './clan';
 import Schedule from './schedule';
 import Gear from './upgradeGear';
