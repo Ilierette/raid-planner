@@ -47,7 +47,7 @@ export class MarketTableRow extends React.Component<MarketTableRowProps> {
         </td>
         {this.props.trade &&
           <td>
-            {parseFloat(item.price).toFixed(2)}
+            {item.price ? parseFloat(item.price).toFixed(2) : 0}
           </td>
         }
         {this.props.trade &&
@@ -56,7 +56,7 @@ export class MarketTableRow extends React.Component<MarketTableRowProps> {
               this.props.mats.map((mat: any) => {
                 if (item.id == mat.id) {
                   return (
-                    <span key={mat.id}>{mat.amount ? (mat.amount * item.price).toFixed(2) : 0}</span>
+                    <span key={mat.id}>{mat.amount && item.price ? (mat.amount * item.price).toFixed(2) : 0}</span>
                   )
                 }
               })
