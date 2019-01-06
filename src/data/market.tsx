@@ -3,56 +3,47 @@ const market = {
         {
             id: "elysian",
             tier: "common",
-            name: "Elysian Orb",
-            price: 6.27
+            name: "Elysian Orb"
         },
         {
             id: "sacred",
             tier: "common",
-            name: "Sacred Orb",
-            price: 1.19
+            name: "Sacred Orb"
         },
         {
             id: "moonstone",
             tier: "common",
-            name: "Moonstone",
-            price: 5.30,
+            name: "Moonstone"
         },
         {
             id: "soulstone",
             tier: "common",
-            name: "Soulstone",
-            price: 0.5,
+            name: "Soulstone"
         },
         {
             id: "petPod",
             tier: "common",
-            name: "Pet Pod",
-            price: 108.50
+            name: "Pet Pod"
         },
         {
             id: "sacredOil",
             tier: "common",
-            name: "Sacred Oil",
-            price: 381.00
+            name: "Sacred Oil"
         },
         {
             id: "PTS",
             tier: "common",
-            name: "Premium Transformation Stone",
-            price: 365.00
+            name: "Premium Transformation Stone"
         },
         {
             id: "TS",
             tier: "common",
-            name: "Transformation Stone",
-            price: 10
+            name: "Transformation Stone"
         },
         {
             id: "empyrean",
             tier: "common",
-            name: "Empyrean Spirit Stone",
-            price: 191.00
+            name: "Empyrean Spirit Stone"
         },
         {
             id: "jewel",
