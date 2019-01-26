@@ -9,66 +9,57 @@ import { CharacterLeader } from '../components/characterLeader';
 import { CharacterTimetable } from '../components/characterTimetable';
 import { CharacterParse } from '../components/characterParse';
 
+import { observable } from "mobx";
+import { observer } from 'mobx-react';
+
 interface HomeState {
   name: string,
+  dpsCount: string,
+  dpsImg: string,
   region: string,
-  modal: boolean
+  isMain: boolean,
+  isBadge: boolean,
+  reload: boolean
 }
 
+@observer
 export default class Home extends React.Component<HomeState> {
-  constructor(props: any) {
-    super(props);
 
-    this.state = {
-      name: "Letty",
-      dpsCount: "605 871/sec",
-      dpsImg: "https://i.imgur.com/UUojn3f.jpg",
-      region: "eu",
-      isMain: true,
-      isBadge: true,
-      reload: true,
-    };
-  }
+  @observable name = "Letty";
+  @observable dpsCount = "605 871/sec";
+  @observable dpsImg = "https://i.imgur.com/UUojn3f.jpg";
+  @observable region = "eu";
+  @observable isMain = true;
+  @observable isBadge = true;
+  @observable reload = true;
 
   changeName = (e: any) => {
     if (!(e.key == 'Shift' || e.key == 'Control' || e.key == 'Alt')) {
-      this.setState({
-        reload: false,
-        isBadge: false,
-        name: e.target.value
-      })
+      this.reload = false;
+      this.isBadge = false;
+      this.name = e.target.value;
     }
     if (e.key == 'Enter') {
-      this.setState({
-        reload: true,
-        name: e.target.value
-      })
+      this.reload = true;
+      this.name = e.target.value;
     }
   }
 
   changeRegion = (e: any) => {
-    this.setState({
-      region: e.target.value
-    })
+    this.region = e.target.value;
   }
 
   handleSubmit = (e: any) => {
     e.preventDefault();
-    this.setState({
-      reload: true,
-    })
+    this.reload = true;
   }
 
   returnHome = () => {
-    this.setState({
-      reload: false,
-      name: "Letty"
-    })
+    this.reload = false;
+    this.name = "Letty";
     setTimeout(() => {
-      this.setState({
-        reload: true,
-        isBadge: true,
-      })
+      this.reload = true;
+      this.isBadge = true;
     }, 1);
   }
 
@@ -99,9 +90,9 @@ export default class Home extends React.Component<HomeState> {
                   </form>
                 </div>
               </div>
-              {this.state.reload ?
+              {this.reload ?
                 <div>
-                  <CharacterData name={this.state.name} region={this.state.region} isMain={this.state.isMain} isBadge={this.state.isBadge} />
+                  <CharacterData name={this.name} region={this.region} isMain={this.isMain} isBadge={this.isBadge} />
                   <div className="char-details mx-auto">
                     <div className="card-group">
                       <CharacterNeeds />
@@ -115,7 +106,7 @@ export default class Home extends React.Component<HomeState> {
                     </div>
                     <div className="row mt-2">
                       <div className="col-12">
-                        <CharacterParse dpsCount={this.state.dpsCount} dpsImg={this.state.dpsImg}/>
+                        <CharacterParse dpsCount={this.dpsCount} dpsImg={this.dpsImg} />
                       </div>
                     </div>
                   </div>

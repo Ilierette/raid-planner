@@ -2,7 +2,10 @@ import * as React from 'react';
 import { PageHeader } from '../components/pageHeader';
 import { RaidTable } from '../components/raidTable'
 import { raid } from '../data/raid';
-import '../scss/content.scss'
+import '../scss/content.scss';
+
+import { observable } from "mobx";
+import { observer } from 'mobx-react';
 
 interface RaidState {
   raids: Raid[]
@@ -24,16 +27,13 @@ interface Member {
   notes: string
 }
 
+@observer
 export default class Schedule extends React.Component<RaidState> {
-  constructor(props: any) {
-    super(props)
+  
+  @observable raids = raid;
 
-    this.state = {
-      raids: raid
-    }
-  }
   toogle = (id: any) => {
-    let raidList = this.state.raids.map((raid: any) => {
+    let raidList = this.raids.map((raid: any) => {
       return ({
         ...raid,
         members: raid.members.map((item: any) => {
@@ -52,18 +52,16 @@ export default class Schedule extends React.Component<RaidState> {
         })
       })
     })
-    this.setState({
-      raids: raidList
-    })
+    
+    this.raids = raidList
   }
 
   render() {
-    const { raids } = this.state;
     return (
       <div className="content-wrapper">
         <PageHeader title="Raid schedule" />
         <div className="content">
-          {raids.map((raid: any) => (
+          {this.raids.map((raid: any) => (
             <RaidTable
               key={raid.type}
               type={raid.type}

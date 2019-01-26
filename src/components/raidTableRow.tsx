@@ -20,6 +20,13 @@ interface RaidTableRowState {
 }
 
 export class RaidTableRow extends React.Component<RaidTableRowProps, RaidTableRowState>{
+    constructor(props: any) {
+        super(props)
+
+        this.state = {
+            activeTab: '1',
+        }
+    }
     changeTab = (tab: any) => {
         if (this.state.activeTab !== tab) {
             this.setState({

@@ -20,11 +20,18 @@ interface RaidState {
     isBadge: boolean,
     currentMemberFlags: Flag[],
     region: string,
-    activeTab: string,
 
     isEditMode: boolean,
     isAddMode: boolean,
-    suggestions: any
+    suggestions: any,
+    isSuggestions: boolean,
+
+    selectedCharId: string,
+    selectedCharName: string,
+    selectedCharClass: string,
+    selectedCharIsMain: boolean,
+    selectedCharIsStatic: boolean,
+    selectedCharHours: any
 }
 interface User {
     id: string,
@@ -58,7 +65,7 @@ interface Flag {
     isLeader: boolean,
     isStatic: boolean,
     isConfirmed: boolean,
-    isExpanded: boolean
+    isExpanded: boolean,
 }
 
 export class RaidTable extends React.Component<RaidProps, RaidState> {
@@ -76,7 +83,15 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
 
             isEditMode: false,
             isAddMode: false,
-            suggestions: []
+            suggestions: null,
+
+            selectedCharId: null,
+            selectedCharName: "",
+            selectedCharClass: "",
+            selectedCharIsMain: null,
+            selectedCharIsStatic: null,
+            selectedCharHours: null
+
 
         }
     }
@@ -90,32 +105,72 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
 
     }
 
-    addUser = () => {
+    addUserRow = () => {
         this.setState((prevState) => ({ isAddMode: !prevState.isAddMode, isEditMode: false }))
     }
     editHours = () => {
         this.setState((prevState) => ({ isEditMode: !prevState.isEditMode, isAddMode: false }))
     }
-    removeUser = () => {
-        console.log("Remove user");
-    }
 
     getSuggestions = (e: any) => {
+
         const suggest = this.state.users.filter((user: any) => (
             e.target.value.length > 0 && user.name.toLowerCase().includes(e.target.value.toLowerCase()))
         ).map((user: any) => {
-            return ({
-                name: user.name,
-                class: user.class
-            })
+            return user
         });
-
-        
         this.setState({
-            suggestions: suggest
+            suggestions: suggest.length == 0 ? null : suggest,
+            selectedCharName: e.target.value,
+            selectedCharId: null,
+            selectedCharClass: null,
+            selectedCharIsMain: null,
+            selectedCharIsStatic: null,
+            selectedCharHours: null
+        })
+    }
+
+    selectChar = (e: any, item: any) => {
+        e.preventDefault();
+        this.setState({
+            selectedCharId: item.id,
+            selectedCharName: item.name,
+            selectedCharClass: item.class,
+            selectedCharIsMain: item.isMain,
+            suggestions: null,
+            selectedCharIsStatic: true,
+            selectedCharHours: item.days
         })
 
-        console.log(suggest)
+    }
+    selectIfStatic = (e: any) => {
+        if (e.target.value == "Static") {
+            this.setState({
+                selectedCharIsStatic: true
+            })
+        }
+        else {
+            this.setState({
+                selectedCharIsStatic: false
+            })
+        }
+    }
+
+    addUser = () => {
+        const selectedChar = {
+            id: this.state.selectedCharId,
+            name: this.state.selectedCharName,
+            class: this.state.selectedCharClass,
+            isMain: this.state.selectedCharIsMain,
+            days: this.state.selectedCharHours
+        }
+
+        this.setState(prevState =>({
+            members:[...prevState.members, selectedChar],
+        }))
+    }
+    removeUser = () => {
+        console.log("Remove user");
     }
 
     render() {
@@ -126,11 +181,15 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
             isBadge,
             isAddMode,
             isEditMode,
-            suggestions
+            suggestions,
+            selectedCharClass,
+            selectedCharName,
+            selectedCharIsMain,
+            selectedCharIsStatic
         } = this.state;
         const {
-            members,
             maxMembers,
+            members,
             toogle
         } = this.props;
         return (
@@ -160,7 +219,7 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                         <table className="table table-sm text-center">
                             <Header
                                 flags={currentMemberFlags}
-                                addUser={this.addUser}
+                                addUser={this.addUserRow}
                                 editHours={this.editHours}
                                 isAddMode={isAddMode}
                                 isEditMode={isEditMode}
@@ -169,30 +228,45 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                                 isAddMode &&
                                 <tbody>
                                     <tr>
-                                        <td colSpan={3}></td>
+                                        <td colSpan={3}>
+                                            <button className="btn btn-outline-success" onClick={this.addUser}>
+                                                <FontAwesomeIcon icon="save" />
+                                            </button>
+                                        </td>
                                         <td>
                                             <input
                                                 type="text"
                                                 name="chars"
-                                                list="chars"
                                                 className="form-control"
-                                                onChange={(e) => this.getSuggestions(e)} />
-                                            <datalist id="chars">
-                                                {suggestions.map((suggestion: any) => (
-                                                    <option>{suggestion.name}<br /></option>
-                                                ))}
-                                            </datalist>
+                                                onChange={(e) => this.getSuggestions(e)}
+                                                value={selectedCharName}
+                                            />
+                                            {
+                                                suggestions &&
+                                                <div className="suggestions-box">
+                                                    {suggestions.map((suggestion: any) => (
+                                                        <a href="" onClick={(e) => this.selectChar(e, suggestion)}>{suggestion.name}<br /></a>
+                                                    ))}
+                                                </div>
+
+                                            }
                                         </td>
                                         <td>
-                                            {suggestions.map((suggestion: any) => (
-                                                <option>{suggestion.class}<br /></option>
-                                            ))[0]}
+                                            {selectedCharClass}
                                         </td>
                                         <td colSpan={7}></td>
                                         <td>
-                                            Static
+                                            {selectedCharIsStatic != null ?
+                                                <select className="form-control" onChange={(e) => this.selectIfStatic(e)}>
+                                                    <option value="Static"> Static </option>
+                                                    <option value="Sub"> Sub </option>
+                                                </select>
+                                                : ""
+                                            }
                                         </td>
-                                        <td></td>
+                                        <td>
+                                            {selectedCharIsMain != null ? selectedCharIsMain ? "Main" : "Alt" : ""}
+                                        </td>
                                     </tr>
                                 </tbody>
                             }

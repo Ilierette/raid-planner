@@ -1,4 +1,4 @@
-const market = {
+export const market = {
     basic: [
         {
             id: "elysian",
@@ -181,5 +181,3 @@ const market = {
         }
     ]
 }
-
-export default market

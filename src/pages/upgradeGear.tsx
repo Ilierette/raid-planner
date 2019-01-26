@@ -3,23 +3,24 @@ import { PageHeader } from '../components/pageHeader';
 import { GearTable } from '../components/gearTable';
 
 import upgrade from '../data/upgradeBelt';
+import { observable } from 'mobx';
+import { observer } from 'mobx-react';
 
 interface GearState {
   gear: [],
 }
 
+@observer
 export default class Gear extends React.Component<GearState> {
-  constructor(props: any) {
-    super(props)
 
-    this.state = { weapon: upgrade.belt }
-  }
+  @observable gear =  upgrade.belt
+
   render() {
     return (
       <div className="content-wrapper">
         <PageHeader title="Gear upgrade chart" />
         <div className="content">
-          <GearTable items={this.state.weapon} title="Weapon" />
+          <GearTable items={this.gear} title="Weapon" />
         </div>
       </div>
     );
