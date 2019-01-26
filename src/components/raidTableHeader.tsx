@@ -2,7 +2,11 @@ import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 interface RaidTableHeaderProps {
-    flags: any
+    flags: any,
+    addUser: any,
+    editHours: any,
+    isAddMode: boolean,
+    isEditMode: boolean
 }
 
 export class RaidTableHeader extends React.Component<RaidTableHeaderProps>{
@@ -13,8 +17,13 @@ export class RaidTableHeader extends React.Component<RaidTableHeaderProps>{
                     {this.props.flags.isLeader &&
                         <th rowSpan={2}>
                             <button
-                                className="btn btn-outline-primary">
-                                <FontAwesomeIcon icon="plus" />
+                                className="btn btn-outline-primary" onClick={this.props.addUser}>
+                                {
+                                    !this.props.isAddMode ?
+                                        <FontAwesomeIcon icon="plus" /> :
+                                        <FontAwesomeIcon icon="times" />
+                                }
+
                             </button>
                         </th>
                     }
@@ -28,8 +37,13 @@ export class RaidTableHeader extends React.Component<RaidTableHeaderProps>{
                         <div className="row py-0">
                             <div className="col">Sign up</div>
                             <div className="col-1">
-                                <button className=" btn btn-outline-success">
-                                    <FontAwesomeIcon icon="pencil-alt" />
+                                <button className=" btn btn-outline-success" onClick={this.props.editHours}>
+                                    {
+                                        !this.props.isEditMode ?
+                                            <FontAwesomeIcon icon="pencil-alt" /> :
+                                            <FontAwesomeIcon icon="times" />
+                                    }
+
                                 </button>
                             </div>
                         </div>

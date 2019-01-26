@@ -1,31 +1,64 @@
 import * as React from 'react';
-import { Input, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
-import classnames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { RaidTableHeader as Header } from './raidTableHeader';
-import { CharacterData } from '../components/characterData';
-
-import users from '../data/users';
-
+import { users } from '../data/users';
 import '../scss/table.scss';
+import { RaidTableRow as Row } from './raidTableRow';
 
 interface RaidProps {
     type: string,
     ratio: string,
     timestamp: string,
-    maxMembers: any,
-    members: [],
+    maxMembers: number,
+    members: Member[],
     toogle: any,
-    currentMemberID: any
+    currentMemberID: string
 }
-
 interface RaidState {
-    users: [],
+    users: User[],
     isMain: boolean,
     isBadge: boolean,
-    currentMemberFlags: any,
+    currentMemberFlags: Flag[],
     region: string,
     activeTab: string,
+
+    isEditMode: boolean,
+    isAddMode: boolean,
+    suggestions: any
+}
+interface User {
+    id: string,
+    name: string,
+    class: string,
+    region: string,
+    isMain: boolean,
+    days: Day[],
+    mats: Mat[]
+}
+interface Day {
+    date: string,
+    min: string,
+    max: string
+}
+interface Mat {
+    id: string,
+    amount: number
+}
+interface Member {
+    id: string,
+    isFounder: boolean,
+    isLeader: boolean,
+    isStatic: boolean,
+    isConfirmed: boolean,
+    isExpanded: boolean,
+    notes: string
+}
+interface Flag {
+    isFounder: boolean,
+    isLeader: boolean,
+    isStatic: boolean,
+    isConfirmed: boolean,
+    isExpanded: boolean
 }
 
 export class RaidTable extends React.Component<RaidProps, RaidState> {
@@ -33,13 +66,18 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
         super(props)
 
         this.state = {
-            users: users.users,
+            users: users,
             region: "eu",
             isMain: true,
             isBadge: true,
             activeTab: '1',
             isRaidLeader: false,
-            currentMemberFlags: {}
+            currentMemberFlags: [],
+
+            isEditMode: false,
+            isAddMode: false,
+            suggestions: []
+
         }
     }
     componentDidMount() {
@@ -52,27 +90,61 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
 
     }
 
-    changeTab = (tab: any) => {
-        if (this.state.activeTab !== tab) {
-            this.setState({
-                activeTab: tab
-            });
-        }
+    addUser = () => {
+        this.setState((prevState) => ({ isAddMode: !prevState.isAddMode, isEditMode: false }))
+    }
+    editHours = () => {
+        this.setState((prevState) => ({ isEditMode: !prevState.isEditMode, isAddMode: false }))
+    }
+    removeUser = () => {
+        console.log("Remove user");
+    }
+
+    getSuggestions = (e: any) => {
+        const suggest = this.state.users.filter((user: any) => (
+            e.target.value.length > 0 && user.name.toLowerCase().includes(e.target.value.toLowerCase()))
+        ).map((user: any) => {
+            return ({
+                name: user.name,
+                class: user.class
+            })
+        });
+
+        
+        this.setState({
+            suggestions: suggest
+        })
+
+        console.log(suggest)
     }
 
     render() {
+        const {
+            currentMemberFlags,
+            users,
+            region,
+            isBadge,
+            isAddMode,
+            isEditMode,
+            suggestions
+        } = this.state;
+        const {
+            members,
+            maxMembers,
+            toogle
+        } = this.props;
         return (
             <div className="card mb-3">
                 <div className="card-body">
                     <div className="row">
                         <div className="col-4 my-auto">
-                            {this.state.currentMemberFlags.isLeader &&
+                            {currentMemberFlags.isLeader &&
                                 <span>
                                     <FontAwesomeIcon icon="crown" /> <strong>Raid leader </strong>
                                 </span>
                             }
                         </div>
-                        {this.state.currentMemberFlags.isLeader &&
+                        {currentMemberFlags.isLeader &&
                             <div className="col-8">
                                 <div className="form-group row">
                                     <label htmlFor="token" className="col-2 col-form-label px-0 text-right">{this.props.type} - Raid Token</label>
@@ -86,111 +158,89 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
 
                     <div className="table-responsive">
                         <table className="table table-sm text-center">
-                            <Header flags={this.state.currentMemberFlags} />
-                            {this.props.members.map((member: any) => (
-                                this.state.users.map((user: any, index: any) => {
+                            <Header
+                                flags={currentMemberFlags}
+                                addUser={this.addUser}
+                                editHours={this.editHours}
+                                isAddMode={isAddMode}
+                                isEditMode={isEditMode}
+                            />
+                            {
+                                isAddMode &&
+                                <tbody>
+                                    <tr>
+                                        <td colSpan={3}></td>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                name="chars"
+                                                list="chars"
+                                                className="form-control"
+                                                onChange={(e) => this.getSuggestions(e)} />
+                                            <datalist id="chars">
+                                                {suggestions.map((suggestion: any) => (
+                                                    <option>{suggestion.name}<br /></option>
+                                                ))}
+                                            </datalist>
+                                        </td>
+                                        <td>
+                                            {suggestions.map((suggestion: any) => (
+                                                <option>{suggestion.class}<br /></option>
+                                            ))[0]}
+                                        </td>
+                                        <td colSpan={7}></td>
+                                        <td>
+                                            Static
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            }
+                            {
+                                isEditMode &&
+                                <tbody>
+                                    <tr>
+                                        <td colSpan={currentMemberFlags.isLeader ? 5 : 3}></td>
+                                        <td>1</td>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>5</td>
+                                        <td>6</td>
+                                        <td>7</td>
+                                        <td colSpan={2}></td>
+                                    </tr>
+                                </tbody>
+                            }
+
+                            {members.map((member: any) => (
+                                users.map((user: any, index: any) => {
                                     if (member.id == user.id) {
                                         return (
-                                            <tbody key={user.id}>
-                                                <tr >
-                                                    {this.state.currentMemberFlags.isLeader &&
-                                                        <td>
-                                                            <button
-                                                                className="btn btn-outline-danger">
-                                                                <FontAwesomeIcon icon="ban" />
-                                                            </button>
-                                                        </td>
-                                                    }
-                                                    <td>{index + 1}</td>
-                                                    {this.state.currentMemberFlags.isLeader &&
-                                                        <td className="edit-checkbox" style={{ width: 31 }}>
-                                                            <Input type="checkbox" id={"conf-" + index} defaultChecked={member.isConfirmed} />
-                                                            <label htmlFor={"conf-" + index}></label>
-                                                        </td>
-                                                    }
-                                                    <td className="text-left">
-                                                        <div className="name-col" onClick={() => this.props.toogle(user.id)}>
-                                                            <abbr title="Click to check character data">
-                                                                {user.name}
-                                                            </abbr>
-                                                            <FontAwesomeIcon icon="caret-down" className="ml-3" />
-                                                        </div>
-                                                    </td>
-                                                    <td className="text-left">
-                                                        {user.class}
-                                                    </td>
-                                                    {user.days.map((day: any, index: any) => (
-                                                        <td key={index}>
-                                                            {day.min} - {day.max}
-                                                        </td>
-                                                    ))}
-                                                    <td className="form-group">
-                                                        {!this.state.currentMemberFlags.isLeader ?
-                                                            <span>
-                                                                {member.isStatic ? "Static" : "Sub"}
-                                                            </span> :
-                                                            <Input type="select">
-                                                                <option value="-"> Static </option>
-                                                                <option value="Static"> Sub </option>
-                                                            </Input>
-                                                        }
-                                                    </td>
-                                                    <td className="form-group">
-                                                        {user.isMain ? "Main" : "Alt"}
-                                                    </td>
-
-                                                </tr>
-                                                {
-                                                    member.isExpanded &&
-                                                    <tr>
-                                                        <td colSpan={2}></td>
-                                                        <td colSpan={10} className="text-left">
-                                                            <Nav tabs className="my-1">
-                                                                <NavItem>
-                                                                    <NavLink
-                                                                        className={classnames({ active: this.state.activeTab === '1' })}
-                                                                        onClick={() => { this.changeTab('1'); }}>
-                                                                        Character Data
-                                                                    </NavLink>
-                                                                </NavItem>
-                                                                <NavItem>
-                                                                    <NavLink
-                                                                        className={classnames({ active: this.state.activeTab === '2' })}
-                                                                        onClick={() => { this.changeTab('2'); }}>
-                                                                        Info
-                                                                    </NavLink>
-                                                                </NavItem>
-                                                            </Nav>
-                                                            <TabContent activeTab={this.state.activeTab}>
-                                                                <TabPane tabId="1" className="bg-dark">
-                                                                    <CharacterData name={user.name} region={this.state.region} isMain={user.isMain} isBadge={this.state.isBadge} />
-                                                                </TabPane>
-                                                                <TabPane tabId="2">
-                                                                    {member.notes} <br />
-                                                                    User additional message <br />
-                                                                    Warnings
-                                                                </TabPane>
-                                                            </TabContent>
-                                                        </td>
-                                                        <td colSpan={2}></td>
-                                                    </tr>
-                                                }
-                                            </tbody>
+                                            <Row
+                                                user={user}
+                                                member={member}
+                                                currentMemberFlags={currentMemberFlags}
+                                                removeUser={this.removeUser}
+                                                toogle={toogle}
+                                                index={index}
+                                                region={region}
+                                                isBadge={isBadge}
+                                            />
                                         )
                                     }
                                 })
                             ))}
-
                         </table>
                     </div>
                 </div>
                 <div className="card-footer">
                     <div className="row">
                         <div className="col-2 my-auto">
-                            {this.props.members.length}/{this.props.maxMembers}
+                            {members.length}/{maxMembers}
                         </div>
                         <div className="col text-right">
-                            {this.state.currentMemberFlags.isLeader &&
+                            {currentMemberFlags.isLeader &&
                                 <button className="btn btn-primary" >Set raid time</button>
                             }
                             <button className="btn btn-success ml-1">Save changes</button>

@@ -5,7 +5,23 @@ import { raid } from '../data/raid';
 import '../scss/content.scss'
 
 interface RaidState {
-  raids: any
+  raids: Raid[]
+}
+interface Raid {
+  type: string,
+  ratio: string,
+  timestamp: string,
+  maxMembers: number,
+  members: Member[]
+}
+interface Member {
+  id: string,
+  isFounder: boolean,
+  isLeader: boolean,
+  isStatic: boolean,
+  isConfirmed: boolean,
+  isExpanded: boolean,
+  notes: string
 }
 
 export default class Schedule extends React.Component<RaidState> {
@@ -17,7 +33,6 @@ export default class Schedule extends React.Component<RaidState> {
     }
   }
   toogle = (id: any) => {
-
     let raidList = this.state.raids.map((raid: any) => {
       return ({
         ...raid,
@@ -43,11 +58,12 @@ export default class Schedule extends React.Component<RaidState> {
   }
 
   render() {
+    const { raids } = this.state;
     return (
       <div className="content-wrapper">
         <PageHeader title="Raid schedule" />
         <div className="content">
-          {this.state.raids.map((raid: any) => (
+          {raids.map((raid: any) => (
             <RaidTable
               key={raid.type}
               type={raid.type}
