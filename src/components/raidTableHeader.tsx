@@ -27,7 +27,7 @@ export class RaidTableHeader extends React.Component<RaidTableHeaderProps>{
                             </button>
                         </th>
                     }
-                    <th rowSpan={2}>LP</th>
+                    
                     {store.raids[index].isLeader &&
                         <th rowSpan={2}>*</th>
                     }

@@ -9,7 +9,6 @@ import { observer } from 'mobx-react';
 import classnames from 'classnames';
 
 interface RaidTableRowProps {
-    index: any,
     o: any,
     user: any,
     member: any,
@@ -37,7 +36,6 @@ export class RaidTableRow extends React.Component<RaidTableRowProps, RaidTableRo
     }
     render() {
         const {
-            index,
             o,
             user,
             member,
@@ -50,7 +48,7 @@ export class RaidTableRow extends React.Component<RaidTableRowProps, RaidTableRo
                             {
                                 user.id != store.currentMemberId ?
                                     <button
-                                        className="btn btn-outline-danger" onClick={() => store.removeUser(o, index)}>
+                                        className="btn btn-outline-danger" onClick={() => store.removeUser(o, user.id)}>
                                         <FontAwesomeIcon icon="ban" />
                                     </button> :
                                     ""
@@ -58,7 +56,6 @@ export class RaidTableRow extends React.Component<RaidTableRowProps, RaidTableRo
 
                         </td>
                     }
-                    <td>{index + 1}</td>
                     {store.raids[o].isLeader &&
                         <td className="edit-checkbox" style={{ width: 31 }}>
                             <Input type="checkbox" id={"conf-" + o} defaultChecked={member.isConfirmed} />
@@ -76,24 +73,26 @@ export class RaidTableRow extends React.Component<RaidTableRowProps, RaidTableRo
                     <td className="text-left">
                         {user.class}
                     </td>
-                    {user.days.map((day: any, o: any) => (
-                        <td key={o}>
+                    {member.days.map((day: any, index: any) => (
+                        <td key={index}>
                             {day.min} - {day.max}
                         </td>
                     ))}
                     <td className="form-group">
                         {!store.raids[o].isLeader ?
                             <span>
-                                {member.isStatic ? "Static" : "Sub"}
+                                {member.isStatic ? "static" : "sub"}
                             </span> :
-                            <Input type="select">
-                                <option value="-"> Static </option>
-                                <option value="Static"> Sub </option>
+                            <Input type="select"
+                                defaultValue={member.isStatic ? "static" : "sub"}
+                            >
+                                <option value="static"> static </option>
+                                <option value="sub"> sub </option>
                             </Input>
                         }
                     </td>
                     <td className="form-group">
-                        {user.isMain ? "Main" : "Alt"}
+                        {user.isMain ? "main" : "alt"}
                     </td>
 
                 </tr>

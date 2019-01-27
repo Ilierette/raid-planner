@@ -1,5 +1,5 @@
 import { observable } from 'mobx';
-import { raid } from '../data/raid';
+import { raid, initDays } from '../data/raid';
 import { users } from '../data/users';
 
 interface RaidState {
@@ -97,10 +97,12 @@ class RaidStore implements RaidState {
         this.raids[id].isAddMode = false;
     }
 
-    removeUser = (id:any, userId:any) => {
+    removeUser = (id: any, userId: any) => {
+        const index = this.raids[id].members.findIndex(m => m.id==userId);
         const all = this.raids[id].members
-        if(userId > -1){
-            all.splice(userId,1);
+
+        if(index > -1){
+            all.splice(index,1);
         }
         this.raids[id].members = all
     }
@@ -129,7 +131,7 @@ class RaidStore implements RaidState {
         this.selectedCharClass = item.class;
         this.selectedCharIsMain = item.isMain;
         this.selectedCharIsStatic = true;
-        this.selectedCharHours = item.days;
+        this.selectedCharHours = initDays;
     }
 
     selectIfStatic = (e: any) => {
@@ -140,7 +142,7 @@ class RaidStore implements RaidState {
             this.selectedCharIsStatic = false
         }
     }
-    addUser = (id:any) => {
+    addUser = (id: any) => {
         const selectedChar = {
             id: this.selectedCharId,
             name: this.selectedCharName,
@@ -149,7 +151,8 @@ class RaidStore implements RaidState {
             isStatic: this.selectedCharIsStatic,
             isConfirmed: false,
             isExpanded: false,
-            notes: ""
+            notes: "",
+            days: this.selectedCharHours
 
         }
         this.raids[id].members.push(selectedChar);
@@ -160,6 +163,7 @@ class RaidStore implements RaidState {
         this.selectedCharClass = null;
         this.selectedCharIsMain = null;
         this.selectedCharIsStatic = null;
+        this.selectedCharHours = null;
         this.selectedCharHours = null;
     }
 

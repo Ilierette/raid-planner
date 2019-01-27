@@ -1,3 +1,48 @@
+export const initDays = [
+    //Wednesday
+    {
+        date: "",
+        min: "",
+        max: ""
+    },
+    //Thursday
+    {
+        date: "",
+        min: "",
+        max: ""
+    },
+    //Friday
+    {
+        date: "",
+        min: "",
+        max: ""
+    },
+    //Saturday
+    {
+        date: "",
+        min: "",
+        max: ""
+    },
+    //Sunday
+    {
+        date: "",
+        min: "",
+        max: ""
+    },
+    //Monday
+    {
+        date: "",
+        min: "",
+        max: ""
+    },
+    //Tuesday
+    {
+        date: "",
+        min: "",
+        max: ""
+    }
+]
+
 export const raid = [
     {
         type: "TT", //BT, VT, TT, ET
@@ -12,16 +57,8 @@ export const raid = [
                 isStatic: true,
                 isConfirmed: true,
                 isExpanded: false,
-                notes: ""
-            },
-            {
-                id: "angor",
-                isFounder: true,
-                isLeader: true,
-                isStatic: true,
-                isConfirmed: true,
-                isExpanded: false,
-                notes: ""
+                notes: "",
+                days: initDays
             }
         ],
 
@@ -42,25 +79,8 @@ export const raid = [
                 isStatic: true,
                 isConfirmed: true,
                 isExpanded: false,
-                notes: ""
-            },
-            {
-                id: "fumi",
-                isFounder: true,
-                isLeader: true,
-                isStatic: true,
-                isConfirmed: true,
-                isExpanded: false,
-                notes: ""
-            },
-            {
-                id: "miiyuit",
-                isFounder: true,
-                isLeader: true,
-                isStatic: true,
-                isConfirmed: true,
-                isExpanded: false,
-                notes: ""
+                notes: "",
+                days: initDays
             }
         ],
 

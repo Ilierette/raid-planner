@@ -61,8 +61,8 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                                 raid.isAddMode &&
                                 <tbody>
                                     <tr>
-                                        <td colSpan={3}>
-                                            <button className="btn btn-outline-success" onClick={()=>store.addUser(index)}>
+                                        <td colSpan={2}>
+                                            <button className="btn btn-outline-success" onClick={() => store.addUser(index)}>
                                                 <FontAwesomeIcon icon="save" />
                                             </button>
                                         </td>
@@ -72,7 +72,7 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                                                 name="chars"
                                                 className="form-control"
                                                 onChange={(e) => store.getSuggestions(e)}
-                                                value={store.selectedCharName || "" }
+                                                value={store.selectedCharName || ""}
                                             />
                                             {
                                                 store.suggestions &&
@@ -90,9 +90,13 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                                         <td colSpan={7}></td>
                                         <td>
                                             {store.selectedCharIsStatic != null ?
-                                                <select className="form-control" onChange={(e) => store.selectIfStatic(e)}>
-                                                    <option value="Static"> Static </option>
-                                                    <option value="Sub"> Sub </option>
+                                                <select
+                                                    className="form-control"
+                                                    onChange={(e) => store.selectIfStatic(e)}
+                                                    defaultValue={store.selectedCharIsStatic ? "static" : "sub"}
+                                                >
+                                                    <option value="static"> Static </option>
+                                                    <option value="sub"> Sub </option>
                                                 </select>
                                                 : ""
                                             }
@@ -107,7 +111,7 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                                 raid.isEditMode &&
                                 <tbody>
                                     <tr>
-                                        <td colSpan={raid.isLeader ? 5 : 3}></td>
+                                        <td colSpan={raid.isLeader ? 4 : 2}></td>
                                         <td>1</td>
                                         <td>2</td>
                                         <td>3</td>
@@ -125,7 +129,6 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                                     if (member.id == user.id) {
                                         return (
                                             <Row
-                                                index={index}
                                                 o={this.props.index}
                                                 user={user}
                                                 member={member}
