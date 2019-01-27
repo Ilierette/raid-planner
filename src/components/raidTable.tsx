@@ -15,13 +15,6 @@ interface RaidProps {
 
 interface RaidState {
     suggestions: any,
-
-    selectedCharId: string,
-    selectedCharName: string,
-    selectedCharClass: string,
-    selectedCharIsMain: boolean,
-    selectedCharIsStatic: boolean,
-    selectedCharHours: any
 }
 
 @observer
