@@ -3,41 +3,68 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Input, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import classnames from 'classnames';
 import { CharacterData } from '../components/characterData';
-import { store } from '../store/raidStore';
 
-interface Props {
+interface RaidTableRowProps {
     user: any,
     member: any,
-    index: any
+    currentMemberFlags: any,
+    removeUser: any,
+    toogle: any,
+    index: any,
+    region: any,
+    isBadge: any
 }
 
-export class RaidTableRow extends React.Component<Props>{
+interface RaidTableRowState {
+    activeTab: any;
+}
+
+export class RaidTableRow extends React.Component<RaidTableRowProps, RaidTableRowState>{
+    constructor(props: any) {
+        super(props)
+
+        this.state = {
+            activeTab: '1',
+        }
+    }
+    changeTab = (tab: any) => {
+        if (this.state.activeTab !== tab) {
+            this.setState({
+                activeTab: tab
+            });
+        }
+    }
     render() {
         const {
             user,
             member,
-            index
-        } = this.props
+            currentMemberFlags,
+            removeUser,
+            toogle,
+            index,
+            region,
+            isBadge
+        } = this.props;
         return (
-            <tbody key={store.currentMemberId}>
+            <tbody key={user.id}>
                 <tr >
-                    {store.isLeader &&
+                    {currentMemberFlags.isLeader &&
                         <td>
                             <button
-                                className="btn btn-outline-danger" onClick={store.removeUser}>
+                                className="btn btn-outline-danger" onClick={removeUser}>
                                 <FontAwesomeIcon icon="ban" />
                             </button>
                         </td>
                     }
                     <td>{index + 1}</td>
-                    {store.isLeader &&
+                    {currentMemberFlags.isLeader &&
                         <td className="edit-checkbox" style={{ width: 31 }}>
                             <Input type="checkbox" id={"conf-" + index} defaultChecked={member.isConfirmed} />
                             <label htmlFor={"conf-" + index}></label>
                         </td>
                     }
                     <td className="text-left">
-                        <div className="name-col" onClick={() => store.toogle(user.id)}>
+                        <div className="name-col" onClick={() => toogle(user.id)}>
                             <abbr title="Click to check character data">
                                 {user.name}
                             </abbr>
@@ -53,7 +80,7 @@ export class RaidTableRow extends React.Component<Props>{
                         </td>
                     ))}
                     <td className="form-group">
-                        {!store.isLeader ?
+                        {!currentMemberFlags.isLeader ?
                             <span>
                                 {member.isStatic ? "Static" : "Sub"}
                             </span> :
@@ -76,22 +103,22 @@ export class RaidTableRow extends React.Component<Props>{
                             <Nav tabs className="my-1">
                                 <NavItem>
                                     <NavLink
-                                        className={classnames({ active: store.activeTab === '1' })}
-                                        onClick={() => { store.changeTab('1'); }}>
+                                        className={classnames({ active: this.state.activeTab === '1' })}
+                                        onClick={() => { this.changeTab('1'); }}>
                                         Character Data
                                     </NavLink>
                                 </NavItem>
                                 <NavItem>
                                     <NavLink
-                                        className={classnames({ active: store.activeTab === '2' })}
-                                        onClick={() => { store.changeTab('2'); }}>
+                                        className={classnames({ active: this.state.activeTab === '2' })}
+                                        onClick={() => { this.changeTab('2'); }}>
                                         Info
                                     </NavLink>
                                 </NavItem>
                             </Nav>
-                            <TabContent activeTab={store.activeTab}>
+                            <TabContent activeTab={this.state.activeTab}>
                                 <TabPane tabId="1" className="bg-dark">
-                                    <CharacterData name={user.name} region={store.region} isMain={user.isMain} isBadge={store.isBadge} />
+                                    <CharacterData name={user.name} region={region} isMain={user.isMain} isBadge={isBadge} />
                                 </TabPane>
                                 <TabPane tabId="2">
                                     {member.notes} <br />

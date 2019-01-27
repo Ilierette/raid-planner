@@ -1,18 +1,25 @@
 import * as React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { store } from '../store/raidStore';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-export class RaidTableHeader extends React.Component{
+interface RaidTableHeaderProps {
+    flags: any,
+    addUser: any,
+    editHours: any,
+    isAddMode: boolean,
+    isEditMode: boolean
+}
+
+export class RaidTableHeader extends React.Component<RaidTableHeaderProps>{
     render() {
         return (
             <thead>
                 <tr>
-                    {store.isLeader &&
+                    {this.props.flags.isLeader &&
                         <th rowSpan={2}>
                             <button
-                                className="btn btn-outline-primary" onClick={store.addUser}>
+                                className="btn btn-outline-primary" onClick={this.props.addUser}>
                                 {
-                                    !store.isAddMode ?
+                                    !this.props.isAddMode ?
                                         <FontAwesomeIcon icon="plus" /> :
                                         <FontAwesomeIcon icon="times" />
                                 }
@@ -21,7 +28,7 @@ export class RaidTableHeader extends React.Component{
                         </th>
                     }
                     <th rowSpan={2}>LP</th>
-                    {store.isLeader &&
+                    {this.props.flags.isLeader &&
                         <th rowSpan={2}>*</th>
                     }
                     <th rowSpan={2} className="text-left">Name</th>
@@ -30,9 +37,9 @@ export class RaidTableHeader extends React.Component{
                         <div className="row py-0">
                             <div className="col">Sign up</div>
                             <div className="col-1">
-                                <button className=" btn btn-outline-success" onClick={store.editHours}>
+                                <button className=" btn btn-outline-success" onClick={this.props.editHours}>
                                     {
-                                        !store.isEditMode ?
+                                        !this.props.isEditMode ?
                                             <FontAwesomeIcon icon="pencil-alt" /> :
                                             <FontAwesomeIcon icon="times" />
                                     }
