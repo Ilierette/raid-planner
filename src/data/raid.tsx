@@ -23,7 +23,11 @@ export const raid = [
                 isExpanded: false,
                 notes: ""
             }
-        ]
+        ],
+
+        isEditMode: false,
+        isAddMode: false,
+        isLeader: true,
     },
     {
         type: "VT", //BT, VT, TT, ET
@@ -58,7 +62,11 @@ export const raid = [
                 isExpanded: false,
                 notes: ""
             }
-        ]
+        ],
+
+        isEditMode: false,
+        isAddMode: false,
+        isLeader: false
     }
 
 ]

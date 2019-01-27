@@ -1,25 +1,25 @@
 import * as React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { store } from '../store/raidStore';
+import { observer } from 'mobx-react';
 
 interface RaidTableHeaderProps {
-    flags: any,
-    addUser: any,
-    editHours: any,
-    isAddMode: boolean,
-    isEditMode: boolean
+    index: any
 }
 
+@observer
 export class RaidTableHeader extends React.Component<RaidTableHeaderProps>{
     render() {
+        const { index } = this.props
         return (
             <thead>
                 <tr>
-                    {this.props.flags.isLeader &&
+                    {store.raids[index].isLeader &&
                         <th rowSpan={2}>
                             <button
-                                className="btn btn-outline-primary" onClick={this.props.addUser}>
+                                className="btn btn-outline-primary" onClick={() => store.addUserRow(index)}>
                                 {
-                                    !this.props.isAddMode ?
+                                    !store.raids[index].isAddMode ?
                                         <FontAwesomeIcon icon="plus" /> :
                                         <FontAwesomeIcon icon="times" />
                                 }
@@ -28,7 +28,7 @@ export class RaidTableHeader extends React.Component<RaidTableHeaderProps>{
                         </th>
                     }
                     <th rowSpan={2}>LP</th>
-                    {this.props.flags.isLeader &&
+                    {store.raids[index].isLeader &&
                         <th rowSpan={2}>*</th>
                     }
                     <th rowSpan={2} className="text-left">Name</th>
@@ -37,9 +37,9 @@ export class RaidTableHeader extends React.Component<RaidTableHeaderProps>{
                         <div className="row py-0">
                             <div className="col">Sign up</div>
                             <div className="col-1">
-                                <button className=" btn btn-outline-success" onClick={this.props.editHours}>
+                                <button className=" btn btn-outline-success" onClick={() => store.editHours(this.props.index)}>
                                     {
-                                        !this.props.isEditMode ?
+                                        !store.raids[index].isEditMode ?
                                             <FontAwesomeIcon icon="pencil-alt" /> :
                                             <FontAwesomeIcon icon="times" />
                                     }

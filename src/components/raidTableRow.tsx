@@ -1,24 +1,25 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Input, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
-import classnames from 'classnames';
 import { CharacterData } from '../components/characterData';
 
+import { store } from '../store/raidStore';
+import { observer } from 'mobx-react';
+
+import classnames from 'classnames';
+
 interface RaidTableRowProps {
+    index: any,
+    o: any,
     user: any,
     member: any,
-    currentMemberFlags: any,
-    removeUser: any,
-    toogle: any,
-    index: any,
-    region: any,
-    isBadge: any
 }
 
 interface RaidTableRowState {
     activeTab: any;
 }
 
+@observer
 export class RaidTableRow extends React.Component<RaidTableRowProps, RaidTableRowState>{
     constructor(props: any) {
         super(props)
@@ -36,35 +37,36 @@ export class RaidTableRow extends React.Component<RaidTableRowProps, RaidTableRo
     }
     render() {
         const {
+            index,
+            o,
             user,
             member,
-            currentMemberFlags,
-            removeUser,
-            toogle,
-            index,
-            region,
-            isBadge
         } = this.props;
         return (
             <tbody key={user.id}>
                 <tr >
-                    {currentMemberFlags.isLeader &&
+                    {store.raids[o].isLeader &&
                         <td>
-                            <button
-                                className="btn btn-outline-danger" onClick={removeUser}>
-                                <FontAwesomeIcon icon="ban" />
-                            </button>
+                            {
+                                user.id != store.currentMemberId ?
+                                    <button
+                                        className="btn btn-outline-danger" onClick={() => store.removeUser(o, index)}>
+                                        <FontAwesomeIcon icon="ban" />
+                                    </button> :
+                                    ""
+                            }
+
                         </td>
                     }
                     <td>{index + 1}</td>
-                    {currentMemberFlags.isLeader &&
+                    {store.raids[o].isLeader &&
                         <td className="edit-checkbox" style={{ width: 31 }}>
-                            <Input type="checkbox" id={"conf-" + index} defaultChecked={member.isConfirmed} />
-                            <label htmlFor={"conf-" + index}></label>
+                            <Input type="checkbox" id={"conf-" + o} defaultChecked={member.isConfirmed} />
+                            <label htmlFor={"conf-" + o}></label>
                         </td>
                     }
                     <td className="text-left">
-                        <div className="name-col" onClick={() => toogle(user.id)}>
+                        <div className="name-col" onClick={() => store.toogle(o, user.id)}>
                             <abbr title="Click to check character data">
                                 {user.name}
                             </abbr>
@@ -74,13 +76,13 @@ export class RaidTableRow extends React.Component<RaidTableRowProps, RaidTableRo
                     <td className="text-left">
                         {user.class}
                     </td>
-                    {user.days.map((day: any, index: any) => (
-                        <td key={index}>
+                    {user.days.map((day: any, o: any) => (
+                        <td key={o}>
                             {day.min} - {day.max}
                         </td>
                     ))}
                     <td className="form-group">
-                        {!currentMemberFlags.isLeader ?
+                        {!store.raids[o].isLeader ?
                             <span>
                                 {member.isStatic ? "Static" : "Sub"}
                             </span> :
@@ -118,7 +120,7 @@ export class RaidTableRow extends React.Component<RaidTableRowProps, RaidTableRo
                             </Nav>
                             <TabContent activeTab={this.state.activeTab}>
                                 <TabPane tabId="1" className="bg-dark">
-                                    <CharacterData name={user.name} region={region} isMain={user.isMain} isBadge={isBadge} />
+                                    <CharacterData name={user.name} region={store.region} isMain={user.isMain} isBadge={store.isBadge} />
                                 </TabPane>
                                 <TabPane tabId="2">
                                     {member.notes} <br />
