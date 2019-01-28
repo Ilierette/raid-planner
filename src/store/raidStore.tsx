@@ -3,17 +3,11 @@ import { raid, initDays } from '../data/raid';
 import { users } from '../data/users';
 
 interface RaidState {
+    currentMemberId: string,
     raids: Raid[],
-    currentMemberId: string
-}
-interface Raid {
-    isBadge: boolean,
     users: User[],
-    members: Member[],
     region: string,
-    isEditMode: boolean,
-    isAddMode: boolean
-    isLeader: boolean;
+    isBadge: boolean,
     suggestions: any,
     selectedCharName: string,
     selectedCharId: string,
@@ -21,6 +15,17 @@ interface Raid {
     selectedCharIsMain: boolean,
     selectedCharIsStatic: boolean,
     selectedCharHours: any
+}
+interface Raid {
+    type: string,
+    ratio: string,
+    timestamp: string;
+    maxMembers: number;
+    members: Member[],
+    
+    isEditMode: boolean,
+    isAddMode: boolean
+    isLeader: boolean;
 }
 
 interface Member {
@@ -30,7 +35,8 @@ interface Member {
     isStatic: boolean,
     isConfirmed: boolean,
     isExpanded: boolean,
-    notes: string
+    notes: string,
+    days: Day[]
 }
 interface User {
     id: string,
@@ -38,7 +44,6 @@ interface User {
     class: string,
     region: string,
     isMain: boolean,
-    days: Day[],
     mats: Mat[]
 }
 interface Day {

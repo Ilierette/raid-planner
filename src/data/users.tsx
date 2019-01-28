@@ -7,40 +7,8 @@ export const users = [
         isMain: true,
         mats: [
             {
-                id: "elysian",
-                amount: 346,
-            },
-            {
-                id: "sacred",
-                amount: 1200,
-            },
-            {
-                id: "moonstone",
-                amount: 508,
-            },
-            {
-                id: "soulstone",
-                amount: 1784,
-            },
-            {
-                id: "petPod",
-                amount: 7,
-            },
-            {
-                id: "sacredOil",
-                amount: 2,
-            },
-            {
-                id: "PTS",
-                amount: 3,
-            },
-            {
-                id: "jewel",
-                amount: 121,
-            },
-            {
-                id: "element",
-                amount: 80,
+                id: "",
+                amount: 0,
             }
         ]
     },
@@ -52,7 +20,8 @@ export const users = [
         isMain: false,
         mats: [
             {
-
+                id: "",
+                amount: 0,
             }
         ]
     },
@@ -64,7 +33,8 @@ export const users = [
         isMain: true,
         mats: [
             {
-
+                id: "",
+                amount: 0,
             }
         ]
     },
@@ -76,7 +46,8 @@ export const users = [
         isMain: true,
         mats: [
             {
-
+                id: "",
+                amount: 0,
             }
         ]
     }
