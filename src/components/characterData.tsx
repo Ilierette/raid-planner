@@ -28,6 +28,12 @@ export class CharacterData extends React.Component<CharacterDataProps, Character
     }
   }
   componentDidMount() {
+    axios.get('https://cors.io/?http://eu-bns.ncsoft.com/ingame/bs/character/data/abilities.json?c=Letty').then(res => {
+      let cos = res.data
+
+      console.log(cos)
+    })
+
     let getCharacter = axios.get('https://api.silveress.ie/bns/v3/character/full/' + this.props.region + '/' + this.props.name).then(res => {
       let activeElement = res.data.activeElement;
       if (activeElement == "Ice") {
