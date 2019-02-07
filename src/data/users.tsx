@@ -10,7 +10,10 @@ export const users = [
                 id: "",
                 amount: 0,
             }
-        ]
+        ],
+        dpsCount: "605 871/sec",
+        dpsImg: "https://i.imgur.com/UUojn3f.jpg"
+        
     },
     {
         id: "angor",

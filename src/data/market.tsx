@@ -1,9 +1,9 @@
-export const market = {
+export const marketData = {
     basic: [
         {
             id: "elysian",
             tier: "common",
-            name: "Elysian Orb"
+            name: "Elysian Orb",
         },
         {
             id: "sacred",

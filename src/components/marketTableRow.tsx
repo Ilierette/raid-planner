@@ -1,19 +1,21 @@
 import * as React from 'react';
+import { user } from '../store/userStore';
+import { market } from '../store/marketStore';
+import { observer } from 'mobx-react';
 
 interface MarketTableRowProps {
   item: any,
   index:any,
   trade: any,
-  mats: any,
-  handleInputChange: any
 }
 
+@observer
 export class MarketTableRow extends React.Component<MarketTableRowProps> {
   render() {
-    const { item, index } = this.props;
+    const { item, index, trade } = this.props;
     return (
       <tr key={item.id}>
-        {!this.props.trade && index==0 ?
+        {!trade && index==0 ?
           <td rowSpan={index}>
             {item.tier != "other" ? item.tier : ""}
           </td> : null
@@ -25,7 +27,7 @@ export class MarketTableRow extends React.Component<MarketTableRowProps> {
         </td>
         <td>
           {
-            this.props.mats.map((mat: any) => {
+            user.mats.map((mat: any) => {
               if (item.id == mat.id) {
                 return (
                   <input
@@ -34,7 +36,7 @@ export class MarketTableRow extends React.Component<MarketTableRowProps> {
                     key={mat.id} 
                     defaultValue={mat.amount ? mat.amount : 0}
                     className="form-control text-center"
-                    onChange={(e) => this.props.handleInputChange(e, mat.id)}
+                    onChange={(e) => market.handleInputChange(e, mat.id)}
                     min="0"
                   />
                 )
@@ -53,10 +55,10 @@ export class MarketTableRow extends React.Component<MarketTableRowProps> {
         {this.props.trade &&
           <td className="text-left">
             {
-              this.props.mats.map((mat: any) => {
+              user.mats.map((mat: any) => {
                 if (item.id == mat.id) {
                   return (
-                    <span key={mat.id}>{mat.amount && item.price ? (mat.amount * item.price).toFixed(2) : 0}</span>
+                    <span key={mat.id}>{mat.totalPrice ? parseFloat(mat.totalPrice).toFixed(2) : 0 }</span>
                   )
                 }
               })

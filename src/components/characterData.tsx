@@ -4,6 +4,10 @@ import "../scss/characterData.scss";
 import { CharacterDataRow } from './characterDataRow';
 import { CharacterDataGearRow } from './characterDataGearRow';
 
+import { observer } from 'mobx-react';
+import { observable } from 'mobx';
+import { user } from '../store/userStore';
+
 interface CharacterDataProps {
   name: string,
   region: string,
@@ -13,21 +17,15 @@ interface CharacterDataProps {
 
 interface CharacterDataState {
   char: any,
-  isLoadingData: boolean,
-  isLoadingEQ: boolean
 }
 
+@observer
 export class CharacterData extends React.Component<CharacterDataProps, CharacterDataState> {
-  constructor(props: any) {
-    super(props)
+  @observable char:any = [];
 
-    this.state = {
-      char: [],
-      isLoadingData: true,
-      isLoadingEQ: true,
-    }
-  }
   componentDidMount() {
+    user.isLoadingData = true;
+    
     let getCharacter = axios.get('https://api.silveress.ie/bns/v3/character/full/' + this.props.region + '/' + this.props.name).then(res => {
       let activeElement = res.data.activeElement;
       if (activeElement == "Ice") {
@@ -192,7 +190,7 @@ export class CharacterData extends React.Component<CharacterDataProps, Character
           }
         ]
       }
-      this.setState({ char: char, isLoadingData: false });
+
       return char;
     })
 
@@ -206,38 +204,34 @@ export class CharacterData extends React.Component<CharacterDataProps, Character
       let char: any, eq: any;
       [char, eq] = value;
 
-      this.setState(prevState => ({
-        ...prevState,
-        char: {
-          ...char,
-          equipment: char.equipment.map((c: any) => {
-            return ({
-              displayName: c.displayName,
-              name: c.name,
-              rank: eq.filter((e: any) => { return e.name == c.name }).map((e: any) => { return e.rank })[0],
-              type: eq.filter((e: any) => { return e.name == c.name }).map((e: any) => { return e.type })[0],
-              img: eq.filter((e: any) => { return e.name == c.name }).map((e: any) => { return e.img })[0]
-            })
+      const charEq = {
+        ...char,
+        equipment: char.equipment.map((c: any) => {
+          return ({
+            displayName: c.displayName,
+            name: c.name,
+            rank: eq.filter((e: any) => { return e.name == c.name }).map((e: any) => { return e.rank })[0],
+            type: eq.filter((e: any) => { return e.name == c.name }).map((e: any) => { return e.type })[0],
+            img: eq.filter((e: any) => { return e.name == c.name }).map((e: any) => { return e.img })[0]
           })
-        },
-        isLoadingEQ: false
-      }))
+        })
+      }
+      user.isLoadingData = false
+      this.char = charEq;
     })
   }
 
-
   render() {
-    const { char, isLoadingData, isLoadingEQ } = this.state;
     return (
       <div className="card bg-dark text-white char-data mx-auto">
-        {isLoadingData ? (
+        {user.isLoadingData ? (
           <div className="loader"></div>
         ) :
           <div className="card-body">
             <div className="row text-light">
-              {char.class && <div className={"class ml-3 " + char.class.toLowerCase().replace(/ /g, '')}></div>}
+              {this.char.class && <div className={"class ml-3 " + this.char.class.toLowerCase().replace(/ /g, '')}></div>}
               <div className="col">
-                <span className="char-name"><strong>{char.name}</strong></span>
+                <span className="char-name"><strong>{this.char.name}</strong></span>
                 {this.props.isBadge &&
                   <span>
                     {this.props.isMain ? (
@@ -247,34 +241,33 @@ export class CharacterData extends React.Component<CharacterDataProps, Character
                       )}
                   </span>}
                 <ul className="list-inline char-data-list mt-1">
-                  <li className="list-inline-item pl-0">{char.class}</li>
-                  <li className="list-inline-item">Level {char.lvl} &bull; {char.lvlHM} HM</li>
-                  <li className="list-inline-item">{char.server}</li>
-                  {char.faction && <li className="list-inline-item">{char.faction} {char.factionRank}</li>}
-                  {char.guild && <li className="list-inline-item">{char.guild}</li>}
+                  <li className="list-inline-item pl-0">{this.char.class}</li>
+                  <li className="list-inline-item">Level {this.char.lvl} &bull; {this.char.lvlHM} HM</li>
+                  <li className="list-inline-item">{this.char.server}</li>
+                  {this.char.faction && <li className="list-inline-item">{this.char.faction} {this.char.factionRank}</li>}
+                  {this.char.guild && <li className="list-inline-item">{this.char.guild}</li>}
                   <li className="list-inline-item last">
-                    <span className={"elements " + char.activeElement.toLowerCase()} >
-                      {char.activeElement}
+                    <span className={"elements " + this.char.activeElement} >
+                      {this.char.activeElement}
                     </span>
                   </li>
                 </ul>
               </div>
             </div>
-
             <div className="row">
               <div className="col pr-0 character-profile border-dark">
-                <img src={char.img} className="card-img" />
+                <img src={this.char.img} className="card-img" />
               </div>
               <div className="col px-1">
                 <div className="character-stats attack">
                   <div className="stats-header">
                     <h3>
                       Attack Power <br />
-                      <span className="accent">{char.ap}</span>
+                      <span className="accent">{this.char.ap}</span>
                     </h3>
                   </div>
                   <div className="split-point"></div>
-                  {char.offensive && char.offensive.map((o: any) => (
+                  {this.char.offensive && this.char.offensive.map((o: any) => (
                     <CharacterDataRow
                       key={o.id}
                       id={o.id}
@@ -293,11 +286,11 @@ export class CharacterData extends React.Component<CharacterDataProps, Character
                   <div className="stats-header">
                     <h3>
                       Health <br />
-                      <span className="accent">{char.hp}</span>
+                      <span className="accent">{this.char.hp}</span>
                     </h3>
                   </div>
                   <div className="split-point"></div>
-                  {char.defensive && char.defensive.map((o: any) => (
+                  {this.char.defensive && this.char.defensive.map((o: any) => (
                     <CharacterDataRow
                       key={o.id}
                       id={o.id}
@@ -312,24 +305,20 @@ export class CharacterData extends React.Component<CharacterDataProps, Character
                 </div>
               </div>
               <div className="col-4 pl-4">
-                {isLoadingEQ ? (
-                  <div className="loader"></div>
-                ) : (
-                    <div className="card bg-dark ">
-                      {
-                        char.equipment && char.equipment.map((item: any, index: any) => (
-                          <CharacterDataGearRow
-                            displayName={item.displayName}
-                            key={index}
-                            type={item.type}
-                            name={item.name}
-                            rank={item.rank}
-                            img={item.img}
-                          />
-                        ))
-                      }
-                    </div>
-                  )}
+                <div className="card bg-dark ">
+                  {
+                    this.char.equipment && this.char.equipment.map((item: any, index: any) => (
+                      <CharacterDataGearRow
+                        displayName={item.displayName}
+                        key={index}
+                        type={item.type}
+                        name={item.name}
+                        rank={item.rank}
+                        img={item.img}
+                      />
+                    ))
+                  }
+                </div>
               </div>
             </div>
           </div>

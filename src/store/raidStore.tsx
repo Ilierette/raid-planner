@@ -1,6 +1,7 @@
 import { observable } from 'mobx';
 import { raid, initDays } from '../data/raid';
 import { users } from '../data/users';
+import { Raid, User } from '../models/interfaces';
 
 interface RaidState {
     currentMemberId: string,
@@ -15,45 +16,6 @@ interface RaidState {
     selectedCharIsMain: boolean,
     selectedCharIsStatic: boolean,
     selectedCharHours: any
-}
-interface Raid {
-    type: string,
-    ratio: string,
-    timestamp: string;
-    maxMembers: number;
-    members: Member[],
-    
-    isEditMode: boolean,
-    isAddMode: boolean
-    isLeader: boolean;
-}
-
-interface Member {
-    id: string,
-    isFounder: boolean,
-    isLeader: boolean,
-    isStatic: boolean,
-    isConfirmed: boolean,
-    isExpanded: boolean,
-    notes: string,
-    days: Day[]
-}
-interface User {
-    id: string,
-    name: string,
-    class: string,
-    region: string,
-    isMain: boolean,
-    mats: Mat[]
-}
-interface Day {
-    date: string,
-    min: string,
-    max: string
-}
-interface Mat {
-    id: string,
-    amount: number
 }
 
 class RaidStore implements RaidState {
