@@ -5,7 +5,7 @@ import { market } from '../store/marketStore';
 
 @observer
 export class GearTable extends React.Component {
-  componentDidMount(){
+  componentDidMount() {
     user.countTotal();
   }
   render() {
@@ -38,36 +38,48 @@ export class GearTable extends React.Component {
               <tbody>
                 {
                   market.tradeable.map((trade: any) => (
-                    <tr>
-                      <td className="text-right">
-                        {trade.name}
-                      </td>
-                      {user.gear.map((item: any) => (
-                        item.stages.map((stage: any) => (
-                          <td>{stage[trade.id]}</td>
-                        ))
-                      ))}
-                      <td></td>
-
-
-                    </tr>
+                    user.mats.map((mat: any) => {
+                      if (mat.id == trade.id && mat.totalAmount != 0) {
+                        return (
+                          <tr>
+                            <td className="text-right">
+                              {trade.name}
+                            </td>
+                            {user.gear.map((item: any) => (
+                              item.stages.map((stage: any) => (
+                                <td>{stage[trade.id]}</td>
+                              ))
+                            ))}
+                            <td>
+                              {mat.totalAmount}
+                            </td>
+                          </tr>
+                        )
+                      }
+                    })
                   ))
                 }
                 {
-                  market.untradeable.map((untrade: any) => (
-                    <tr>
-                      <td className="text-right">
-                        {untrade.name}
-                      </td>
-                      {user.gear.map((item: any) => (
-                        item.stages.map((stage: any) => (
-                          <td>{stage[untrade.id]}</td>
-                        ))
-                      ))}
-                      <td>
-
-                      </td>
-                    </tr>
+                  market.untradeable.map((trade: any) => (
+                    user.mats.map((mat: any) => {
+                      if (mat.id == trade.id && mat.totalAmount != 0) {
+                        return (
+                          <tr>
+                            <td className="text-right">
+                              {trade.name}
+                            </td>
+                            {user.gear.map((item: any) => (
+                              item.stages.map((stage: any) => (
+                                <td>{stage[trade.id]}</td>
+                              ))
+                            ))}
+                            <td>
+                              {mat.totalAmount}
+                            </td>
+                          </tr>
+                        )
+                      }
+                    })
                   ))
                 }
               </tbody>
