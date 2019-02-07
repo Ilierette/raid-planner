@@ -23,8 +23,8 @@ export const users = [
                 ]
             }
         ],
-        dpsCount: "605 871/sec",
-        dpsImg: "https://i.imgur.com/UUojn3f.jpg"
+        dpsCount: "1 041 205/sec",
+        dpsImg: "https://i.imgur.com/vbjW9w2.jpg"
 
     },
     {
