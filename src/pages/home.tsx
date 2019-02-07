@@ -8,7 +8,6 @@ import { CharacterMember } from '../components/characterMember';
 import { CharacterLeader } from '../components/characterLeader';
 import { CharacterTimetable } from '../components/characterTimetable';
 import { CharacterParse } from '../components/characterParse';
-
 import { observable } from "mobx";
 import { observer } from 'mobx-react';
 

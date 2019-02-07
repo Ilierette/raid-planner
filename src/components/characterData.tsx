@@ -1,6 +1,5 @@
 import * as React from 'react';
 import axios from 'axios';
-import * as jsonpAdapter from 'axios-jsonp';
 import "../scss/characterData.scss";
 import { CharacterDataRow } from './characterDataRow';
 import { CharacterDataGearRow } from './characterDataGearRow';
@@ -29,14 +28,6 @@ export class CharacterData extends React.Component<CharacterDataProps, Character
     }
   }
   componentDidMount() {
-
-    axios({
-      url: 'http://eu-bns.ncsoft.com/ingame/bs/character/data/equipments?c=Letty',
-      adapter: jsonpAdapter,
-    }).then(res => {
-      console.log(res)
-    })
-
     let getCharacter = axios.get('https://api.silveress.ie/bns/v3/character/full/' + this.props.region + '/' + this.props.name).then(res => {
       let activeElement = res.data.activeElement;
       if (activeElement == "Ice") {
