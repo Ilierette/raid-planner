@@ -11,6 +11,9 @@ interface MarketTableRowProps {
 
 @observer
 export class MarketTableRow extends React.Component<MarketTableRowProps> {
+  componentDidMount() {
+    user.countTotal();
+  }
   render() {
     const { item, index, trade } = this.props;
     return (
@@ -24,6 +27,14 @@ export class MarketTableRow extends React.Component<MarketTableRowProps> {
           {item.name}
         </td>
         <td>
+        {
+            user.mats.map((mat: any) => {
+              if (item.id == mat.id) {
+                return (
+                  <span>{mat.totalAmount}</span>
+                )}
+              })
+            }
         </td>
         <td>
           {
