@@ -5,6 +5,9 @@ import { market } from '../store/marketStore';
 
 @observer
 export class GearTable extends React.Component {
+  componentDidMount(){
+    user.countTotal();
+  }
   render() {
     return (
       <div className="card">
@@ -22,6 +25,7 @@ export class GearTable extends React.Component {
                       {item.name}
                     </th>
                   ))}
+                  <th rowSpan={2}>Total</th>
                 </tr>
                 <tr>
                   {user.gear.map((item: any) => (
@@ -43,6 +47,9 @@ export class GearTable extends React.Component {
                           <td>{stage[trade.id]}</td>
                         ))
                       ))}
+                      <td></td>
+
+
                     </tr>
                   ))
                 }
@@ -57,6 +64,9 @@ export class GearTable extends React.Component {
                           <td>{stage[untrade.id]}</td>
                         ))
                       ))}
+                      <td>
+
+                      </td>
                     </tr>
                   ))
                 }

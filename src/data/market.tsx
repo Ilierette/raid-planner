@@ -60,11 +60,6 @@ export const marketData = {
     ],
     untradeable: [
         {
-            id: "naryu",
-            tier: "other",
-            name: "Naryu Tablet"
-        },
-        {
             id: "bCrux",
             tier: "other",
             name: "Blue Crux"
@@ -90,6 +85,11 @@ export const marketData = {
             tier: "BT",
             name: "Raven Heart"
         },
+        {
+            id: "blackstone",
+            tier: "BT",
+            name: "Blackstone",
+        },
         // VT
         {
             id: "hqWings",
@@ -102,24 +102,14 @@ export const marketData = {
             name: "Hive Queen Heart"
         },
         {
-            id: "aransuOrb",
-            tier: "VT",
-            name: "Aransu Orb"
-        },
-        {
-            id: "voidFragments",
-            tier: "BT",
-            name: "Void Fragments"
-        },
-        {
-            id: "blackstone",
-            tier: "BT",
-            name: "Blackstone",
-        },
-        {
             id: "dgs",
             tier: "VT",
             name: "Divine Grace Stone"
+        },
+        {
+            id: "silverScale",
+            tier: "VT",
+            name: "Silver Scale",
         },
         // TT
         {
@@ -133,37 +123,11 @@ export const marketData = {
             name: "Celestial Steel",
         },
         {
-            id: "bloodPearl",
-            tier: "TT",
-            name: "Blood Pearl",
-        },
-        {
-            id: "silverScale",
-            tier: "VT",
-            name: "Silver Scale",
-        },
-        {
-            id: "seaGlass",
-            tier: "TT",
-            name: "Sea Glass",
-        },
-        // ET Wings
-        // ET Hearts
-        {
-            id: "skyshadowOrb",
-            tier: "ET",
-            name: "Skyshadow Orb"
-        },
-        {
             id: "onyxScale",
             tier: "ET",
             name: "Onyx Scale"
         },
-        {
-            id: "warforge",
-            tier: "ET",
-            name: "Warforge Fragment"
-        },
+        // PVP
         {
             id: "bloodstone",
             tier: "PVP",
