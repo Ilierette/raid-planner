@@ -1,4 +1,3 @@
-
 export const belt = [
     {
         name: "Horizon",

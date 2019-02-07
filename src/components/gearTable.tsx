@@ -1,46 +1,30 @@
 import * as React from 'react';
-import market from '../data/market'
+import { observer } from 'mobx-react';
+import { user } from '../store/userStore';
+import { market } from '../store/marketStore';
 
-interface GearProps {
-  title: string,
-  items: [],
-}
-
-interface GearState {
-  tradeable: [],
-  untradeable: [],
-}
-
-export class GearTable extends React.Component<GearProps, GearState> {
-  constructor(props: any) {
-    super(props);
-
-    this.state = {
-      tradeable: market.basic,
-      untradeable: market.untradeable,
-    }
-  }
-
+@observer
+export class GearTable extends React.Component {
   render() {
     return (
       <div className="card">
         <div className="card-body">
           <div className="table-responsive">
-            <h5 className="card-title">{this.props.title}</h5>
+            <h5 className="card-title"></h5>
             <table className="table table-sm text-center">
               <thead>
                 <tr>
                   <th rowSpan={2} className="text-right">
                     Mats
                   </th>
-                  {this.props.items.map((item: any) => (
+                  {user.gear.map((item: any) => (
                     <th colSpan={item.stages.length}>
                       {item.name}
                     </th>
                   ))}
                 </tr>
                 <tr>
-                  {this.props.items.map((item: any) => (
+                  {user.gear.map((item: any) => (
                     item.stages.map((stage: any) => (
                       <th>{stage.name}</th>
                     ))
@@ -49,12 +33,12 @@ export class GearTable extends React.Component<GearProps, GearState> {
               </thead>
               <tbody>
                 {
-                  this.state.tradeable.map((trade: any) => (
+                  market.tradeable.map((trade: any) => (
                     <tr>
                       <td className="text-right">
                         {trade.name}
                       </td>
-                      {this.props.items.map((item: any) => (
+                      {user.gear.map((item: any) => (
                         item.stages.map((stage: any) => (
                           <td>{stage[trade.id]}</td>
                         ))
@@ -63,12 +47,12 @@ export class GearTable extends React.Component<GearProps, GearState> {
                   ))
                 }
                 {
-                  this.state.untradeable.map((untrade: any) => (
+                  market.untradeable.map((untrade: any) => (
                     <tr>
                       <td className="text-right">
                         {untrade.name}
                       </td>
-                      {this.props.items.map((item: any) => (
+                      {user.gear.map((item: any) => (
                         item.stages.map((stage: any) => (
                           <td>{stage[untrade.id]}</td>
                         ))
