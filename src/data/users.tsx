@@ -11,9 +11,21 @@ export const users = [
                 amount: 0,
             }
         ],
+        gear: [
+            {
+                name: "",
+                tier: "",
+                stages: [
+                    {
+                        name: "",
+                        isActive: true,
+                    }
+                ]
+            }
+        ],
         dpsCount: "605 871/sec",
         dpsImg: "https://i.imgur.com/UUojn3f.jpg"
-        
+
     },
     {
         id: "angor",

@@ -4,7 +4,7 @@ import { User } from '../models/interfaces';
 
 interface UserStoreState {
     id: number,
-    isBadge: boolean,  
+    isBadge: boolean,
     isLoadingData: boolean,
     reload: boolean,
     users: User[]
@@ -53,7 +53,8 @@ class UserStore implements UserStoreState {
     }
 
     @observable mats = this.users[this.id].mats;
-    
+    @observable gear = this.users[this.id].gear;
+
 
 }
 

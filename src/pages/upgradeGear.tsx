@@ -20,7 +20,7 @@ export default class Gear extends React.Component<GearState> {
       <div className="content-wrapper">
         <PageHeader title="Gear upgrade chart" />
         <div className="content">
-          <GearTable items={this.gear} title="Weapon" />
+          {/* <GearTable items={this.gear} title="Weapon" /> */}
         </div>
       </div>
     );
