@@ -7,10 +7,11 @@ import { observer } from 'mobx-react';
 import { store } from '../store/raidStore';
 
 import '../scss/table.scss';
+import { Raid, Member, User } from '../models/interfaces';
 
 interface RaidProps {
-    raid: any,
-    index: any
+    raid: Raid,
+    index: number
 }
 
 interface RaidState {
@@ -117,8 +118,8 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                                 </tbody>
                             }
 
-                            {raid.members.map((member: any) => (
-                                store.users.map((user: any) => {
+                            {raid.members.map((member: Member) => (
+                                store.users.map((user: User) => {
                                     if (member.id == user.id) {
                                         return (
                                             <Row
