@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-interface CharacterParseProps{
-    dpsCount: any,
-    dpsImg:any
+interface CharacterParseProps {
+    dpsCount: string,
+    dpsImg: string
 }
 
 export class CharacterParse extends React.Component<CharacterParseProps> {

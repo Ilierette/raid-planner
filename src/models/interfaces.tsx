@@ -42,8 +42,8 @@ export interface Mats {
 export interface UserMats {
     id: string,
     amount: number,
-    totalAmount?: number,
-    totalPrice?: number
+    totalAmount: number,
+    totalPrice: number
 }
 
 export interface Tiers {
@@ -103,4 +103,40 @@ export interface Stages {
     incrinerator?: number,
     vegeneance?: number,
     dgs?: number
+}
+
+export interface Character {
+    class: string,
+    name: string,
+    lvl: string,
+    lvlHM: string,
+    server: string,
+    faction: string,
+    factionRank: string,
+    guild: string,
+    activeElement: string,
+    img: string,
+    ap: string,
+    offensive: Stats[],
+    hp: string,
+    defensive: Stats[],
+    equipment: Equipments[],
+}
+
+export interface Stats {
+    id: string,
+    title: string,
+    stat: number,
+    rate?: number,
+    rate2?: number,
+    description?: string,
+    description2?: string
+}
+
+export interface Equipments {
+    name: string,
+    displayName: string,
+    rank?: string,
+    type?: string,
+    img?: string
 }

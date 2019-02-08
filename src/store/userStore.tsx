@@ -1,7 +1,6 @@
 import { observable } from 'mobx';
 import { users, mats, gear } from '../data/users';
 import { User } from '../models/interfaces';
-import { market } from './marketStore';
 
 interface UserStoreState {
     id: number,
@@ -55,22 +54,6 @@ class UserStore implements UserStoreState {
 
     @observable mats = mats;
     @observable gear = gear;
-
-    countTotal() {
-        let mats = this.mats.map((mat: any) => {
-            return ({
-                ...mat,
-                totalAmount: user.gear.reduce((total: any, gear: any) => {
-                    return total + gear.stages.reduce((acc: any, stage: any) => {
-                        if (stage[mat.id])
-                            return acc + stage[mat.id]
-                        else return acc
-                    }, 0)
-                }, 0)
-            })
-        })
-        this.mats = mats
-    }
 }
 
 export const user = new UserStore();

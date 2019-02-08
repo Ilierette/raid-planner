@@ -4,7 +4,6 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-
 import Home from './home';
 import Login from './login';
 import Register from './register';
@@ -12,7 +11,6 @@ import Clan from './clan';
 import Schedule from './schedule';
 import Gear from './upgradeGear';
 import Marketplace from './marketplace';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
@@ -23,12 +21,9 @@ import {
   faChalkboard, faBalanceScale,
   faBan, faPlus, faPencilAlt, faTimes, faCrown, faSave
 } from '@fortawesome/free-solid-svg-icons'
-
 import SiteNav from '../components/navbar';
-
 import "../scss/navigation.scss"
 import { market } from '../store/marketStore';
-import { user } from '../store/userStore';
 
 library.add(
   fab, faPowerOff, faBars, faCaretDown,
@@ -42,8 +37,6 @@ library.add(
 export default class MasterPage extends React.Component {
   componentDidMount() {
     market.getStoreData();
-    user.countTotal();
-
   }
   render() {
     return (

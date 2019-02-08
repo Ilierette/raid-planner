@@ -1,11 +1,11 @@
 import * as React from 'react';
 
 interface CharacterDataGearRowProps {
-    displayName: any,
-    name: any,
-    rank: any,
-    type: any,
-    img: any
+    displayName: string,
+    name: string,
+    rank: string,
+    type: string,
+    img: string
 }
 
 export class CharacterDataGearRow extends React.Component<CharacterDataGearRowProps> {

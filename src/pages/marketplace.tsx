@@ -3,6 +3,7 @@ import { PageHeader } from '../components/pageHeader';
 import { MarketTable } from '../components/marketTable';
 import { observer } from 'mobx-react';
 import { market } from '../store/marketStore';
+import { Tiers } from '../models/interfaces';
 
 @observer
 export default class Marketplace extends React.Component {
@@ -16,7 +17,7 @@ export default class Marketplace extends React.Component {
                             <div className="row ">
                                 <div className="col-12 mb-2">
                                     <form>
-                                        {market.tierList.map((tier: any) => (
+                                        {market.tierList.map((tier: Tiers) => (
                                             <div className="form-check form-check-inline" key={tier.name}>
                                                 <input
                                                     className="form-check-input"

@@ -1,7 +1,7 @@
 import { observable } from 'mobx';
 import { raid, initDays } from '../data/raid';
 import { users } from '../data/users';
-import { Raid, User } from '../models/interfaces';
+import { Raid, User, Member } from '../models/interfaces';
 
 interface RaidState {
     currentMemberId: string,
@@ -36,8 +36,8 @@ class RaidStore implements RaidState {
     @observable selectedCharHours: any;
 
 
-    toogle = (raidId: any, id: any) => {
-        let raidList = this.raids[raidId].members.map((item: any) => {
+    toogle = (raidId: number, id: string) => {
+        let raidList = this.raids[raidId].members.map((item: Member) => {
             if (item.id == id) {
                 return ({
                     ...item,
@@ -54,17 +54,17 @@ class RaidStore implements RaidState {
         this.raids[raidId].members = raidList
     }
 
-    addUserRow = (id: any) => {
+    addUserRow = (id: number) => {
         this.raids[id].isEditMode = false;
         this.raids[id].isAddMode = !this.raids[id].isAddMode;
     }
 
-    editHours = (id: any) => {
+    editHours = (id: number) => {
         this.raids[id].isEditMode = !this.raids[id].isEditMode;
         this.raids[id].isAddMode = false;
     }
 
-    removeUser = (id: any, userId: any) => {
+    removeUser = (id: number, userId: string) => {
         const index = this.raids[id].members.findIndex(m => m.id==userId);
         const all = this.raids[id].members
 
@@ -75,9 +75,9 @@ class RaidStore implements RaidState {
     }
 
     getSuggestions = (e: any) => {
-        const suggest = this.users.filter((user: any) => (
+        const suggest = this.users.filter((user: User) => (
             e.target.value.length > 0 && user.name.toLowerCase().includes(e.target.value.toLowerCase()))
-        ).map((user: any) => {
+        ).map((user: User) => {
             return user
         });
 
@@ -90,7 +90,7 @@ class RaidStore implements RaidState {
         this.selectedCharHours = null
     }
 
-    selectChar = (e: any, item: any) => {
+    selectChar = (e: any, item: User) => {
         e.preventDefault();
         this.selectedCharName = item.name;
         this.suggestions = null;
@@ -109,7 +109,7 @@ class RaidStore implements RaidState {
             this.selectedCharIsStatic = false
         }
     }
-    addUser = (id: any) => {
+    addUser = (id: number) => {
         const selectedChar = {
             id: this.selectedCharId,
             name: this.selectedCharName,

@@ -2,20 +2,19 @@ import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Input, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import { CharacterData } from '../components/characterData';
-
 import { store } from '../store/raidStore';
 import { observer } from 'mobx-react';
-
 import classnames from 'classnames';
+import { User, Member, Day } from '../models/interfaces';
 
 interface RaidTableRowProps {
-    o: any,
-    user: any,
-    member: any,
+    o: number,
+    user: User,
+    member: Member,
 }
 
 interface RaidTableRowState {
-    activeTab: any;
+    activeTab: number;
 }
 
 @observer
@@ -24,7 +23,7 @@ export class RaidTableRow extends React.Component<RaidTableRowProps, RaidTableRo
         super(props)
 
         this.state = {
-            activeTab: '1',
+            activeTab: 1,
         }
     }
     changeTab = (tab: any) => {
@@ -73,7 +72,7 @@ export class RaidTableRow extends React.Component<RaidTableRowProps, RaidTableRo
                     <td className="text-left">
                         {user.class}
                     </td>
-                    {member.days.map((day: any, index: any) => (
+                    {member.days.map((day: Day, index: number) => (
                         <td key={index}>
                             {day.min} - {day.max}
                         </td>
@@ -104,24 +103,24 @@ export class RaidTableRow extends React.Component<RaidTableRowProps, RaidTableRo
                             <Nav tabs className="my-1">
                                 <NavItem>
                                     <NavLink
-                                        className={classnames({ active: this.state.activeTab === '1' })}
-                                        onClick={() => { this.changeTab('1'); }}>
+                                        className={classnames({ active: this.state.activeTab === 1 })}
+                                        onClick={() => { this.changeTab(1); }}>
                                         Character Data
                                     </NavLink>
                                 </NavItem>
                                 <NavItem>
                                     <NavLink
-                                        className={classnames({ active: this.state.activeTab === '2' })}
-                                        onClick={() => { this.changeTab('2'); }}>
+                                        className={classnames({ active: this.state.activeTab === 2 })}
+                                        onClick={() => { this.changeTab(2); }}>
                                         Info
                                     </NavLink>
                                 </NavItem>
                             </Nav>
                             <TabContent activeTab={this.state.activeTab}>
-                                <TabPane tabId="1" className="bg-dark">
+                                <TabPane tabId={1} className="bg-dark">
                                     <CharacterData name={user.name} region={store.region} isMain={user.isMain} isBadge={store.isBadge} />
                                 </TabPane>
-                                <TabPane tabId="2">
+                                <TabPane tabId={2}>
                                     {member.notes} <br />
                                     User additional message <br />
                                     Warnings

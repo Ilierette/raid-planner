@@ -118,7 +118,7 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                             }
 
                             {raid.members.map((member: any) => (
-                                store.users.map((user: any, index: any) => {
+                                store.users.map((user: any) => {
                                     if (member.id == user.id) {
                                         return (
                                             <Row

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { MarketTableRow } from './marketTableRow'
 import { market } from '../store/marketStore';
-import { Mats } from '../models/interfaces';
+import { Mats, Tiers } from '../models/interfaces';
 import { observer } from 'mobx-react';
 
 interface MarketProps {
@@ -34,9 +34,9 @@ export class MarketTable extends React.Component<MarketProps> {
               {this.props.trade && <th style={{ width: "250px" }} className="text-left">Total Price</th>}
             </tr>
           </thead>
-          {market.tierList.map((tier: any) => (
+          {market.tierList.map((tier: Tiers) => (
             <tbody key={tier.name}>
-              {tier.show && this.props.items.filter((item: any) => { return item.tier == tier.name }).map((item: any, index: any) => (
+              {tier.show && this.props.items.filter((item: Mats) => { return item.tier == tier.name }).map((item: Mats, index: number) => (
                 <MarketTableRow
                   item={item}
                   key={index}
@@ -53,7 +53,7 @@ export class MarketTable extends React.Component<MarketProps> {
                   Total cost
                 </td>
                 <td className="text-left">
-                  {market.totalCost ? parseFloat(market.totalCost).toFixed(2): 0}
+                  {market.totalCost ? market.totalCost: 0}
                 </td>
               </tr>
             </tbody>

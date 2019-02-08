@@ -3,10 +3,11 @@ import axios from 'axios';
 import "../scss/characterData.scss";
 import { CharacterDataRow } from './characterDataRow';
 import { CharacterDataGearRow } from './characterDataGearRow';
-
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
 import { user } from '../store/userStore';
+import { Character, Equipments } from '../models/interfaces';
+import { character } from '../data/character';
 
 interface CharacterDataProps {
   name: string,
@@ -16,16 +17,16 @@ interface CharacterDataProps {
 }
 
 interface CharacterDataState {
-  char: any,
+  char: Character[],
 }
 
 @observer
 export class CharacterData extends React.Component<CharacterDataProps, CharacterDataState> {
-  @observable char:any = [];
+  @observable char = character;
 
   componentDidMount() {
     user.isLoadingData = true;
-    
+
     let getCharacter = axios.get('https://api.silveress.ie/bns/v3/character/full/' + this.props.region + '/' + this.props.name).then(res => {
       let activeElement = res.data.activeElement;
       if (activeElement == "Ice") {
@@ -206,13 +207,13 @@ export class CharacterData extends React.Component<CharacterDataProps, Character
 
       const charEq = {
         ...char,
-        equipment: char.equipment.map((c: any) => {
+        equipment: char.equipment.map((c: Equipments) => {
           return ({
             displayName: c.displayName,
             name: c.name,
-            rank: eq.filter((e: any) => { return e.name == c.name }).map((e: any) => { return e.rank })[0],
-            type: eq.filter((e: any) => { return e.name == c.name }).map((e: any) => { return e.type })[0],
-            img: eq.filter((e: any) => { return e.name == c.name }).map((e: any) => { return e.img })[0]
+            rank: eq.filter((e: Equipments) => { return e.name == c.name }).map((e: Equipments) => { return e.rank })[0],
+            type: eq.filter((e: Equipments) => { return e.name == c.name }).map((e: Equipments) => { return e.type })[0],
+            img: eq.filter((e: Equipments) => { return e.name == c.name }).map((e: Equipments) => { return e.img })[0]
           })
         })
       }

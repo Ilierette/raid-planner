@@ -7,9 +7,9 @@ interface CharacterDataRowProps {
     title: string,
     description: string,
     description2: string,
-    stat: any,
-    rate: any,
-    rate2: any,
+    stat: number,
+    rate: number,
+    rate2: number,
 }
 
 export class CharacterDataRow extends React.Component<CharacterDataRowProps> {
