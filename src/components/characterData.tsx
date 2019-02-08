@@ -308,7 +308,7 @@ export class CharacterData extends React.Component<CharacterDataProps, Character
               <div className="col-4 pl-4">
                 <div className="card bg-dark ">
                   {
-                    this.char.equipment && this.char.equipment.map((item: any, index: any) => (
+                    this.char.equipment && this.char.equipment.map((item: Equipments, index: number) => (
                       <CharacterDataGearRow
                         displayName={item.displayName}
                         key={index}

@@ -5,11 +5,11 @@ import { UncontrolledCollapse } from 'reactstrap';
 interface CharacterDataRowProps {
     id: string,
     title: string,
-    description: string,
-    description2: string,
     stat: number,
-    rate: number,
-    rate2: number,
+    rate?: number,
+    rate2?: number,
+    description?: string,
+    description2?: string
 }
 
 export class CharacterDataRow extends React.Component<CharacterDataRowProps> {

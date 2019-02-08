@@ -5,7 +5,7 @@ import { observer } from 'mobx-react';
 import { UserMats, Mats } from '../models/interfaces';
 
 interface MarketTableRowProps {
-  item: any,
+  item: Mats,
   index: number,
   trade: boolean,
 }
@@ -59,7 +59,7 @@ export class MarketTableRow extends React.Component<MarketTableRowProps> {
             user.mats.map((mat: UserMats) => {
               if (item.id == mat.id) {
                 return (
-                  <span>{mat.totalAmount - mat.amount > 0 ? mat.totalAmount - mat.amount : 0 }</span>
+                  <span>{mat.totalAmount - mat.amount > 0 ? mat.totalAmount - mat.amount : 0}</span>
                 )
               }
             })
@@ -67,7 +67,7 @@ export class MarketTableRow extends React.Component<MarketTableRowProps> {
         </td>
         {this.props.trade &&
           <td>
-            {item.price ? parseFloat(item.price).toFixed(2) : 0}
+            {item.price ? item.price : 0}
           </td>
         }
         {this.props.trade &&

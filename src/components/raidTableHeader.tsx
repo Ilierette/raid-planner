@@ -4,7 +4,7 @@ import { store } from '../store/raidStore';
 import { observer } from 'mobx-react';
 
 interface RaidTableHeaderProps {
-    index: any
+    index: number
 }
 
 @observer
