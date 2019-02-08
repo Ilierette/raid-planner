@@ -5,9 +5,6 @@ import { market } from '../store/marketStore';
 
 @observer
 export class GearTable extends React.Component {
-  componentDidMount() {
-    user.countTotal();
-  }
   render() {
     return (
       <div className="card">
@@ -17,7 +14,7 @@ export class GearTable extends React.Component {
             <table className="table table-sm text-center">
               <thead>
                 <tr>
-                  <th rowSpan={2} className="text-right">
+                  <th rowSpan={2} className="text-right" style={{ width: 220 }}>
                     Mats
                   </th>
                   {user.gear.map((item: any) => (
@@ -25,7 +22,9 @@ export class GearTable extends React.Component {
                       {item.name}
                     </th>
                   ))}
-                  <th rowSpan={2}>Total</th>
+                  <th rowSpan={2} style={{ width: 90 }} >All</th>
+                  <th rowSpan={2} style={{ width: 90 }} >Owned</th>
+                  <th rowSpan={2} style={{ width: 90 }} >Left</th>
                 </tr>
                 <tr>
                   {user.gear.map((item: any) => (
@@ -53,6 +52,12 @@ export class GearTable extends React.Component {
                             <td>
                               {mat.totalAmount}
                             </td>
+                            <td>
+                              {mat.amount}
+                            </td>
+                            <td>
+                              {mat.totalAmount-mat.amount}
+                            </td>
                           </tr>
                         )
                       }
@@ -75,6 +80,12 @@ export class GearTable extends React.Component {
                             ))}
                             <td>
                               {mat.totalAmount}
+                            </td>
+                            <td>
+                              {mat.amount}
+                            </td>
+                            <td>
+                              {mat.totalAmount-mat.amount}
                             </td>
                           </tr>
                         )

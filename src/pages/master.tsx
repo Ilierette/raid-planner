@@ -27,6 +27,8 @@ import {
 import SiteNav from '../components/navbar';
 
 import "../scss/navigation.scss"
+import { market } from '../store/marketStore';
+import { user } from '../store/userStore';
 
 library.add(
   fab, faPowerOff, faBars, faCaretDown,
@@ -38,6 +40,11 @@ library.add(
 )
 
 export default class MasterPage extends React.Component {
+  componentDidMount() {
+    market.getStoreData();
+    user.countTotal();
+
+  }
   render() {
     return (
       <Router>

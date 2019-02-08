@@ -45,7 +45,7 @@ export class MarketTableRow extends React.Component<MarketTableRowProps> {
                     type="number"
                     name={item.id} 
                     key={mat.id} 
-                    defaultValue={mat.amount ? mat.amount : 0}
+                    defaultValue={mat.amount}
                     className="form-control text-center"
                     onChange={(e) => market.handleInputChange(e, mat.id)}
                     min="0"

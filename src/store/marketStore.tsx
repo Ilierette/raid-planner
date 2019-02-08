@@ -2,12 +2,13 @@ import { observable } from 'mobx';
 import { Mats, Tiers } from '../models/interfaces';
 import { marketData } from '../data/market';
 import { user } from './userStore';
+import axios from 'axios';
 
 interface MarketStoreState {
     tradeable: Mats[],
     untradeable: Mats[],
     tierList: Tiers[],
-    totalCost: number
+    totalCost: number,
 }
 
 class MarketStore implements MarketStoreState {
@@ -26,14 +27,14 @@ class MarketStore implements MarketStoreState {
     @observable totalCost = 0;
 
     handleInputChange = (e: any, id: any) => {
-        let matList = user.mats.map((mat: any) => {
+        /* let matList = user.mats.map((mat: any) => {
             if (mat.id == id) {
                 return ({
                     ...mat,
                     amount: e.target.value,
-                    totalPrice: market.tradeable.filter((trade:any)=>{
+                    totalPrice: market.tradeable.filter((trade: any) => {
                         return mat.id == trade.id
-                    }).map((trade:any)=>{
+                    }).map((trade: any) => {
                         return trade.price * e.target.value
                     })
                 })
@@ -42,18 +43,17 @@ class MarketStore implements MarketStoreState {
         })
 
         user.mats = matList
-        this.calculateTotalCost()
+        this.calculateTotalCost() */
     }
 
     calculateTotalCost() {
-        let cost = user.mats.filter((mat: any) => {
+        /* let cost = user.mats.filter((mat: any) => {
             return mat.amount > 0
         }).reduce((acc: any, mat: any) => {
-            console.log(mat.totalPrice)
             return acc + mat.totalPrice
         }, 0)
 
-        this.totalCost =  cost
+        this.totalCost = cost */
     }
 
     handleTierChange = (e: any) => {
@@ -69,6 +69,27 @@ class MarketStore implements MarketStoreState {
         this.tierList = allTiers
     }
 
+    getStoreData() {
+        let allItems = axios.get('https://api.silveress.ie/bns/v3/market/eu/current/all').then(res => {
+            let items = res.data.map((item: any) => {
+                return ({
+                    name: item.name,
+                    price: item.listings.map((list: any) => { return list.price })[0]
+                })
+            })
+            let tradeable = market.tradeable.map((trade: any) => {
+                let current = (items.filter((item: any) => { return item.name == trade.name }).map((item: any) => { return item.price })[0]) / 1000
+                return ({
+                    ...trade,
+                    price: current ? current : trade.price
+                })
+            })
+            return tradeable
+        })
+        Promise.all([allItems]).then((value: any) => {
+            market.tradeable = value[0];
+        })
+    }
 }
 
 

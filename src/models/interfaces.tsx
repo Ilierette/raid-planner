@@ -26,7 +26,6 @@ export interface User {
     class: string,
     region: string,
     isMain: boolean,
-    mats: UserMats[]
 }
 export interface Day {
     date: string,

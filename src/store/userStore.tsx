@@ -1,5 +1,5 @@
 import { observable } from 'mobx';
-import { users } from '../data/users';
+import { users, mats, gear } from '../data/users';
 import { User } from '../models/interfaces';
 import { market } from './marketStore';
 
@@ -53,47 +53,23 @@ class UserStore implements UserStoreState {
         }, 1);
     }
 
-    @observable mats = this.users[this.id].mats;
-    @observable gear = this.users[this.id].gear;
+    @observable mats = mats;
+    @observable gear = gear;
 
-    countTotal = () => {
-        let trade = market.tradeable.map((trade: any) => (
-            user.mats.map((mat: any) => {
-                return ({
-                    ...mat,
-                    id: trade.id,
-                    totalAmount: user.gear.reduce((total:any, gear: any) => {
-                        return total + gear.stages.reduce((acc: any, stage: any) => {
-                            if (stage[trade.id]){
-                                return acc + stage[trade.id]
-                            }
-                            else{
-                                return acc
-                            }
-                        },0)
-                    },0)
-                })
-            })[0]
-        ))
-        let untrade = market.untradeable.map((trade: any) => (
-            user.mats.map((mat: any) => {
-                return ({
-                    ...mat,
-                    id: trade.id,
-                    totalAmount: user.gear.reduce((total:any, gear: any) => {
-                        return total + gear.stages.reduce((acc: any, stage: any) => {
-                            if (stage[trade.id]){
-                                return acc + stage[trade.id]
-                            }
-                            else{
-                                return acc
-                            }
-                        },0)
-                    },0)
-                })
-            })[0]
-        ))
-        this.mats = [...trade, ...untrade];
+    countTotal() {
+        let mats = this.mats.map((mat: any) => {
+            return ({
+                ...mat,
+                totalAmount: user.gear.reduce((total: any, gear: any) => {
+                    return total + gear.stages.reduce((acc: any, stage: any) => {
+                        if (stage[mat.id])
+                            return acc + stage[mat.id]
+                        else return acc
+                    }, 0)
+                }, 0)
+            })
+        })
+        this.mats = mats
     }
 }
 
