@@ -53,7 +53,7 @@ export class MarketTable extends React.Component<MarketProps> {
                   Total cost
                 </td>
                 <td className="text-left">
-                  {market.totalCost ? market.totalCost: 0}
+                  {market.totalCost ? market.totalCost.toLocaleString() : 0}
                 </td>
               </tr>
             </tbody>

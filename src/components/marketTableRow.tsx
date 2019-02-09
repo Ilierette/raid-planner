@@ -29,7 +29,7 @@ export class MarketTableRow extends React.Component<MarketTableRowProps> {
             user.mats.map((mat: UserMats) => {
               if (item.id == mat.id) {
                 return (
-                  <span>{mat.totalAmount}</span>
+                  <span>{mat.totalAmount.toLocaleString()}</span>
                 )
               }
             })
@@ -59,15 +59,15 @@ export class MarketTableRow extends React.Component<MarketTableRowProps> {
             user.mats.map((mat: UserMats) => {
               if (item.id == mat.id) {
                 return (
-                  <span>{mat.totalAmount - mat.amount > 0 ? mat.totalAmount - mat.amount : 0}</span>
+                  <span>{mat.totalAmount - mat.amount > 0 ? (mat.totalAmount - mat.amount).toLocaleString() : 0}</span>
                 )
               }
             })
           }
         </td>
         {this.props.trade &&
-          <td>
-            {item.price ? item.price : 0}
+          <td className="text-left">
+            {item.price ? item.price.toLocaleString() : 0}
           </td>
         }
         {this.props.trade &&
@@ -76,7 +76,7 @@ export class MarketTableRow extends React.Component<MarketTableRowProps> {
               user.mats.map((mat: UserMats) => {
                 if (item.id == mat.id) {
                   return (
-                    <span key={mat.id}>{mat.totalPrice}</span>
+                    <span key={mat.id}>{mat.totalPrice && mat.totalPrice.toLocaleString()}</span>
                   )
                 }
               })

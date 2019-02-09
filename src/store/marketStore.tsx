@@ -27,23 +27,20 @@ class MarketStore implements MarketStoreState {
     @observable totalCost = 0;
 
     handleInputChange = (e: any, id: any) => {
-        /* let matList = user.mats.map((mat: any) => {
+        let matList = user.mats.map((mat: any) => {
             if (mat.id == id) {
                 return ({
                     ...mat,
-                    amount: e.target.value,
-                    totalPrice: market.tradeable.filter((trade: any) => {
-                        return mat.id == trade.id
-                    }).map((trade: any) => {
-                        return trade.price * e.target.value
-                    })
+                    amount: e.target.value
                 })
             }
             else return mat
         })
 
         user.mats = matList
-        this.calculateTotalCost() */
+        
+        this.calculateTotalPrice();
+        this.calculateTotalCost();
     }
 
     handleTierChange = (e: any) => {
@@ -78,40 +75,44 @@ class MarketStore implements MarketStoreState {
         })
         Promise.all([allItems]).then((value: any) => {
             market.tradeable = value[0];
-            let mats = user.mats.map((mat: UserMats) => {
-                return ({
-                    ...mat,
-                    totalAmount: user.gear.reduce((total: any, gear: Gears) => {
-                        return total + gear.stages.reduce((acc: any, stage: any) => {
-                            if (stage[mat.id])
-                                return acc + stage[mat.id]
-                            else return acc
-                        }, 0)
-                    }, 0)
-                })
-            })
-            let matsCost = mats.map((mat: UserMats) => {
-                return ({
-                    ...mat,
-                    totalPrice: market.tradeable.reduce((total: any, trade: Mats) => {
-                        if (mat.id == trade.id && trade.price) {
-                            let current = (trade.price * (mat.totalAmount - mat.amount))
-                            return total + (current > 0 ? current : 0)
-                        }
-                        return total
-
-                    }, 0)
-                })
-            })
-            user.mats = matsCost;
-            this.calculateTotalCost()
+            this.calculateTotalPrice();
+            this.calculateTotalCost();
         })
     }
 
+    calculateTotalPrice() {
+        let mats = user.mats.map((mat: UserMats) => {
+            return ({
+                ...mat,
+                totalAmount: user.gear.reduce((total: any, gear: Gears) => {
+                    return total + gear.stages.reduce((acc: any, stage: any) => {
+                        if (stage[mat.id])
+                            return acc + stage[mat.id]
+                        else return acc
+                    }, 0)
+                }, 0)
+            })
+        })
+        let matsCost = mats.map((mat: UserMats) => {
+            return ({
+                ...mat,
+                totalPrice: market.tradeable.reduce((total: any, trade: Mats) => {
+                    if (mat.id == trade.id && trade.price) {
+                        let current = (trade.price * (mat.totalAmount - mat.amount))
+                        return total + (current > 0 ? current : 0)
+                    }
+                    return total
+
+                }, 0)
+            })
+        })
+        user.mats = matsCost;
+    }
+
     calculateTotalCost() {
-        let totalCost = user.mats.reduce((total:any, mat:UserMats)=>{
+        let totalCost = user.mats.reduce((total: any, mat: UserMats) => {
             return total + mat.totalPrice
-        },0)
+        }, 0)
         this.totalCost = totalCost
     }
 }
