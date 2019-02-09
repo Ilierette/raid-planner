@@ -7,7 +7,9 @@ interface UserStoreState {
     isBadge: boolean,
     isLoadingData: boolean,
     reload: boolean,
-    users: User[]
+    users: User[],
+    isGearEditMode: boolean,
+    isMarketEditMode: boolean
 }
 
 class UserStore implements UserStoreState {
@@ -21,6 +23,9 @@ class UserStore implements UserStoreState {
     @observable isBadge = true;
     @observable reload = true;
     @observable isLoadingData = true;
+    @observable isGearEditMode = false;
+    @observable isMarketEditMode = false;
+
 
     changeName = (e: any) => {
         if (!(e.key == 'Shift' || e.key == 'Control' || e.key == 'Alt')) {

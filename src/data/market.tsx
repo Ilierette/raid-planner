@@ -124,7 +124,7 @@ export const marketData = {
         },
         {
             id: "onyxScale",
-            tier: "ET",
+            tier: "TT",
             name: "Onyx Scale"
         },
         // PVP

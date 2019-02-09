@@ -111,7 +111,6 @@
     }
   }
 
-
   .name-col {
     cursor: pointer;
     width:100%;
@@ -128,4 +127,11 @@
     text-align: left;
     padding: 5px 15px;
     border: 1px solid #dee2e6;
+  }
+
+  .edit-cell{
+    background: #f8f9fa;
+    input{
+      background: #f8f9fa;
+    }
   }

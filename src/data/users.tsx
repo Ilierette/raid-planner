@@ -88,136 +88,163 @@ export const mats = [
     {
         id: "elysian",
         amount: 0,
-        totalAmount: 0
+        totalAmount: 0,
+        show: true
     },
     {
         id: "sacred",
         amount: 40,
-        totalAmount: 0
+        totalAmount: 0,
+        show: true
     },
     {
         id: "moonstone",
         amount: 0,
-        totalAmount: 0
+        totalAmount: 0,
+        show: true
     },
     {
         id: "soulstone",
         amount: 0,
-        totalAmount: 0
+        totalAmount: 0,
+        show: true
     },
     {
         id: "petPod",
         amount: 10,
-        totalAmount: 0
+        totalAmount: 0,
+        show: true
     },
     {
         id: "sacredOil",
         amount: 0,
-        totalAmount: 0
+        totalAmount: 0,
+        show: true
     },
     {
         id: "PTS",
         amount: 2,
-        totalAmount: 0
+        totalAmount: 0,
+        show: true
     },
     {
         id: "TS",
         amount: 0,
-        totalAmount: 0
+        totalAmount: 0,
+        show: true
     },
     {
         id: "empyrean",
         amount: 32,
-        totalAmount: 0
+        totalAmount: 0,
+        show: true
     },
     {
         id: "jewel",
         amount: 0,
-        totalAmount: 0
+        totalAmount: 0,
+        show: true
     },
     {
         id: "element",
         amount: 0,
-        totalAmount: 0
+        totalAmount: 0,
+        show: true
     },
     {
         id: "bCrux",
         amount: 10,
-        totalAmount: 0
+        totalAmount: 0,
+        show: true
     },
     {
         id: "rCrux",
         amount: 0,
-        totalAmount: 0
+        totalAmount: 0,
+        show: true
     },
     {
         id: "pristine",
         amount: 0,
-        totalAmount: 0
+        totalAmount: 0,
+        show: true
     },
     {
         id: "ravenFeather",
         amount: 0,
-        totalAmount: 0
+        totalAmount: 0,
+        show: true
     },
     {
         id: "ravenHeart",
         amount: 0,
-        totalAmount: 0
+        totalAmount: 0,
+        show: true
     },
     {
         id: "blackstone",
         amount: 0,
-        totalAmount: 0
+        totalAmount: 0,
+        show: true
     },
     {
         id: "hqWings",
         amount: 0,
-        totalAmount: 0
+        totalAmount: 0,
+        show: true
     },
     {
         id: "hqHearts",
         amount: 0,
-        totalAmount: 0
+        totalAmount: 0,
+        show: true
     },
     {
         id: "dgs",
         amount: 0,
-        totalAmount: 0
+        totalAmount: 0,
+        show: true
     },
     {
         id: "silverScale",
         amount: 0,
-        totalAmount: 0
+        totalAmount: 0,
+        show: true
     },
     {
         id: "celestialWings",
         amount: 0,
-        totalAmount: 0
+        totalAmount: 0,
+        show: true
     },
     {
         id: "celestialSteel",
         amount: 0,
-        totalAmount: 0
+        totalAmount: 0,
+        show: true
     },
     {
         id: "onyxScale",
         amount: 0,
-        totalAmount: 0
+        totalAmount: 0,
+        show: true
     },
     {
         id: "bloodstone",
         amount: 0,
-        totalAmount: 0
+        totalAmount: 0,
+        show: true
     },
     {
         id: "incrinerator",
         amount: 0,
-        totalAmount: 0
+        totalAmount: 0,
+        show: true
     },
     {
         id: "vegeneance",
         amount: 0,
-        totalAmount: 0
+        totalAmount: 0,
+        show: true
     }
 ]

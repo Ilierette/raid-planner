@@ -43,7 +43,8 @@ export interface UserMats {
     id: string,
     amount: number,
     totalAmount: number,
-    totalPrice: number
+    totalPrice: number,
+    show: boolean
 }
 
 export interface Tiers {

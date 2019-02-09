@@ -4,6 +4,7 @@ import { MarketTable } from '../components/marketTable';
 import { observer } from 'mobx-react';
 import { market } from '../store/marketStore';
 import { Tiers } from '../models/interfaces';
+import { user } from '../store/userStore';
 
 @observer
 export default class Marketplace extends React.Component {
@@ -14,8 +15,8 @@ export default class Marketplace extends React.Component {
                 <div className="content">
                     <div className="card">
                         <div className="card-body">
-                            <div className="row ">
-                                <div className="col-12 mb-2">
+                            <div className="row mb-2">
+                                <div className="col-10">
                                     <form>
                                         {market.tierList.map((tier: Tiers) => (
                                             <div className="form-check form-check-inline" key={tier.name}>
@@ -31,6 +32,14 @@ export default class Marketplace extends React.Component {
                                         ))}
                                     </form>
                                 </div>
+                                <div className="col-2 text-right">
+                                    {user.isMarketEditMode ?
+                                        <button className="btn btn-success" onClick={() => user.isMarketEditMode = false}>Save changes</button> :
+                                        <button className="btn btn-primary" onClick={() => user.isMarketEditMode = true}>Edit</button>
+                                    }
+                                </div>
+                            </div>
+                            <div className="row mb-2">
                                 <div className="col-5">
                                     <MarketTable
                                         title="Untradeable"
@@ -44,9 +53,6 @@ export default class Marketplace extends React.Component {
                                         items={market.tradeable}
                                         trade={true}
                                     />
-                                    <div className="mt-auto text-right">
-                                        <button className="btn btn-success">Save changes</button>
-                                    </div>
                                 </div>
                             </div>
                         </div>

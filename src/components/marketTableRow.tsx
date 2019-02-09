@@ -35,20 +35,26 @@ export class MarketTableRow extends React.Component<MarketTableRowProps> {
             })
           }
         </td>
-        <td>
+        <td className={user.isMarketEditMode && "edit-cell"}>
           {
             user.mats.map((mat: UserMats) => {
               if (item.id == mat.id) {
                 return (
-                  <input
-                    type="number"
-                    name={item.id}
-                    key={mat.id}
-                    defaultValue={mat.amount + ""}
-                    className="form-control text-center"
-                    onChange={(e) => market.handleInputChange(e, mat.id)}
-                    min="0"
-                  />
+                  <div>
+                    {user.isMarketEditMode ?
+                      <input
+                        type="number"
+                        name={item.id}
+                        key={mat.id}
+                        defaultValue={mat.amount + ""}
+                        className="form-control text-center"
+                        onChange={(e) => market.handleInputChange(e, mat.id)}
+                        min="0"
+                      /> :
+                      <span>{mat.amount + ""}</span>
+                    }
+                  </div>
+
                 )
               }
             })
