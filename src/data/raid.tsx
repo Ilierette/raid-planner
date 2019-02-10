@@ -1,9 +1,9 @@
 export const initDays = [
     //Wednesday
     {
-        date: "",
-        min: "",
-        max: ""
+        date: "21.01",
+        min: "16:00",
+        max: "23:00"
     },
     //Thursday
     {
@@ -25,9 +25,9 @@ export const initDays = [
     },
     //Sunday
     {
-        date: "",
-        min: "",
-        max: ""
+        date: "22.01",
+        min: "12:00",
+        max: "24:00"
     },
     //Monday
     {
@@ -37,9 +37,9 @@ export const initDays = [
     },
     //Tuesday
     {
-        date: "",
-        min: "",
-        max: ""
+        date: "23.01",
+        min: "14:00",
+        max: "24:00"
     }
 ]
 

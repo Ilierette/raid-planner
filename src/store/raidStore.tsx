@@ -65,11 +65,11 @@ class RaidStore implements RaidState {
     }
 
     removeUser = (id: number, userId: string) => {
-        const index = this.raids[id].members.findIndex(m => m.id==userId);
+        const index = this.raids[id].members.findIndex(m => m.id == userId);
         const all = this.raids[id].members
 
-        if(index > -1){
-            all.splice(index,1);
+        if (index > -1) {
+            all.splice(index, 1);
         }
         this.raids[id].members = all
     }
@@ -132,6 +132,27 @@ class RaidStore implements RaidState {
         this.selectedCharIsStatic = null;
         this.selectedCharHours = null;
         this.selectedCharHours = null;
+    }
+
+    editHoursMin(raidId: number, id: number, date: string, e: any) {
+        this.raids[raidId].members.map((member: Member) => {
+            if (member.id == this.currentMemberId) {
+                return ({
+                    date: date,
+                    min: member.days[id].min = e.target.value,
+                })
+            }
+        })
+    }
+    editHoursMax(raidId: number, id: number, date: string, e: any) {
+        this.raids[raidId].members.map((member: Member) => {
+            if (member.id == this.currentMemberId) {
+                return ({
+                    date: date,
+                    max: member.days[id].max = e.target.value
+                })
+            }
+        })
     }
 
 }

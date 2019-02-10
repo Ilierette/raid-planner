@@ -59,6 +59,8 @@ class UserStore implements UserStoreState {
 
     @observable mats = mats;
     @observable gear = gear;
+
+    
 }
 
 export const user = new UserStore();

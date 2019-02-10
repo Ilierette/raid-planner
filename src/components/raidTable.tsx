@@ -7,7 +7,8 @@ import { observer } from 'mobx-react';
 import { store } from '../store/raidStore';
 
 import '../scss/table.scss';
-import { Raid, Member, User } from '../models/interfaces';
+import { Raid, Member, User, Day } from '../models/interfaces';
+import { HourInputGroup } from './hourInputGroup';
 
 interface RaidProps {
     raid: Raid,
@@ -106,13 +107,20 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                                 <tbody>
                                     <tr>
                                         <td colSpan={raid.isLeader ? 4 : 2}></td>
-                                        <td>1</td>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                        <td>5</td>
-                                        <td>6</td>
-                                        <td>7</td>
+                                        {raid.members.map((member: Member) => (
+                                            store.users.map((user: User) => {
+                                                if (member.id == user.id) {
+                                                    return(
+                                                        member.days.map((day:Day, id:number)=>{
+                                                            return (
+                                                                <HourInputGroup date={day.date} min={day.min} max={day.max} id={id} raidId={index}/>
+                                                            )
+                                                        })
+                                                    )
+                                                    
+                                                }
+                                            })
+                                        ))}
                                         <td colSpan={2}></td>
                                     </tr>
                                 </tbody>
