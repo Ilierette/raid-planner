@@ -1,7 +1,7 @@
 import { observable } from 'mobx';
 import { raid, initDays } from '../data/raid';
 import { users } from '../data/users';
-import { Raid, User, Member } from '../models/interfaces';
+import { Raid, User, Member, Day } from '../models/interfaces';
 
 interface RaidState {
     currentMemberId: string,
@@ -143,6 +143,8 @@ class RaidStore implements RaidState {
                 })
             }
         })
+
+        //this.getMin(raidId, id);
     }
     editHoursMax(raidId: number, id: number, date: string, e: any) {
         this.raids[raidId].members.map((member: Member) => {
@@ -154,6 +156,11 @@ class RaidStore implements RaidState {
             }
         })
     }
+    // getMin(raidId: number, id:number){
+    //     let min = store.raids[raidId].members.map((member: Member)=>{
+    //         return member.days[id]
+    //     })
+    // }
 
 }
 

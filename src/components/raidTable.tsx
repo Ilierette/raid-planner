@@ -106,7 +106,7 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                                 raid.isEditMode &&
                                 <tbody>
                                     <tr>
-                                        <td colSpan={raid.isLeader ? 4 : 2}></td>
+                                        <td colSpan={raid.isLeader ? 3 : 2}></td>
                                         {raid.members.map((member: Member) => (
                                             store.users.map((user: User) => {
                                                 if (member.id == user.id) {

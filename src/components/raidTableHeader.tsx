@@ -47,15 +47,15 @@ export class RaidTableHeader extends React.Component<RaidTableHeaderProps>{
                     <th colSpan={2}>Activity Status</th>
                 </tr>
                 <tr>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
-                    <th>Saturday</th>
-                    <th>Sunday</th>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Static</th>
-                    <th>Main</th>
+                    <th style={{ width: 100 }} >Wednesday</th>
+                    <th style={{ width: 100 }} >Thursday</th>
+                    <th style={{ width: 100 }} >Friday</th>
+                    <th style={{ width: 100 }} >Saturday</th>
+                    <th style={{ width: 100 }} >Sunday</th>
+                    <th style={{ width: 100 }} >Monday</th>
+                    <th style={{ width: 100 }} >Tuesday</th>
+                    <th >Static</th>
+                    <th >Main</th>
                 </tr>
             </thead>
         );

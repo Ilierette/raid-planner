@@ -92,8 +92,7 @@ export class RaidTableRow extends React.Component<RaidTableRowProps, RaidTableRo
                 {
                     member.isExpanded &&
                     <tr>
-                        <td colSpan={2}></td>
-                        <td colSpan={10} className="text-left">
+                        <td colSpan={12} className="text-left">
                             <Nav tabs className="my-1">
                                 <NavItem>
                                     <NavLink
@@ -121,7 +120,6 @@ export class RaidTableRow extends React.Component<RaidTableRowProps, RaidTableRo
                                 </TabPane>
                             </TabContent>
                         </td>
-                        <td colSpan={2}></td>
                     </tr>
                 }
             </tbody>
