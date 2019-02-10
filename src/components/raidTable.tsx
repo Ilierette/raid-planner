@@ -119,7 +119,7 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                                                     )
                                                     
                                                 }
-                                            })
+                                            })[0]
                                         ))}
                                         <td colSpan={2}></td>
                                     </tr>

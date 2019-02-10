@@ -1,9 +1,9 @@
 export const initDays = [
     //Wednesday
     {
-        date: "21.01",
-        min: "16:00",
-        max: "23:00"
+        date: "",
+        min: "",
+        max: ""
     },
     //Thursday
     {
@@ -25,9 +25,9 @@ export const initDays = [
     },
     //Sunday
     {
-        date: "22.01",
-        min: "12:00",
-        max: "24:00"
+        date: "",
+        min: "",
+        max: ""
     },
     //Monday
     {
@@ -37,9 +37,9 @@ export const initDays = [
     },
     //Tuesday
     {
-        date: "23.01",
-        min: "14:00",
-        max: "24:00"
+        date: "",
+        min: "",
+        max: ""
     }
 ]
 
@@ -52,6 +52,26 @@ export const raid = [
         members: [
             {
                 id: "letty",
+                isFounder: true,
+                isLeader: true,
+                isStatic: true,
+                isConfirmed: true,
+                isExpanded: false,
+                notes: "",
+                days: initDays
+            },
+            {
+                id: "fumi",
+                isFounder: true,
+                isLeader: false,
+                isStatic: false,
+                isConfirmed: true,
+                isExpanded: false,
+                notes: "",
+                days: initDays
+            },
+            {
+                id: "miiyuit",
                 isFounder: true,
                 isLeader: true,
                 isStatic: true,
@@ -76,6 +96,16 @@ export const raid = [
                 id: "letty",
                 isFounder: true,
                 isLeader: false,
+                isStatic: true,
+                isConfirmed: true,
+                isExpanded: false,
+                notes: "",
+                days: initDays
+            },
+            {
+                id: "faustynian",
+                isFounder: true,
+                isLeader: true,
                 isStatic: true,
                 isConfirmed: true,
                 isExpanded: false,

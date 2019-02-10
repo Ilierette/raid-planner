@@ -55,12 +55,6 @@ export class RaidTableRow extends React.Component<RaidTableRowProps, RaidTableRo
 
                         </td>
                     }
-                    {store.raids[o].isLeader &&
-                        <td className="edit-checkbox" style={{ width: 31 }}>
-                            <Input type="checkbox" id={"conf-" + o} defaultChecked={member.isConfirmed} />
-                            <label htmlFor={"conf-" + o}></label>
-                        </td>
-                    }
                     <td className="text-left">
                         <div className="name-col" onClick={() => store.toogle(o, user.id)}>
                             <abbr title="Click to check character data">

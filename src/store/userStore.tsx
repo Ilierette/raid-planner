@@ -10,6 +10,7 @@ interface UserStoreState {
     users: User[],
     isGearEditMode: boolean,
     isMarketEditMode: boolean
+    isAuthUser: boolean
 }
 
 class UserStore implements UserStoreState {
@@ -25,6 +26,7 @@ class UserStore implements UserStoreState {
     @observable isLoadingData = true;
     @observable isGearEditMode = false;
     @observable isMarketEditMode = false;
+    @observable isAuthUser = true;
 
 
     changeName = (e: any) => {

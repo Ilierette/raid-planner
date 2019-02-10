@@ -24,13 +24,14 @@ import {
 import SiteNav from '../components/navbar';
 import "../scss/navigation.scss"
 import { market } from '../store/marketStore';
+import { user } from '../store/userStore';
 
 library.add(
   fab, faPowerOff, faBars, faCaretDown,
   faUser, faComments, faCogs, faPowerOff,
   faHome, faTable, faHeadphones,
   faChalkboard, faBalanceScale,
-  faBan, faPlus, faPencilAlt, faTimes,faCrown,
+  faBan, faPlus, faPencilAlt, faTimes, faCrown,
   faSave
 )
 
@@ -42,54 +43,68 @@ export default class MasterPage extends React.Component {
     return (
       <Router>
         <div>
-          <SiteNav />
+          {
+            user.isAuthUser &&
+            <SiteNav />
+          }
           <div className="container-fluid">
             <div className="row">
-              <div className="col-md-2 sidebar">
-                <div className="sidebar-sticky">
-                  <ul className="nav flex-column">
-                    <li className="nav-item">
-                      <Link to="/" className="nav-link active text-light">
-                        <FontAwesomeIcon icon="home" className="mr-3" />
-                        Home
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link to="/raid-schedule" className="nav-link text-light">
-                        <FontAwesomeIcon icon="table" className="mr-3" />
-                        Raid schedule
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link to="/market" className="nav-link text-light">
-                        <FontAwesomeIcon icon="balance-scale" className="mr-3" />
-                        Marketplace
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link to="/upgrade-gear" className="nav-link text-light">
-                        <FontAwesomeIcon icon="chalkboard" className="mr-3" />
-                        Gear upgrade chart
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link to="/find-clan" className="nav-link text-light">
-                        <FontAwesomeIcon icon="headphones" className="mr-3" />
-                        Find clan
-                      </Link>
-                    </li>
-                  </ul>
+              {
+                user.isAuthUser ?
+                  <div className="sidebar">
+                    <div className="sidebar-sticky">
+                      <ul className="nav flex-column">
+                        <li className="nav-item">
+                          <Link to="/" className="nav-link active text-light">
+                            <FontAwesomeIcon icon="home" className="mr-3" />
+                            Home
+                          </Link>
+                        </li>
+                        <li className="nav-item">
+                          <Link to="/raid-schedule" className="nav-link text-light">
+                            <FontAwesomeIcon icon="table" className="mr-3" />
+                            Raid schedule
+                          </Link>
+                        </li>
+                        <li className="nav-item">
+                          <Link to="/market" className="nav-link text-light">
+                            <FontAwesomeIcon icon="balance-scale" className="mr-3" />
+                            Marketplace
+                          </Link>
+                        </li>
+                        <li className="nav-item">
+                          <Link to="/upgrade-gear" className="nav-link text-light">
+                            <FontAwesomeIcon icon="chalkboard" className="mr-3" />
+                            Gear upgrade chart
+                          </Link>
+                        </li>
+                        <li className="nav-item">
+                          <Link to="/find-clan" className="nav-link text-light">
+                            <FontAwesomeIcon icon="headphones" className="mr-3" />
+                            Find clan
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div> :
+                  ("")
+              }
+              {user.isAuthUser ?
+                <main role="main" className="col px-0">
+                  <div>
+                    <Route exact path="/" component={Home} />
+                    <Route path="/find-clan" component={Clan} />
+                    <Route path="/raid-schedule" component={Schedule} />
+                    <Route path="/upgrade-gear" component={Gear} />
+                    <Route path="/market" component={Marketplace} />
+                  </div>
+                </main> :
+                <div className="auth-box mx-auto">
+                  <div className="logo"></div>
+                  <Route path="/login" component={Login} />
+                  <Route path="/register" component={Register} />
                 </div>
-              </div>
-              <main role="main" className="col px-0">
-                <Route exact path="/" component={Home} />
-                <Route path="/login" component={Login} />
-                <Route path="/register" component={Register} />
-                <Route path="/find-clan" component={Clan} />
-                <Route path="/raid-schedule" component={Schedule} />
-                <Route path="/upgrade-gear" component={Gear} />
-                <Route path="/market" component={Marketplace} />
-              </main>
+              }
             </div>
           </div>
         </div>
