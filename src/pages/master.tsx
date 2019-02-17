@@ -19,12 +19,13 @@ import {
   faUser, faComments, faCogs,
   faHome, faTable, faHeadphones,
   faChalkboard, faBalanceScale,
-  faBan, faPlus, faPencilAlt, faTimes, faCrown, faSave
+  faBan, faPlus, faPencilAlt, faTimes, faCrown, faSave, faSearch
 } from '@fortawesome/free-solid-svg-icons'
-import SiteNav from '../components/navbar';
 import "../scss/navigation.scss"
 import { market } from '../store/marketStore';
 import { user } from '../store/userStore';
+import CharacterSearch from './characterSearch';
+import Badge from 'reactstrap/lib/Badge';
 
 library.add(
   fab, faPowerOff, faBars, faCaretDown,
@@ -32,7 +33,7 @@ library.add(
   faHome, faTable, faHeadphones,
   faChalkboard, faBalanceScale,
   faBan, faPlus, faPencilAlt, faTimes, faCrown,
-  faSave
+  faSave, faSearch
 )
 
 export default class MasterPage extends React.Component {
@@ -43,21 +44,32 @@ export default class MasterPage extends React.Component {
     return (
       <Router>
         <div>
-          {
-            user.isAuthUser &&
-            <SiteNav />
-          }
           <div className="container-fluid">
             <div className="row">
               {
                 user.isAuthUser ?
                   <div className="sidebar">
                     <div className="sidebar-sticky">
-                      <ul className="nav flex-column">
+                      <ul className="nav side-nav flex-column">
+                        <li className="nav-item">
+                          <a className="navbar-brand col-sm-3 col-md-2 mr-0 text-light" href="#">
+                            <FontAwesomeIcon icon={['fab', 'react']} />
+                            <span className="ml-2 brand-name">BNS Raid Planner</span>
+                          </a>
+                        </li>
+                        <li>
+                          <hr className="hr-light"/>
+                        </li>
                         <li className="nav-item">
                           <Link to="/" className="nav-link active text-light">
                             <FontAwesomeIcon icon="home" className="mr-3" />
                             Home
+                          </Link>
+                        </li>
+                        <li className="nav-item">
+                          <Link to="/character" className="nav-link text-light">
+                            <FontAwesomeIcon icon="search" className="mr-3" />
+                            Character search
                           </Link>
                         </li>
                         <li className="nav-item">
@@ -84,6 +96,15 @@ export default class MasterPage extends React.Component {
                             Find clan
                           </Link>
                         </li>
+                        <li>
+                          <hr className="hr-light"/>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link text-light" href="#">
+                                <FontAwesomeIcon icon="power-off" className="mr-2" />
+                                Logout
+                            </a>
+                        </li>
                       </ul>
                     </div>
                   </div> :
@@ -93,6 +114,7 @@ export default class MasterPage extends React.Component {
                 <main role="main" className="col px-0">
                   <div>
                     <Route exact path="/" component={Home} />
+                    <Route path="/character" component={CharacterSearch} />
                     <Route path="/find-clan" component={Clan} />
                     <Route path="/raid-schedule" component={Schedule} />
                     <Route path="/upgrade-gear" component={Gear} />

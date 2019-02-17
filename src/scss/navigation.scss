@@ -1,14 +1,12 @@
 .sidebar-sticky {
     position: sticky;
-    top: 0;
+    top: 0px;
     height: 100vh;
-    padding-top: 80px;
     overflow-x: hidden;
     overflow-y: auto;
 }
 
 [role="main"] {
-    padding-top: 55px;
     background: #f5f5f5;
 }
 
@@ -36,3 +34,12 @@
     height: 210px;
     width: 500px;
   }
+
+  .hr-light{
+    border-top: 1px solid #f8f9fa73;
+    margin: 10px 15px;
+}
+
+.side-nav{
+    margin-top:30px;
+}
