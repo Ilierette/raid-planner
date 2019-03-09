@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { PageHeader } from '../components/pageHeader';
 import Badge from 'reactstrap/lib/Badge';
+import { Changelog } from '../components/changelog';
+import { data } from '../data/changelog';
 
 export default class Home extends React.Component {
   render() {
@@ -10,10 +12,10 @@ export default class Home extends React.Component {
         <div className="content">
           <div className="card">
             <div className="card-body">
-              <h3>Welcome to (BNS) game tools</h3>
-              <span>This site is currently under construction! </span>
+              <h2>Welcome to (BNS) game tools</h2>
+              <h4 className="card-subtitle mb-2 text-muted">This site is currently under construction! </h4>
               <hr />
-              <span>
+              <p>
                 We all love spreadsheets, right? Well... not really. <br />
                 <br />
                 Of course, it is a amazing tool, but it's limited functions encourage me to write my own application.<br />
@@ -26,9 +28,15 @@ export default class Home extends React.Component {
                 <Badge className="mr-2" href="https://slate.silveress.ie/docs_bns#introduction" color="success">BNS API</Badge>
                 <Badge className="mr-2" href="https://reactjs.org/docs/hello-world.html" color="danger">React Docs</Badge>
                 <Badge href="http://eu-bns.ncsoft.com/ingame/bs/character/profile?c=Letty&s=207" color="warning">Ingame F2</Badge>
-
-              </span>
-
+              </p>
+              <div>
+                <h5>Functionality checklist:</h5>
+                {
+                  data.map((data: any) => (
+                    <Changelog log={data}/>
+                  ))
+                }
+              </div>
             </div>
           </div>
         </div>
