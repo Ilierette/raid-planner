@@ -27,6 +27,7 @@ class UserStore implements UserStoreState {
     @observable isGearEditMode = false;
     @observable isMarketEditMode = false;
     @observable isAuthUser = true;
+    @observable tab = 1;
 
 
     changeName = (e: any) => {
@@ -57,6 +58,10 @@ class UserStore implements UserStoreState {
             this.reload = true;
             this.isBadge = true;
         }, 1);
+    }
+
+    toggle = (tab:number) => {
+        this.tab = tab;
     }
 
     @observable mats = mats;

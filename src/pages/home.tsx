@@ -2,7 +2,7 @@ import * as React from 'react';
 import { PageHeader } from '../components/pageHeader';
 import Badge from 'reactstrap/lib/Badge';
 import { Changelog } from '../components/changelog';
-import { data } from '../data/changelog';
+import { data, links } from '../data/changelog';
 
 export default class Home extends React.Component {
   render() {
@@ -23,17 +23,23 @@ export default class Home extends React.Component {
                 I'm still looking for ways to improve backend, so I'll wait for all suggestions working well with React.
                 <br />
 
-                <Badge className="mr-2" href="https://game-tools-b5a6d.firebaseapp.com/" color="primary">Current link</Badge>
-                <Badge className="mr-2" href="https://github.com/Ilierette/raid-planner" color="secondary">Repository</Badge>
-                <Badge className="mr-2" href="https://slate.silveress.ie/docs_bns#introduction" color="success">BNS API</Badge>
-                <Badge className="mr-2" href="https://reactjs.org/docs/hello-world.html" color="danger">React Docs</Badge>
-                <Badge href="http://eu-bns.ncsoft.com/ingame/bs/character/profile?c=Letty&s=207" color="warning">Ingame F2</Badge>
+                {
+                  links.map((link: any, id:any) => (
+                    <Badge
+                      key={id}
+                      className="mr-2"
+                      href={link.link}
+                      color={link.color}>
+                      {link.title}
+                    </Badge>
+                  ))
+                }
               </p>
               <div>
                 <h5>Functionality checklist:</h5>
                 {
-                  data.map((data: any) => (
-                    <Changelog log={data}/>
+                  data.map((data: any, id:any) => (
+                    <Changelog log={data} key={id} />
                   ))
                 }
               </div>

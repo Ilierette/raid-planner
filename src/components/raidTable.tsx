@@ -82,7 +82,7 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                                         <td>
                                             {store.selectedCharClass}
                                         </td>
-                                        <td colSpan={7}></td>
+                                        <td colSpan={6}></td>
                                         <td>
                                             {store.selectedCharIsStatic != null ?
                                                 <select

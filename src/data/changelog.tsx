@@ -1,3 +1,31 @@
+export const links = [
+    {
+        link: "https://game-tools-b5a6d.firebaseapp.com/",
+        color: "primary",
+        title: "Current link"
+    },
+    {
+        link: "https://github.com/Ilierette/raid-planner",
+        color: "secondary",
+        title: "Repository"        
+    },
+    {
+        link: "https://slate.silveress.ie/docs_bns#introduction",
+        color: "success",
+        title: "BNS API"        
+    },
+    {
+        link: "https://reactjs.org/docs/hello-world.html",
+        color: "danger",
+        title: "React Docs"
+    },
+    {
+        link: "http://eu-bns.ncsoft.com/ingame/bs/character/profile?c=Letty&s=207",
+        color: "warning",
+        title: "Ingame F2"       
+    }
+]
+
 export const data = [
     {
         title: "User profile",
@@ -21,6 +49,7 @@ export const data = [
         checklist: [
             {
                 title: "table:",
+                isChecked: false,
                 checklist: [
                     {
                         title: "fields (name, class, hours, notes, isMain, isStatic)",
@@ -46,7 +75,8 @@ export const data = [
             },
             {
                 title: "add user:",
-                checklist:[
+                isChecked: false,
+                checklist: [
                     {
                         title: "character data modal",
                         isChecked: true
@@ -67,7 +97,8 @@ export const data = [
             },
             {
                 title: "edit hours:",
-                checklist:[
+                isChecked: false,
+                checklist: [
                     {
                         title: "editable fields by lider - isStatic, notes",
                         isChecked: true
@@ -79,10 +110,12 @@ export const data = [
                 ]
             },
             {
-                title: "delete user"
+                title: "delete user",
+                isChecked: false
             },
             {
                 title: "set raid time:",
+                isChecked: false,
                 checklist: [
                     {
                         title: "first in - then user gets locked in that time from other raids",

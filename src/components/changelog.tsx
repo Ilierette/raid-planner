@@ -17,16 +17,16 @@ export class Changelog extends React.Component<ChangelogProps> {
                         <div className="card-body">
                             <ul>
                                 {
-                                    log.checklist.map((check: any) => (
-                                        <li>
+                                    log.checklist.map((check: any, id: any) => (
+                                        <li key={id}>
                                             <input className="form-check-input" type="checkbox" defaultChecked={check.isChecked} />
                                             {check.title}
                                             {
                                                 check.checklist &&
                                                 <ul>
                                                     {
-                                                        check.checklist.map((check: any) => (
-                                                            <li>
+                                                        check.checklist.map((check: any, id: any) => (
+                                                            <li key={id}>
                                                                 <input className="form-check-input" type="checkbox" defaultChecked={check.isChecked} />
                                                                 {check.title}
                                                             </li>

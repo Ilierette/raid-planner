@@ -105,6 +105,20 @@ export class RaidTableRow extends React.Component<RaidTableRowProps, RaidTableRo
                                     <NavLink
                                         className={classnames({ active: this.state.activeTab === 2 })}
                                         onClick={() => { this.changeTab(2); }}>
+                                        Needs
+                                    </NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink
+                                        className={classnames({ active: this.state.activeTab === 3 })}
+                                        onClick={() => { this.changeTab(3); }}>
+                                        Parse
+                                    </NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink
+                                        className={classnames({ active: this.state.activeTab === 4 })}
+                                        onClick={() => { this.changeTab(4); }}>
                                         Info
                                     </NavLink>
                                 </NavItem>
@@ -113,7 +127,13 @@ export class RaidTableRow extends React.Component<RaidTableRowProps, RaidTableRo
                                 <TabPane tabId={1} className="bg-dark">
                                     <CharacterData name={user.name} region={store.region} isMain={user.isMain} isBadge={store.isBadge} />
                                 </TabPane>
-                                <TabPane tabId={2}>
+                                <TabPane tabId={2} className="bg-dark">
+                                
+                                </TabPane>
+                                <TabPane tabId={3} className="bg-dark">
+                                
+                                </TabPane>
+                                <TabPane tabId={4}>
                                     {member.notes} <br />
                                     User additional message <br />
                                     Warnings
