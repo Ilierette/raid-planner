@@ -2,6 +2,12 @@ import { observable } from 'mobx';
 import { users, mats, gear } from '../data/users';
 import { User } from '../models/interfaces';
 
+//import * as firebase from 'firebase/auth';
+
+import { config } from './config';
+import * as firebase from 'firebase'
+require('firebase/auth')
+
 interface UserStoreState {
     id: number,
     isBadge: boolean,
@@ -26,9 +32,8 @@ class UserStore implements UserStoreState {
     @observable isLoadingData = true;
     @observable isGearEditMode = false;
     @observable isMarketEditMode = false;
-    @observable isAuthUser = true;
+    @observable isAuthUser = false;
     @observable tab = 1;
-
 
     changeName = (e: any) => {
         if (!(e.key == 'Shift' || e.key == 'Control' || e.key == 'Alt')) {
@@ -60,14 +65,34 @@ class UserStore implements UserStoreState {
         }, 1);
     }
 
-    toggle = (tab:number) => {
+    toggle = (tab: number) => {
         this.tab = tab;
     }
 
     @observable mats = mats;
     @observable gear = gear;
 
-    
+    constructor() {
+        firebase.initializeApp(config);
+        console.log("app ready")
+    }
+
+    login = (email: any, password: any) => {
+        firebase.auth().signInWithEmailAndPassword(email, password);
+    }
+
+    logout = () => {
+        firebase.auth().signOut();
+    }
+
+    resetPassword = (email: any) => {
+        firebase.auth().sendPasswordResetEmail(email);
+    }
+
+    updatePassword = (password: any) => {
+        firebase.auth().currentUser.updatePassword(password);
+    }
+
 }
 
 export const user = new UserStore();

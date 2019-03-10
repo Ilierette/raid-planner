@@ -25,7 +25,6 @@ import "../scss/navigation.scss"
 import { market } from '../store/marketStore';
 import { user } from '../store/userStore';
 import CharacterSearch from './characterSearch';
-import Badge from 'reactstrap/lib/Badge';
 
 library.add(
   fab, faPowerOff, faBars, faCaretDown,
@@ -39,6 +38,9 @@ library.add(
 export default class MasterPage extends React.Component {
   componentDidMount() {
     market.getStoreData();
+  }
+  componentDidUpdate(){
+    
   }
   render() {
     return (

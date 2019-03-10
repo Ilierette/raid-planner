@@ -1,10 +1,33 @@
 import * as React from 'react';
 import '../scss/auth.scss';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { observer } from 'mobx-react';
+import { observable } from 'mobx';
+import { user } from '../store/userStore';
+import firebase = require('firebase');
 
+@observer
 export default class Register extends React.Component {
+  @observable region = "EU";
+  @observable username = "";
+  @observable email = "";
+  @observable passwordOne = "";
+  @observable passwordTwo = "";
+  @observable error: any = null;
+
+  onSubmit = (e: any) => {
+    e.preventDefault();
+    firebase.auth().createUserWithEmailAndPassword(this.email, this.passwordOne).then((authUser: any) => {
+      console.log(authUser);
+
+      
+    }).then(() => {
+      user.isAuthUser = true;
+    }).catch((error: any) => this.error = error);
+  }
+
   render() {
-    return (
+    return user.isAuthUser ? <Redirect to = '/raid-schedule'  /> : (
       <div className="card">
         <div className="card-body">
           <div className="text-center">
@@ -14,44 +37,59 @@ export default class Register extends React.Component {
           <form>
             <div className="form-group">
               <select
-                className="form-control">
-
+                className="form-control"
+                onChange={(e) => this.region = e.target.value}
+              >
                 <option value="EU">EU</option>
                 <option value="NA">NA</option>
               </select>
               <label htmlFor="region" className="">Region</label>
             </div>
-
             <div className="form-group">
               <input
                 type="text"
+                name="username"
+                value={this.username}
+                onChange={(e) => this.username = e.target.value}
                 className="form-control"
               />
-              <label htmlFor="name" className="">Nazwa postaci</label>
+              <label htmlFor="username" className="">Nazwa postaci</label>
             </div>
-
             <div className="form-group">
               <input
-                type="text"
+                type="email"
+                name="email"
+                value={this.email}
+                onChange={(e) => this.email = e.target.value}
                 className="form-control"
               />
               <label htmlFor="email" className="">E-mail</label>
             </div>
-
             <div className="form-group">
               <input
                 type="password"
+                name="passwordOne"
+                value={this.passwordOne}
+                onChange={(e) => this.passwordOne = e.target.value}
                 className="form-control"
               />
               <label htmlFor="passwordOne" className="">Hasło</label>
             </div>
-
             <div className="form-group">
               <input
                 type="password"
+                name="passwordTwo"
+                value={this.passwordTwo}
+                onChange={(e) => this.passwordTwo = e.target.value}
                 className="form-control"
               />
               <label htmlFor="passwordTwo" className="">Powtórz hasło</label>
+            </div>
+            <div className="col-12">
+              <small className="text-danger">
+                {this.error && <p>{this.error.message}
+                </p>}
+              </small>
             </div>
             <hr className="hr-light" />
             <div className="mt-4">
@@ -62,7 +100,11 @@ export default class Register extends React.Component {
                   </Link>
                 </div>
                 <div className="col text-right">
-                  <button type="submit" className="btn btn-primary">
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    onClick={(e) => this.onSubmit(e)}
+                  >
                     Rejestracja
                   </button>
                 </div>
