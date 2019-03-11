@@ -107,7 +107,7 @@ export default class MasterPage extends React.Component {
                               <hr className="hr-light" />
                             </li>
                             <li className="nav-item">
-                              <a className="nav-link text-light" href="#">
+                              <a className="nav-link text-light" href="#" onClick={user.logout}>
                                 <FontAwesomeIcon icon="power-off" className="mr-2" />
                                 Logout
                             </a>
@@ -119,14 +119,30 @@ export default class MasterPage extends React.Component {
                   }
                   <main role="main" className="col px-0">
                     <div>
-                      <Route exact path="/" component={Home} />
-                      <Route path="/character" component={CharacterSearch} />
-                      <Route path="/find-clan" component={Clan} />
-                      <Route exact path="/raid-schedule" component={Schedule} />
-                      <Route exact path="/upgrade-gear" component={Gear} />
-                      <Route exact path="/market" component={Marketplace} />
-                      <Route exact path="/login" render={() => (user.isAuthUser ? <Redirect to="/" /> : <Login />)} />
-                      <Route exact path="/register" render={() => (user.isAuthUser ? <Redirect to="/" /> : <Register />)} />
+                      <Route
+                        exact path="/"
+                        render={() => (!user.isAuthUser ? <Redirect to="/login" /> : <Home />)} />
+                      <Route
+                        path="/character"
+                        render={() => (!user.isAuthUser ? <Redirect to="/login" /> : <CharacterSearch />)} />
+                      <Route
+                        path="/find-clan"
+                        render={() => (!user.isAuthUser ? <Redirect to="/login" /> : <Clan />)} />
+                      <Route
+                        exact path="/raid-schedule"
+                        render={() => (!user.isAuthUser ? <Redirect to="/login" /> : <Schedule />)} />
+                      <Route
+                        exact path="/upgrade-gear"
+                        render={() => (!user.isAuthUser ? <Redirect to="/login" /> : <Gear />)} />
+                      <Route
+                        exact path="/market"
+                        render={() => (!user.isAuthUser ? <Redirect to="/login" /> : <Marketplace />)} />
+                      <Route
+                        exact path="/login"
+                        render={() => (user.isAuthUser ? <Redirect to="/" /> : <Login />)} />
+                      <Route
+                        exact path="/register"
+                        render={() => (user.isAuthUser ? <Redirect to="/" /> : <Register />)} />
                     </div>
                   </main>
                 </div>

@@ -24,12 +24,16 @@ class UserStore implements UserStoreState {
             if(user) {
                 this.isAuthUser = true;
                 this.user = user;
-                this.isLoading = false;
             }
+            this.isLoading = false;
             console.log(user)
         })
     }
-
+    logout = () => {
+        event.preventDefault();
+        auth.signOut();
+        window.location.reload();
+    }
 
     @observable id = 0;
     @observable users = users;

@@ -1,10 +1,9 @@
 import * as React from 'react';
 import '../scss/auth.scss';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
-import { user } from '../store/userStore';
-import firebase = require('firebase');
+import { auth } from '../store/config';
 
 @observer
 export default class Register extends React.Component {
@@ -17,12 +16,8 @@ export default class Register extends React.Component {
 
   onSubmit = (e: any) => {
     e.preventDefault();
-    firebase.auth().createUserWithEmailAndPassword(this.email, this.passwordOne).then((authUser: any) => {
-      console.log(authUser);
-
-
-    }).then(() => {
-
+    auth.createUserWithEmailAndPassword(this.email, this.passwordOne).then((authUser: any) => {
+      this.props.history.push('/');
     }).catch((error: any) => this.error = error);
   }
 
