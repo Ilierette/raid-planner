@@ -14,9 +14,54 @@ import { observer } from 'mobx-react';
 import { user } from '../store/userStore';
 import Badge from 'reactstrap/lib/Badge';
 import classnames = require('classnames');
+import { observable } from 'mobx';
+import { CharacterDataSearch } from '../components/characterDataSearch';
 
 @observer
 export default class CharacterSearch extends React.Component {
+  @observable searchName = "";
+  @observable searchRegion = "EU";
+
+  @observable isBadge = true;
+  @observable reload = true;
+  @observable isGearEditMode = false;
+  @observable isMarketEditMode = false;
+  @observable tab = 1;
+
+  @observable searchSwitch = true;
+
+  changeName = (e: any) => {
+    if (!(e.key == 'Shift' || e.key == 'Control' || e.key == 'Alt')) {
+      this.reload = false;
+      this.isBadge = false;
+      this.searchSwitch = false;
+      this.searchName = e.target.value;
+    }
+    if (e.key == 'Enter') {
+      this.reload = true;
+      this.searchSwitch = false;
+      this.searchName = e.target.value;
+    }
+  }
+
+  changeRegion = (e: any) => {
+    this.searchRegion = e.target.value;
+  }
+
+  handleSubmit = (e: any) => {
+    e.preventDefault();
+    this.searchSwitch = false;
+    this.reload = true;
+  }
+
+  returnHome = () => {
+    this.searchSwitch = true;
+  }
+
+  toggle = (tab: number) => {
+    this.tab = tab;
+  }
+
   render() {
     return (
       <div className="content-wrapper">
@@ -25,16 +70,16 @@ export default class CharacterSearch extends React.Component {
           <Nav tabs className="justify-content-end">
             <NavItem>
               <NavLink
-                className={classnames({ active: user.tab === 1 })}
-                onClick={() => { user.toggle(1); }}
+                className={classnames({ active: this.tab === 1 })}
+                onClick={() => { this.toggle(1); }}
               >
                 Character info
             </NavLink>
             </NavItem>
             <NavItem>
               <NavLink
-                className={classnames({ active: user.tab === 2 })}
-                onClick={() => { user.toggle(2); }}
+                className={classnames({ active: this.tab === 2 })}
+                onClick={() => { this.toggle(2); }}
               >
                 <FontAwesomeIcon icon="comments" className="mr-2" />
                 Messages
@@ -43,29 +88,29 @@ export default class CharacterSearch extends React.Component {
             </NavItem>
             <NavItem>
               <NavLink
-                className={classnames({ active: user.tab === 3 })}
-                onClick={() => { user.toggle(3); }}
+                className={classnames({ active: this.tab === 3 })}
+                onClick={() => { this.toggle(3); }}
               >
                 Settings
             </NavLink>
             </NavItem>
           </Nav>
-          <TabContent activeTab={user.tab}>
+          <TabContent activeTab={this.tab}>
             <TabPane tabId={1}>
               <div className="card bg-dark">
                 <div className="card-body">
                   <div className="char-data row mx-auto">
                     <div className="col-1">
-                      <button className="btn btn-outline-primary" onClick={() => user.returnHome()}>
+                      <button className="btn btn-outline-primary" onClick={() => this.returnHome()}>
                         <FontAwesomeIcon icon="home" />
                       </button>
                     </div>
                     <div className="col-11 reversed">
-                      <form className="form-inline mb-2" onSubmit={(e: any) => user.handleSubmit(e)}>
+                      <form className="form-inline mb-2" onSubmit={(e: any) => this.handleSubmit(e)}>
                         <div className="form-group">
                           <CharacterSelectDropdown />
-                          <input placeholder="Find other character" className="form-control ml-1 mr-1 bg-dark text-light" onKeyUp={(e: any) => user.changeName(e)} />
-                          <select className="form-control mr-3 bg-dark text-light" onChange={(e: any) => user.changeRegion(e)}>
+                          <input placeholder="Find other character" className="form-control ml-1 mr-1 bg-dark text-light" onKeyUp={(e: any) => this.changeName(e)} />
+                          <select className="form-control mr-3 bg-dark text-light" onChange={(e: any) => this.changeRegion(e)}>
                             <option value="eu">EU</option>
                             <option value="na">NA</option>
                           </select>
@@ -74,23 +119,28 @@ export default class CharacterSearch extends React.Component {
                       </form>
                     </div>
                   </div>
-                  {user.reload ?
+                  {this.reload ?
                     <div>
-                      <CharacterData name={user.name} region={user.region} isMain={user.isMain} isBadge={user.isBadge} />
-                      {
-                        !user.isLoadingData &&
-                        <div className="char-details mx-auto">
-                          <div className="card-group">
-                            <CharacterNeeds need={user.needs}/>
-                            <CharacterMember />
-                            <CharacterLeader />
-                          </div>
-                          <div className="row mt-2">
-                            <div className="col-12">
-                              <CharacterParse dpsCount={user.dpsCount} dpsImg={user.dpsImg} />
+                      {this.searchSwitch ?
+                        <div>
+                          <CharacterData name={user.name} region={user.region} isMain={user.isMain} isBadge={this.isBadge} />
+                          {
+                            !user.isLoadingData &&
+                            <div className="char-details mx-auto">
+                              <div className="card-group">
+                                <CharacterNeeds need={user.needs} />
+                                <CharacterMember />
+                                <CharacterLeader />
+                              </div>
+                              <div className="row mt-2">
+                                <div className="col-12">
+                                  <CharacterParse dpsCount={user.dpsCount} dpsImg={user.dpsImg} />
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        </div>
+                          }
+                        </div> :
+                        <CharacterDataSearch name={this.searchName} region={this.searchRegion} isMain={null} isBadge={null} />
                       }
                     </div> :
                     <div className="card bg-dark text-white char-data mx-auto">
