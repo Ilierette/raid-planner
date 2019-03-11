@@ -6,6 +6,7 @@ import { store } from '../store/raidStore';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
 import { User, Member, Day } from '../models/interfaces';
+import { CharacterDataSearch } from './characterDataSearch';
 
 interface RaidTableRowProps {
     o: number,
@@ -125,7 +126,7 @@ export class RaidTableRow extends React.Component<RaidTableRowProps, RaidTableRo
                             </Nav>
                             <TabContent activeTab={this.state.activeTab}>
                                 <TabPane tabId={1} className="bg-dark">
-                                    <CharacterData name={user.name} region={store.region} isMain={user.isMain} isBadge={store.isBadge} />
+                                    <CharacterDataSearch name={user.name} region={store.region} isMain={user.isMain} isBadge={store.isBadge} />
                                 </TabPane>
                                 <TabPane tabId={2} className="bg-dark">
                                 
