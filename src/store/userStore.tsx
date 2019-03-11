@@ -1,32 +1,44 @@
 import { observable } from 'mobx';
 import { users, mats, gear } from '../data/users';
-import { User } from '../models/interfaces';
-import { auth } from './config';
+import { auth, db } from './config';
 
-interface UserStoreState {
-    id: number,
-    isBadge: boolean,
-    isLoadingData: boolean,
-    reload: boolean,
-    users: User[],
-    isGearEditMode: boolean,
-    isMarketEditMode: boolean
-    isAuthUser: boolean
-}
-
-class UserStore implements UserStoreState {
+class UserStore {
     @observable isAuthUser = false;
-    @observable user:any = null
+    @observable user: any = null
     @observable isLoading = true;
+    @observable uid: any = null;
+    @observable name: any = null;
+    @observable region: any = null;
+    @observable dpsCount: any = null;
+    @observable dpsImg: any = null;
+    @observable isMain: any = null;
+    @observable needs:any = null;
 
-    authListener = () =>{
-        auth.onAuthStateChanged((user)=>{
-            if(user) {
+    @observable isLoadingData = true;
+
+    authListener = () => {
+        auth.onAuthStateChanged((user) => {
+            if (user) {
                 this.isAuthUser = true;
                 this.user = user;
+                this.uid = user.uid;
+
+                const docRef = db.collection("users").doc(this.uid);
+                docRef.get().then((doc) => {
+                    if (doc.exists) {
+                        this.name = doc.data().username;
+                        this.region = doc.data().region;
+                        this.dpsCount = doc.data().dpsParseValue;
+                        this.dpsImg = doc.data().dpsParse;
+                        this.isMain = doc.data().isMain;
+
+                        this.needs = doc.data().needs;
+
+                        console.log(this.needs)
+                    }
+                })
             }
             this.isLoading = false;
-            console.log(user)
         })
     }
     logout = () => {
@@ -35,16 +47,10 @@ class UserStore implements UserStoreState {
         window.location.reload();
     }
 
-    @observable id = 0;
+
     @observable users = users;
-    @observable name = this.users[this.id].name;
-    @observable dpsCount = this.users[this.id].dpsCount;
-    @observable dpsImg = this.users[this.id].dpsImg;
-    @observable region = this.users[this.id].region;
-    @observable isMain = this.users[this.id].isMain;
     @observable isBadge = true;
     @observable reload = true;
-    @observable isLoadingData = true;
     @observable isGearEditMode = false;
     @observable isMarketEditMode = false;
     @observable tab = 1;

@@ -81,7 +81,7 @@ export default class CharacterSearch extends React.Component {
                         !user.isLoadingData &&
                         <div className="char-details mx-auto">
                           <div className="card-group">
-                            <CharacterNeeds />
+                            <CharacterNeeds need={user.needs}/>
                             <CharacterMember />
                             <CharacterLeader />
                           </div>

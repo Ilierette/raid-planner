@@ -6,7 +6,7 @@ import { observable } from 'mobx';
 import { auth } from '../store/config';
 
 @observer
-export default class Login extends React.Component {
+export default class Login extends React.Component<any> {
   @observable email = "";
   @observable password = "";
   @observable error: any = null;

@@ -3,10 +3,19 @@ import '../scss/auth.scss';
 import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
-import { auth } from '../store/config';
+import { auth, db } from '../store/config';
+
+const initNeeds = [{
+  name: "",
+  isAwakened: false
+}]
+
+const initRaid = [{
+  raidId: ""
+}]
 
 @observer
-export default class Register extends React.Component {
+export default class Register extends React.Component<any> {
   @observable region = "EU";
   @observable username = "";
   @observable email = "";
@@ -17,7 +26,21 @@ export default class Register extends React.Component {
   onSubmit = (e: any) => {
     e.preventDefault();
     auth.createUserWithEmailAndPassword(this.email, this.passwordOne).then((authUser: any) => {
-      this.props.history.push('/');
+      return db.collection("users").doc(authUser.user.uid).set({
+        region: this.region,
+        username: this.username,
+        email: this.email,
+        dpsParse: "",
+        dpsParseValue: "",
+        needs: initNeeds,
+        raidMember: initRaid,
+        raidLeader: initRaid,
+        isMain: true
+      }).then(()=>{
+        this.props.history.push('/');
+      }).catch((error)=>{
+        console.log(error)
+      })
     }).catch((error: any) => this.error = error);
   }
 

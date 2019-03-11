@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { PageHeader } from '../components/pageHeader';
-import { RaidTable } from '../components/raidTable'
+import { RaidTable } from '../components/raidTable';
 import '../scss/content.scss';
 
 import { observer } from 'mobx-react';
