@@ -6,8 +6,9 @@
     overflow-y: auto;
 }
 
-[role="main"] {
+.content-wrapper {
     background: #f5f5f5;
+    min-height: 100vh;
 }
 
 .brand-name {

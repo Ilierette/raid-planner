@@ -19,8 +19,7 @@ export default class Home extends React.Component {
                 We all love spreadsheets, right? Well... not really. <br />
                 <br />
                 Of course, it is a amazing tool, but it's limited functions encourage me to write my own application.<br />
-                This app will be written in React as single-page application. The database will be Firebase.<br />
-                I'm still looking for ways to improve backend, so I'll wait for all suggestions working well with React.
+                This app will be written in React as single-page application. The database will be Firebase.
                 <br />
 
                 {

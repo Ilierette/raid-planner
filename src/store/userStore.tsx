@@ -1,12 +1,7 @@
 import { observable } from 'mobx';
 import { users, mats, gear } from '../data/users';
 import { User } from '../models/interfaces';
-
-//import * as firebase from 'firebase/auth';
-
-import { config } from './config';
-import * as firebase from 'firebase'
-require('firebase/auth')
+import { auth } from './config';
 
 interface UserStoreState {
     id: number,
@@ -20,6 +15,22 @@ interface UserStoreState {
 }
 
 class UserStore implements UserStoreState {
+    @observable isAuthUser = false;
+    @observable user:any = null
+    @observable isLoading = true;
+
+    authListener = () =>{
+        auth.onAuthStateChanged((user)=>{
+            if(user) {
+                this.isAuthUser = true;
+                this.user = user;
+                this.isLoading = false;
+            }
+            console.log(user)
+        })
+    }
+
+
     @observable id = 0;
     @observable users = users;
     @observable name = this.users[this.id].name;
@@ -32,7 +43,6 @@ class UserStore implements UserStoreState {
     @observable isLoadingData = true;
     @observable isGearEditMode = false;
     @observable isMarketEditMode = false;
-    @observable isAuthUser = false;
     @observable tab = 1;
 
     changeName = (e: any) => {
@@ -71,27 +81,6 @@ class UserStore implements UserStoreState {
 
     @observable mats = mats;
     @observable gear = gear;
-
-    constructor() {
-        firebase.initializeApp(config);
-        console.log("app ready")
-    }
-
-    login = (email: any, password: any) => {
-        firebase.auth().signInWithEmailAndPassword(email, password);
-    }
-
-    logout = () => {
-        firebase.auth().signOut();
-    }
-
-    resetPassword = (email: any) => {
-        firebase.auth().sendPasswordResetEmail(email);
-    }
-
-    updatePassword = (password: any) => {
-        firebase.auth().currentUser.updatePassword(password);
-    }
 
 }
 
