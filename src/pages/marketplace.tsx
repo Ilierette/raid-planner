@@ -34,8 +34,8 @@ export default class Marketplace extends React.Component {
                                 </div>
                                 <div className="col-2 text-right">
                                     {user.isMarketEditMode ?
-                                        <button className="btn btn-success" onClick={() => user.isMarketEditMode = false}>Save changes</button> :
-                                        <button className="btn btn-primary" onClick={() => user.isMarketEditMode = true}>Edit</button>
+                                        <button className="btn btn-success btn-sm" onClick={() => user.isMarketEditMode = false}>Save changes</button> :
+                                        <button className="btn btn-primary btn-sm" onClick={() => user.isMarketEditMode = true}>Edit</button>
                                     }
                                 </div>
                             </div>
