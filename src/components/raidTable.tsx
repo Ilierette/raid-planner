@@ -9,6 +9,7 @@ import { store } from '../store/raidStore';
 import '../scss/table.scss';
 import { Raid, Member, User, Day } from '../models/interfaces';
 import { HourInputGroup } from './hourInputGroup';
+import { Badge } from 'reactstrap';
 
 interface RaidProps {
     raid: Raid,
@@ -110,14 +111,14 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                                         {raid.members.map((member: Member) => (
                                             store.users.map((user: User) => {
                                                 if (member.id == user.id) {
-                                                    return(
-                                                        member.days.map((day:Day, id:number)=>{
+                                                    return (
+                                                        member.days.map((day: Day, id: number) => {
                                                             return (
-                                                                <HourInputGroup date={day.date} min={day.min} max={day.max} id={id} raidId={index}/>
+                                                                <HourInputGroup date={day.date} min={day.min} max={day.max} id={id} raidId={index} />
                                                             )
                                                         })
                                                     )
-                                                    
+
                                                 }
                                             })[0]
                                         ))}
@@ -149,9 +150,15 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                         </div>
                         <div className="col text-right">
                             {raid.isLeader &&
-                                <button className="btn btn-primary" >Set raid time</button>
+                                <button className="btn btn-outline-secondary btn-sm mr-2" >
+                                    Recruit players
+                                    <Badge color="secondary" pill className="ml-1">58</Badge>
+                                </button>
                             }
-                            <button className="btn btn-success ml-1">Save changes</button>
+                            {raid.isLeader &&
+                                <button className="btn btn-primary btn-sm" >Set raid time</button>
+                            }
+                            <button className="btn btn-success btn-sm ml-1">Save changes</button>
                         </div>
                     </div>
                 </div>

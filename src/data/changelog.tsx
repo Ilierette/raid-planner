@@ -41,11 +41,26 @@ export const data = [
             {
                 title: "character search",
                 isChecked: true
+            },
+            {
+                title: "Account settings",
+                isChecked: false,
+                checklist: [
+                    {
+                        title: "Change email",
+                        isChecked: false,
+                    },
+                    {
+                        title: "Change password",
+                        isChecked: false,
+                    }
+                ]
             }
         ]
     },
     {
         title: "Raid table",
+        isChecked: false,
         checklist: [
             {
                 title: "table:",
@@ -123,6 +138,30 @@ export const data = [
                     },
                     {
                         title: "user gets notification ( Push notification to discord Bot )",
+                        isChecked: false
+                    }
+                ]
+            },
+            {
+                title: "recruit / apply modal",
+                isChecked: false,
+                checklist: [
+                    {
+                        title: "fields: nickname, class, requirements, experience, dps parse",
+                        isChecked: false
+                    }
+                ]
+            },
+            {
+                title: "Loot spilt",
+                isChecked: false,
+                checklist: [
+                    {
+                        title: "comparable with user eq or needs",
+                        isChecked: false
+                    },
+                    {
+                        title: "loot story / rng ratio calculations",
                         isChecked: false
                     }
                 ]

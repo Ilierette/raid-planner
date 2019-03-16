@@ -17,8 +17,10 @@ export class CharacterNeeds extends React.Component<CharacterNeedsProps> {
                                 <li>{need.name} {need.isAwakened && <span className="badge badge-success ml-1 my-auto">awakened</span>}  </li>
                             ))
                         }
-                        <li><a href="" ><FontAwesomeIcon icon="plus" className="mr-1" /> Add EQ</a></li>
                     </ul>
+                </div>
+                <div className="card-footer text-muted">
+                    <a href="" ><FontAwesomeIcon icon="plus" className="mr-1" /> Add / edit</a>
                 </div>
             </div>
         );

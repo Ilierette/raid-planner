@@ -81,6 +81,14 @@ export default class CharacterSearch extends React.Component {
                 className={classnames({ active: this.tab === 2 })}
                 onClick={() => { this.toggle(2); }}
               >
+                Additional data
+            </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+                className={classnames({ active: this.tab === 3 })}
+                onClick={() => { this.toggle(3); }}
+              >
                 <FontAwesomeIcon icon="comments" className="mr-2" />
                 Messages
               <Badge color="success" pill className="ml-1">58</Badge>
@@ -88,8 +96,8 @@ export default class CharacterSearch extends React.Component {
             </NavItem>
             <NavItem>
               <NavLink
-                className={classnames({ active: this.tab === 3 })}
-                onClick={() => { this.toggle(3); }}
+                className={classnames({ active: this.tab === 4 })}
+                onClick={() => { this.toggle(4); }}
               >
                 Settings
             </NavLink>
@@ -101,7 +109,7 @@ export default class CharacterSearch extends React.Component {
                 <div className="card-body">
                   <div className="char-data row mx-auto">
                     <div className="col-1">
-                      <button className="btn btn-outline-primary" onClick={() => this.returnHome()}>
+                      <button className="btn btn-outline-primary btn-sm" onClick={() => this.returnHome()}>
                         <FontAwesomeIcon icon="home" />
                       </button>
                     </div>
@@ -122,24 +130,7 @@ export default class CharacterSearch extends React.Component {
                   {this.reload ?
                     <div>
                       {this.searchSwitch ?
-                        <div>
-                          <CharacterData name={user.name} region={user.region} isMain={user.isMain} isBadge={this.isBadge} />
-                          {
-                            !user.isLoadingData &&
-                            <div className="char-details mx-auto">
-                              <div className="card-group">
-                                <CharacterNeeds need={user.needs} />
-                                <CharacterMember />
-                                <CharacterLeader />
-                              </div>
-                              <div className="row mt-2">
-                                <div className="col-12">
-                                  <CharacterParse dpsCount={user.dpsCount} dpsImg={user.dpsImg} />
-                                </div>
-                              </div>
-                            </div>
-                          }
-                        </div> :
+                        <CharacterData name={user.name} region={user.region} isMain={user.isMain} isBadge={this.isBadge} /> :
                         <CharacterDataSearch name={this.searchName} region={this.searchRegion} isMain={null} isBadge={null} />
                       }
                     </div> :
@@ -151,13 +142,34 @@ export default class CharacterSearch extends React.Component {
               </div>
             </TabPane>
             <TabPane tabId={2}>
+              <div className="card bg-dark">
+                <div className="card-body">
+                  {
+                    !user.isLoadingData &&
+                    <div className="char-details mx-auto">
+                      <div className="card-group">
+                        <CharacterNeeds need={user.needs} />
+                        <CharacterMember />
+                        <CharacterLeader />
+                      </div>
+                      <div className="row mt-2">
+                        <div className="col-12">
+                          <CharacterParse dpsCount={user.dpsCount} dpsImg={user.dpsImg} />
+                        </div>
+                      </div>
+                    </div>
+                  }
+                </div>
+              </div>
+            </TabPane>
+            <TabPane tabId={3}>
               <div className="card">
                 <div className="card-body">
                   <h4>Messages</h4>
                 </div>
               </div>
             </TabPane>
-            <TabPane tabId={3}>
+            <TabPane tabId={4}>
               <div className="card">
                 <div className="card-body">
                   <h4>Settings</h4>
