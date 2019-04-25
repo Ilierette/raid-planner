@@ -12,47 +12,46 @@ interface CharacterDataRowProps {
     description2?: string
 }
 
-export class CharacterDataRow extends React.Component<CharacterDataRowProps> {
-    render() {
-        return (
-            <div className="skill-tab">
-                <button className="btn tab-button" id={this.props.id}>
-                    <span>
-                        {this.props.title}:
+export const CharacterDataRow = ({ id, title, stat, rate, rate2, description, description2 }: CharacterDataRowProps) => {
+    return (
+        <div className="skill-tab">
+            <button className="btn tab-button" id={id}>
+                <span>
+                    {title}:
                     </span>
-                    <span>
-                        <span className="accent">
-                            {this.props.stat}
-                        </span>
-                        <span className="skill-more">
-                            {this.props.rate && <FontAwesomeIcon icon="caret-down" className="ml-2 my-auto" />}
-                        </span>
+                <span>
+                    <span className="accent">
+                        {stat}
                     </span>
-                </button>
-                {
-                    this.props.rate &&
-                    <UncontrolledCollapse toggler={"#" + this.props.id}>
+                    <span className="skill-more">
+                        {rate && <FontAwesomeIcon icon="caret-down" className="ml-2 my-auto" />}
+                    </span>
+                </span>
+            </button>
+            {
+                rate &&
+                <UncontrolledCollapse toggler={"#" + id}>
+                    <div className="tab-data">
+                        <span>
+                            {title} {description}
+                        </span>
+                        <span>
+                            {Math.floor(rate * 100)} %
+                        </span>
+                    </div>
+                    {rate2 &&
                         <div className="tab-data">
                             <span>
-                                {this.props.title} {this.props.description}
+                                {title} {description2}
                             </span>
                             <span>
-                                {Math.floor(this.props.rate * 100)} %
-                        </span>
+                                {rate2}
+                            </span>
                         </div>
-                        {this.props.rate2 &&
-                            <div className="tab-data">
-                                <span>
-                                    {this.props.title} {this.props.description2}
-                                </span>
-                                <span>
-                                    {this.props.rate2}
-                                </span>
-                            </div>
-                        }
-                    </UncontrolledCollapse>
-                }
-            </div>
-        );
-    }
+                    }
+                </UncontrolledCollapse>
+            }
+        </div>
+    );
 }
+

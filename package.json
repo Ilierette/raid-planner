@@ -49,6 +49,7 @@
     "lodash": "^4.17.11",
     "mobx": "^5.9.4",
     "mobx-react": "^5.4.3",
+    "mobx-react-lite": "^1.2.0",
     "node-sass": "^4.11.0",
     "postcss-loader": "^3.0.0",
     "react": "^16.8.6",
