@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { user } from '../store/userStore';
-import { market } from '../store/marketStore';
 import { observer } from 'mobx-react';
-import { UserMats, Mats } from '../models/interfaces';
+import { UserMats, Mats } from '../../models/interfaces';
+import { user } from '../../store/userStore';
+import { market } from '../../store/marketStore';
 
 interface MarketTableRowProps {
   item: Mats,
@@ -35,13 +35,13 @@ export class MarketTableRow extends React.Component<MarketTableRowProps> {
             })
           }
         </td>
-        <td className={user.isMarketEditMode && "edit-cell"}>
+        <td className={market.isMarketEditMode && "edit-cell"}>
           {
             user.mats.map((mat: UserMats) => {
               if (item.id == mat.id) {
                 return (
                   <div>
-                    {user.isMarketEditMode ?
+                    {market.isMarketEditMode ?
                       <input
                         type="number"
                         name={item.id}

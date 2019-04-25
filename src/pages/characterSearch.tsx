@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { PageHeader } from '../components/pageHeader';
-import { CharacterData } from '../components/characterData/component';
+import { CharacterData } from '../components/characterData/characterData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CharacterSelectDropdown } from '../components/characterSelectDropdown';
-import { CharacterNeeds } from '../components/characterNeeds';
-import { CharacterMember } from '../components/characterMember';
-import { CharacterLeader } from '../components/characterLeader';
-import { CharacterParse } from '../components/characterParse';
+import { CharacterSelectDropdown } from '../components/characterData/characterSelectDropdown';
+import { CharacterNeeds } from '../components/characterAdditionalData/characterNeeds';
+import { CharacterMember } from '../components/characterAdditionalData/characterMember';
+import { CharacterLeader } from '../components/characterAdditionalData/characterLeader';
+import { CharacterParse } from '../components/characterAdditionalData/characterParse';
 
 import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
 

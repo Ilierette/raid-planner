@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Input, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
-import { CharacterData } from '../components/characterData';
-import { store } from '../store/raidStore';
+import { store } from '../../store/raidStore';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
-import { User, Member, Day } from '../models/interfaces';
-import { CharacterDataSearch } from './characterDataSearch';
+import { User, Member, Day } from '../../models/interfaces';
+import { CharacterDataSearch } from '../../components/characterDataSearch';
 
 interface RaidTableRowProps {
     o: number,

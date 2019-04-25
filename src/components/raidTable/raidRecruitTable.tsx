@@ -1,5 +1,5 @@
 import * as React from 'react';
-import '../scss/table.scss';
+import '../../scss/table.scss';
 
 export class RaidRecruitTable extends React.Component {
     render() {

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { MarketTableRow } from './marketTableRow'
-import { market } from '../store/marketStore';
-import { Mats, Tiers } from '../models/interfaces';
+import { Mats, Tiers } from '../../models/interfaces';
 import { observer } from 'mobx-react';
+import { market } from '../../store/marketStore';
 
 interface MarketProps {
   title: string,

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { PageHeader } from '../components/pageHeader';
-import { MarketTable } from '../components/marketTable';
+import { MarketTable } from '../components/marketTable/marketTable';
 import { observer } from 'mobx-react';
 import { market } from '../store/marketStore';
 import { Tiers } from '../models/interfaces';
@@ -33,9 +33,9 @@ export default class Marketplace extends React.Component {
                                     </form>
                                 </div>
                                 <div className="col-2 text-right">
-                                    {user.isMarketEditMode ?
-                                        <button className="btn btn-success btn-sm" onClick={() => user.isMarketEditMode = false}>Save changes</button> :
-                                        <button className="btn btn-primary btn-sm" onClick={() => user.isMarketEditMode = true}>Edit</button>
+                                    {market.isMarketEditMode ?
+                                        <button className="btn btn-success btn-sm" onClick={() => market.isMarketEditMode = false}>Save changes</button> :
+                                        <button className="btn btn-primary btn-sm" onClick={() => market.isMarketEditMode = true}>Edit</button>
                                     }
                                 </div>
                             </div>

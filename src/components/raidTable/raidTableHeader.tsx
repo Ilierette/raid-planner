@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { store } from '../store/raidStore';
+import { store } from '../../store/raidStore';
 import { observer } from 'mobx-react';
 
 interface RaidTableHeaderProps {

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { store } from '../store/raidStore';
-import { Day } from '../models/interfaces';
+import { store } from '../../store/raidStore';
+import { Day } from '../../models/interfaces';
 
 interface HourInputGroupProps {
     min: string,

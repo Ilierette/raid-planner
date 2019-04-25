@@ -4,10 +4,10 @@ import { RaidTableHeader as Header } from './raidTableHeader';
 import { RaidTableRow as Row } from './raidTableRow';
 
 import { observer } from 'mobx-react';
-import { store } from '../store/raidStore';
+import { store } from '../../store/raidStore';
 
-import '../scss/table.scss';
-import { Raid, Member, User, Day } from '../models/interfaces';
+import '../../scss/table.scss';
+import { Raid, Member, User, Day } from '../../models/interfaces';
 import { HourInputGroup } from './hourInputGroup';
 import { Badge } from 'reactstrap';
 

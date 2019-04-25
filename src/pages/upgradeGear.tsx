@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { PageHeader } from '../components/pageHeader';
-import { GearTable } from '../components/gearTable';
+import { GearTable } from '../components/gearTable/gearTable';
 import { observer } from 'mobx-react';
 import { user } from '../store/userStore';
 import { market } from '../store/marketStore';

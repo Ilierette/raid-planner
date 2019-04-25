@@ -25,6 +25,7 @@ class MarketStore implements MarketStoreState {
     ]
 
     @observable totalCost = 0;
+    @observable isMarketEditMode = false;
 
     handleInputChange = (e: any, id: any) => {
         let matList = user.mats.map((mat: any) => {
