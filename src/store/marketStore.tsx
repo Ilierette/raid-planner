@@ -1,9 +1,8 @@
 import { observable } from 'mobx';
 import { Mats, Tiers, UserMats, Gears, User } from '../models/interfaces';
 import { marketData } from '../data/market';
-import { user } from './userStore';
 import axios from 'axios';
-import { createContext } from 'react';
+import { mats, gear } from '../data/users';
 
 interface MarketStoreState {
     tradeable: Mats[],
@@ -28,8 +27,11 @@ class MarketStore implements MarketStoreState {
     @observable totalCost = 0;
     @observable isMarketEditMode = false;
 
+    @observable mats = mats;
+    @observable gear = gear;
+
     handleInputChange = (e: any, id: any) => {
-        let matList = user.mats.map((mat: any) => {
+        let matList = this.mats.map((mat: any) => {
             if (mat.id == id) {
                 return ({
                     ...mat,
@@ -39,7 +41,7 @@ class MarketStore implements MarketStoreState {
             else return mat
         })
 
-        user.mats = matList
+        this.mats = matList
         
         this.calculateTotalPrice();
         this.calculateTotalCost();
@@ -83,10 +85,10 @@ class MarketStore implements MarketStoreState {
     }
 
     calculateTotalPrice() {
-        let mats = user.mats.map((mat: UserMats) => {
+        let mats = this.mats.map((mat: UserMats) => {
             return ({
                 ...mat,
-                totalAmount: user.gear.reduce((total: any, gear: Gears) => {
+                totalAmount: this.gear.reduce((total: any, gear: Gears) => {
                     return total + gear.stages.reduce((acc: any, stage: any) => {
                         if (stage[mat.id])
                             return acc + stage[mat.id]
@@ -108,11 +110,11 @@ class MarketStore implements MarketStoreState {
                 }, 0)
             })
         })
-        user.mats = matsCost;
+        this.mats = matsCost;
     }
 
     calculateTotalCost() {
-        let totalCost = user.mats.reduce((total: any, mat: UserMats) => {
+        let totalCost = this.mats.reduce((total: any, mat: UserMats) => {
             return total + mat.totalPrice
         }, 0)
         this.totalCost = totalCost

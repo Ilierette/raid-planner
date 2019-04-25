@@ -243,11 +243,6 @@ class UserStore {
             this.char = charEq;
         })
     }
-
-    @observable users = users;
-    @observable mats = mats;
-    @observable gear = gear;
-
 }
 
 export const user = new UserStore();

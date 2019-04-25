@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { observer } from 'mobx-react-lite';
 import { Gears, Mats, UserMats, Stages } from '../../models/interfaces';
-import { user } from '../../store/userStore';
-import { market } from '../../store/marketStore';
+import GearStore from '../../store/gearStore'
 
 export const GearTable = observer(() => {
+  const { gear, mats, tradeable, untradeable } = React.useContext(GearStore)
   return (
     <div className="card">
       <div className="card-body">
@@ -16,7 +16,7 @@ export const GearTable = observer(() => {
                 <th rowSpan={2} className="text-right" style={{ width: 220 }}>
                   Mats
                   </th>
-                {user.gear.map((item: Gears) => (
+                {gear.map((item: Gears) => (
                   <th colSpan={item.stages.length}>
                     {item.name}
                   </th>
@@ -26,7 +26,7 @@ export const GearTable = observer(() => {
                 <th rowSpan={2} style={{ width: 90 }} >Left</th>
               </tr>
               <tr>
-                {user.gear.map((item: Gears) => (
+                {gear.map((item: Gears) => (
                   item.stages.map((stage: Stages) => (
                     <th>{stage.name}</th>
                   ))
@@ -35,15 +35,15 @@ export const GearTable = observer(() => {
             </thead>
             <tbody>
               {
-                market.tradeable.map((trade: Mats) => (
-                  user.mats.map((mat: UserMats) => {
+                tradeable.map((trade: Mats) => (
+                  mats.map((mat: UserMats) => {
                     if (mat.id == trade.id && mat.totalAmount != 0) {
                       return (
                         <tr>
                           <td className="text-right">
                             {trade.name}
                           </td>
-                          {user.gear.map((item: Gears) => (
+                          {gear.map((item: Gears) => (
                             item.stages.map((stage: any) => (
                               <td>{stage[trade.id]}</td>
                             ))
@@ -64,15 +64,15 @@ export const GearTable = observer(() => {
                 ))
               }
               {
-                market.untradeable.map((trade: Mats) => (
-                  user.mats.map((mat: UserMats) => {
+                untradeable.map((trade: Mats) => (
+                  mats.map((mat: UserMats) => {
                     if (mat.id == trade.id && mat.totalAmount != 0) {
                       return (
                         <tr>
                           <td className="text-right">
                             {trade.name}
                           </td>
-                          {user.gear.map((item: Gears) => (
+                          {gear.map((item: Gears) => (
                             item.stages.map((stage: any) => (
                               <td>{stage[trade.id]}</td>
                             ))

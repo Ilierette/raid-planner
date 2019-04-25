@@ -23,13 +23,13 @@ import { CharacterSearch } from './characterSearch';
 import Login from '../pages/auth/login';
 import Register from '../pages/auth/register';
 import Schedule from '../pages/tables/schedule';
-import Gear from '../pages/tables/upgradeGear';
-import Marketplace from '../pages/tables/marketplace';
+import { Gear } from '../pages/tables/upgradeGear';
+import { Marketplace } from '../pages/tables/marketplace';
 
 import "../scss/navigation.scss"
 
 import GlobalStore from '../store/globalStore';
-import MarketStore from '../store/marketStore'
+
 
 library.add(
   fab, faPowerOff, faBars, faCaretDown,
@@ -43,10 +43,10 @@ library.add(
 
 export const MasterPage = observer(() => {
   const { isLoading, isAuthUser, authListener, logout } = React.useContext(GlobalStore)
-  const { getStoreData } = React.useContext(MarketStore)
+  //const { getStoreData } = React.useContext(MarketStore)
 
   useEffect(() => {
-    getStoreData()
+    //getStoreData()
     authListener()
   })
 

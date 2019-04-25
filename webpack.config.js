@@ -11,6 +11,7 @@ module.exports = function (env) {
         },
 
         mode: 'development',
+        devtool: 'source-map',
 
         output: {
             path: path.join(__dirname, 'public'),

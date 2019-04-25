@@ -247,8 +247,6 @@ class GlobalStore {
             this.isLoadingData = false
         })
     }
-
-    @observable users = users;
 }
 
 export default createContext(new GlobalStore())
