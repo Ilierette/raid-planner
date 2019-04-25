@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { PageHeader } from '../../components/pageHeader';
 import { MarketTable } from '../../components/marketTable/component';
-import { observer } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
 import { Tiers } from '../../models/interfaces';
 import GearStore from '../../store/gearStore'
-import { withRouter } from 'react-router-dom';
 
-export const Marketplace = withRouter(observer(() => {
+export const Marketplace = observer(() => {
     const { tierList, isMarketEditMode, untradeable, tradeable, handleTierChange } = React.useContext(GearStore);
     return (
         <div className="content-wrapper">
@@ -31,12 +30,12 @@ export const Marketplace = withRouter(observer(() => {
                                     ))}
                                 </form>
                             </div>
-                            {/* <div className="col-2 text-right">
+                            <div className="col-2 text-right">
                                 {isMarketEditMode ?
                                     <button className="btn btn-success btn-sm" onClick={() => isMarketEditMode = false}>Save changes</button> :
                                     <button className="btn btn-primary btn-sm" onClick={() => isMarketEditMode = true}>Edit</button>
                                 }
-                            </div> */}
+                            </div>
                         </div>
                         <div className="row mb-2">
                             <div className="col-5">
@@ -59,5 +58,5 @@ export const Marketplace = withRouter(observer(() => {
             </div>
         </div>
     );
-}))
+})
 

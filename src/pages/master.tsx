@@ -29,6 +29,7 @@ import { Marketplace } from '../pages/tables/marketplace';
 import "../scss/navigation.scss"
 
 import GlobalStore from '../store/globalStore';
+import GearStore from '../store/gearStore';
 
 
 library.add(
@@ -43,10 +44,10 @@ library.add(
 
 export const MasterPage = observer(() => {
   const { isLoading, isAuthUser, authListener, logout } = React.useContext(GlobalStore)
-  //const { getStoreData } = React.useContext(MarketStore)
+  const { getStoreData } = React.useContext(GearStore)
 
   useEffect(() => {
-    //getStoreData()
+    getStoreData()
     authListener()
   })
 
