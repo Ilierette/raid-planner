@@ -1,13 +1,13 @@
 import * as React from 'react';
 import axios from 'axios';
 import "../scss/characterData.scss";
-import { CharacterDataRow } from './characterData/characterDataRow';
-import { CharacterDataGearRow } from './characterData/characterDataGearRow';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
 import { user } from '../store/userStore';
 import { Character, Equipments } from '../models/interfaces';
 import { character } from '../data/character';
+import { CharacterStat } from './characterData/characterStat';
+import { CharacterGear } from './characterData/characterGear';
 
 //TO DO - avoid duplicate code
 
@@ -271,7 +271,7 @@ export class CharacterDataSearch extends React.Component<CharacterDataProps, Cha
                   </div>
                   <div className="split-point"></div>
                   {this.char.offensive && this.char.offensive.map((o: any) => (
-                    <CharacterDataRow
+                    <CharacterStat
                       key={o.id}
                       id={o.id}
                       title={o.title}
@@ -294,7 +294,7 @@ export class CharacterDataSearch extends React.Component<CharacterDataProps, Cha
                   </div>
                   <div className="split-point"></div>
                   {this.char.defensive && this.char.defensive.map((o: any) => (
-                    <CharacterDataRow
+                    <CharacterStat
                       key={o.id}
                       id={o.id}
                       title={o.title}
@@ -311,7 +311,7 @@ export class CharacterDataSearch extends React.Component<CharacterDataProps, Cha
                 <div className="card bg-dark ">
                   {
                     this.char.equipment && this.char.equipment.map((item: Equipments, index: number) => (
-                      <CharacterDataGearRow
+                      <CharacterGear
                         displayName={item.displayName}
                         key={index}
                         type={item.type}

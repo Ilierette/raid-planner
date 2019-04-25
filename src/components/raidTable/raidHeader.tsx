@@ -3,12 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { store } from '../../store/raidStore';
 import { observer } from 'mobx-react';
 
-interface RaidTableHeaderProps {
+interface RaidHeaderProps {
     index: number
 }
 
 @observer
-export class RaidTableHeader extends React.Component<RaidTableHeaderProps>{
+export class RaidHeader extends React.Component<RaidHeaderProps>{
     render() {
         const { index } = this.props
         return (

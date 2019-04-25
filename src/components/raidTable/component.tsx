@@ -1,14 +1,12 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { RaidTableHeader as Header } from './raidTableHeader';
-import { RaidTableRow as Row } from './raidTableRow';
-
+import { RaidHeader as Header } from './raidHeader';
+import { RaidRow as Row } from './raidRow';
 import { observer } from 'mobx-react';
 import { store } from '../../store/raidStore';
-
 import '../../scss/table.scss';
 import { Raid, Member, User, Day } from '../../models/interfaces';
-import { HourInputGroup } from './hourInputGroup';
+import { HourInput } from './hourInput';
 import { Badge } from 'reactstrap';
 
 interface RaidProps {
@@ -114,7 +112,7 @@ export class RaidTable extends React.Component<RaidProps, RaidState> {
                                                     return (
                                                         member.days.map((day: Day, id: number) => {
                                                             return (
-                                                                <HourInputGroup date={day.date} min={day.min} max={day.max} id={id} raidId={index} />
+                                                                <HourInput date={day.date} min={day.min} max={day.max} id={id} raidId={index} />
                                                             )
                                                         })
                                                     )

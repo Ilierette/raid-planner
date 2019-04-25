@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { PageHeader } from '../components/pageHeader';
-import { RaidTable } from '../components/raidTable/raidTable';
+import { RaidTable } from '../components/raidTable/component';
 import '../scss/content.scss';
 
 import { observer } from 'mobx-react';
 import { store } from '../store/raidStore';
 import { Raid } from '../models/interfaces';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { RaidRecruitTable } from '../components/raidTable/raidRecruitTable';
 import { Alert } from 'reactstrap';
 

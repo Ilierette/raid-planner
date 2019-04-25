@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
-export const CharacterSelectDropdown = () => {
+export const CharacterSelect = () => {
     return (
         <UncontrolledDropdown>
             <DropdownToggle color="outline-light">

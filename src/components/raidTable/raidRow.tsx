@@ -7,18 +7,18 @@ import classnames from 'classnames';
 import { User, Member, Day } from '../../models/interfaces';
 import { CharacterDataSearch } from '../../components/characterDataSearch';
 
-interface RaidTableRowProps {
+interface RaidRowProps {
     o: number,
     user: User,
     member: Member,
 }
 
-interface RaidTableRowState {
+interface RaidRowState {
     activeTab: number;
 }
 
 @observer
-export class RaidTableRow extends React.Component<RaidTableRowProps, RaidTableRowState>{
+export class RaidRow extends React.Component<RaidRowProps, RaidRowState>{
     constructor(props: any) {
         super(props)
 

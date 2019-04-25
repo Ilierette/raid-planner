@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export const CharacterMember = () => {
+export const Member = () => {
     return (
         <div className="card text-center text-white bg-dark border-primary">
             <div className="card-body">

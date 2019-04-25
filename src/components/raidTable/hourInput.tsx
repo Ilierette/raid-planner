@@ -2,7 +2,7 @@ import * as React from 'react';
 import { store } from '../../store/raidStore';
 import { Day } from '../../models/interfaces';
 
-interface HourInputGroupProps {
+interface HourInputProps {
     min: string,
     max: string,
     date: string,
@@ -10,7 +10,7 @@ interface HourInputGroupProps {
     raidId: number
 }
 
-export class HourInputGroup extends React.Component<HourInputGroupProps> {
+export class HourInput extends React.Component<HourInputProps> {
     render() {
         const { min, max, date, id, raidId } = this.props
         return (

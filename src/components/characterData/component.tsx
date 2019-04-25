@@ -1,10 +1,11 @@
 import * as React from 'react';
 import "../../scss/characterData.scss";
-import { CharacterDataRow } from './characterDataRow';
-import { CharacterDataGearRow } from './characterDataGearRow';
 import { observer } from 'mobx-react-lite';
 import { user } from '../../store/userStore';
 import { Equipments } from '../../models/interfaces';
+import { CharacterStat } from './characterStat';
+import { CharacterGear } from './characterGear';
+
 
 interface CharacterDataProps {
   isMain: boolean,
@@ -58,7 +59,7 @@ export const CharacterData = observer(({isMain, isBadge}:CharacterDataProps) => 
                 </div>
                 <div className="split-point"></div>
                 {user.char.offensive && user.char.offensive.map((o: any) => (
-                  <CharacterDataRow
+                  <CharacterStat
                     key={o.id}
                     id={o.id}
                     title={o.title}
@@ -81,7 +82,7 @@ export const CharacterData = observer(({isMain, isBadge}:CharacterDataProps) => 
                 </div>
                 <div className="split-point"></div>
                 {user.char.defensive && user.char.defensive.map((o: any) => (
-                  <CharacterDataRow
+                  <CharacterStat
                     key={o.id}
                     id={o.id}
                     title={o.title}
@@ -98,7 +99,7 @@ export const CharacterData = observer(({isMain, isBadge}:CharacterDataProps) => 
               <div className="card bg-dark ">
                 {
                   user.char.equipment && user.char.equipment.map((item: Equipments, index: number) => (
-                    <CharacterDataGearRow
+                    <CharacterGear
                       displayName={item.displayName}
                       key={index}
                       type={item.type}

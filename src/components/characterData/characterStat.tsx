@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { UncontrolledCollapse } from 'reactstrap';
 
-interface CharacterDataRowProps {
+interface CharacterStatProps {
     id: string,
     title: string,
     stat: number,
@@ -12,7 +12,7 @@ interface CharacterDataRowProps {
     description2?: string
 }
 
-export const CharacterDataRow = ({ id, title, stat, rate, rate2, description, description2 }: CharacterDataRowProps) => {
+export const CharacterStat = ({ id, title, stat, rate, rate2, description, description2 }: CharacterStatProps) => {
     return (
         <div className="skill-tab">
             <button className="btn tab-button" id={id}>

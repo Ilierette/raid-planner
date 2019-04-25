@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { MarketTableRow } from './marketTableRow'
+import { MarketRow } from './marketRow'
 import { Mats, Tiers } from '../../models/interfaces';
 import { observer } from 'mobx-react';
 import { market } from '../../store/marketStore';
@@ -37,7 +37,7 @@ export class MarketTable extends React.Component<MarketProps> {
           {market.tierList.map((tier: Tiers) => (
             <tbody key={tier.name}>
               {tier.show && this.props.items.filter((item: Mats) => { return item.tier == tier.name }).map((item: Mats, index: number) => (
-                <MarketTableRow
+                <MarketRow
                   item={item}
                   key={index}
                   index={index}

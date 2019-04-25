@@ -4,14 +4,14 @@ import { UserMats, Mats } from '../../models/interfaces';
 import { user } from '../../store/userStore';
 import { market } from '../../store/marketStore';
 
-interface MarketTableRowProps {
+interface MarketRowProps {
   item: Mats,
   index: number,
   trade: boolean,
 }
 
 @observer
-export class MarketTableRow extends React.Component<MarketTableRowProps> {
+export class MarketRow extends React.Component<MarketRowProps> {
   render() {
     const { item, index, trade } = this.props;
     return (

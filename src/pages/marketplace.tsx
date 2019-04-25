@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { PageHeader } from '../components/pageHeader';
-import { MarketTable } from '../components/marketTable/marketTable';
+import { MarketTable } from '../components/marketTable/component';
 import { observer } from 'mobx-react';
 import { market } from '../store/marketStore';
 import { Tiers } from '../models/interfaces';
-import { user } from '../store/userStore';
 
 @observer
 export default class Marketplace extends React.Component {

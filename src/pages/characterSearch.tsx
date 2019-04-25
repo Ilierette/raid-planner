@@ -1,12 +1,8 @@
 import * as React from 'react';
 import { PageHeader } from '../components/pageHeader';
-import { CharacterData } from '../components/characterData/characterData';
+import { CharacterData } from '../components/characterData/component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CharacterSelectDropdown } from '../components/characterData/characterSelectDropdown';
-import { CharacterNeeds } from '../components/characterAdditionalData/characterNeeds';
-import { CharacterMember } from '../components/characterAdditionalData/characterMember';
-import { CharacterLeader } from '../components/characterAdditionalData/characterLeader';
-import { CharacterParse } from '../components/characterAdditionalData/characterParse';
+import { CharacterSelect} from '../components/characterData/characterSelect';
 
 import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
 
@@ -15,7 +11,12 @@ import { user } from '../store/userStore';
 import Badge from 'reactstrap/lib/Badge';
 import classnames = require('classnames');
 import { observable } from 'mobx';
+
 import { CharacterDataSearch } from '../components/characterDataSearch';
+import { Parse } from '../components/characterAdditionalData/parse';
+import { Leader } from '../components/characterAdditionalData/leader';
+import { Member } from '../components/characterAdditionalData/member';
+import { Needs } from '../components/characterAdditionalData/needs';
 
 @observer
 export default class CharacterSearch extends React.Component {
@@ -116,7 +117,7 @@ export default class CharacterSearch extends React.Component {
                     <div className="col-11 reversed">
                       <form className="form-inline mb-2" onSubmit={(e: any) => this.handleSubmit(e)}>
                         <div className="form-group">
-                          <CharacterSelectDropdown />
+                          <CharacterSelect />
                           <input placeholder="Find other character" className="form-control ml-1 mr-1 bg-dark text-light" onKeyUp={(e: any) => this.changeName(e)} />
                           <select className="form-control mr-3 bg-dark text-light" onChange={(e: any) => this.changeRegion(e)}>
                             <option value="eu">EU</option>
@@ -148,13 +149,13 @@ export default class CharacterSearch extends React.Component {
                     !user.isLoadingData &&
                     <div className="char-details mx-auto">
                       <div className="card-group">
-                        <CharacterNeeds need={user.needs} />
-                        <CharacterMember />
-                        <CharacterLeader />
+                        <Needs need={user.needs} />
+                        <Member />
+                        <Leader />
                       </div>
                       <div className="row mt-2">
                         <div className="col-12">
-                          <CharacterParse dpsCount={user.dpsCount} dpsImg={user.dpsImg} />
+                          <Parse dpsCount={user.dpsCount} dpsImg={user.dpsImg} />
                         </div>
                       </div>
                     </div>
