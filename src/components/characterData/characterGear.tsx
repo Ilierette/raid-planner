@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-interface CharacterGearProps {
+interface props {
     displayName: string,
     name: string,
     rank: string,
@@ -8,7 +8,7 @@ interface CharacterGearProps {
     img: string
 }
 
-export const CharacterGear = ({ name, img, rank, type, displayName }: CharacterGearProps) => {
+export const CharacterGear = ({ name, img, rank, type, displayName }: props) => {
     return (
         <div className={"equip-item " + type}>
             <div className="item-img">

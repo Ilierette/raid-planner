@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-interface NeedsProps {
+interface props {
     need: any
 }
 
-export const Needs = ({need}:NeedsProps) => {
+export const Needs = ({need}:props) => {
     return (
         <div className="card text-center text-white bg-dark border-primary">
             <div className="card-body">

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { observer } from 'mobx-react-lite';
+import { Gears, Mats, UserMats, Stages } from '../../models/interfaces';
 import { user } from '../../store/userStore';
 import { market } from '../../store/marketStore';
-import { Gears, Mats, UserMats, Stages } from '../../models/interfaces';
 
 export const GearTable = observer(() => {
   return (

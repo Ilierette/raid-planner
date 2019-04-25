@@ -1,19 +1,16 @@
 import * as React from 'react';
-import { observer } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
 import { UserMats, Mats } from '../../models/interfaces';
 import { user } from '../../store/userStore';
 import { market } from '../../store/marketStore';
 
-interface MarketRowProps {
+interface props {
   item: Mats,
   index: number,
   trade: boolean,
 }
 
-@observer
-export class MarketRow extends React.Component<MarketRowProps> {
-  render() {
-    const { item, index, trade } = this.props;
+export const MarketRow = observer(({item,index,trade}:props) => {
     return (
       <tr key={item.id}>
         {!trade && index == 0 ?
@@ -35,7 +32,7 @@ export class MarketRow extends React.Component<MarketRowProps> {
             })
           }
         </td>
-        <td className={market.isMarketEditMode && "edit-cell"}>
+        <td className={market.isMarketEditMode ? "edit-cell" : ""}>
           {
             user.mats.map((mat: UserMats) => {
               if (item.id == mat.id) {
@@ -71,12 +68,12 @@ export class MarketRow extends React.Component<MarketRowProps> {
             })
           }
         </td>
-        {this.props.trade &&
+        {trade &&
           <td className="text-left">
             {item.price ? item.price.toLocaleString() : 0}
           </td>
         }
-        {this.props.trade &&
+        {trade &&
           <td className="text-left">
             {
               user.mats.map((mat: UserMats) => {
@@ -90,6 +87,5 @@ export class MarketRow extends React.Component<MarketRowProps> {
           </td>
         }
       </tr>
-    );
-  }
-}
+    )
+  })

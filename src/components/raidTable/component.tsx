@@ -1,166 +1,156 @@
 import * as React from 'react';
+import { observer } from 'mobx-react-lite';
+import { Badge } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { RaidHeader as Header } from './raidHeader';
 import { RaidRow as Row } from './raidRow';
-import { observer } from 'mobx-react';
+import { HourInput } from './hourInput';
+import { Raid, Member, User, Day } from '../../models/interfaces';
 import { store } from '../../store/raidStore';
 import '../../scss/table.scss';
-import { Raid, Member, User, Day } from '../../models/interfaces';
-import { HourInput } from './hourInput';
-import { Badge } from 'reactstrap';
 
-interface RaidProps {
+interface props {
     raid: Raid,
     index: number
 }
 
-interface RaidState {
-    suggestions: any,
-}
-
-@observer
-export class RaidTable extends React.Component<RaidProps, RaidState> {
-    render() {
-        const {
-            raid,
-            index
-        } = this.props;
-        return (
-            <div className="card mb-3">
-                <div className="card-body">
-                    <div className="row">
-                        <div className="col-4 my-auto">
-                            {raid.isLeader &&
-                                <span>
-                                    <FontAwesomeIcon icon="crown" /> <strong>Raid leader </strong>
-                                </span>
-                            }
-                        </div>
+export const RaidTable = observer(({ raid, index }: props) => {
+    return (
+        <div className="card mb-3">
+            <div className="card-body">
+                <div className="row">
+                    <div className="col-4 my-auto">
                         {raid.isLeader &&
-                            <div className="col-8">
-                                <div className="form-group row">
-                                    <label htmlFor="token" className="col-2 col-form-label px-0 text-right">{raid.type} - Raid Token</label>
-                                    <div className="col-10">
-                                        <input type="text" readOnly id="token" className="form-control" value="1273t21tguy6" />
-                                    </div>
-                                </div>
-                            </div>
+                            <span>
+                                <FontAwesomeIcon icon="crown" /> <strong>Raid leader </strong>
+                            </span>
                         }
                     </div>
-
-                    <div className="table-responsive">
-                        <table className="table table-sm text-center">
-                            <Header index={index} />
-                            {
-                                raid.isAddMode &&
-                                <tbody>
-                                    <tr>
-                                        <td colSpan={2}>
-                                            <button className="btn btn-outline-success" onClick={() => store.addUser(index)}>
-                                                <FontAwesomeIcon icon="save" />
-                                            </button>
-                                        </td>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                name="chars"
-                                                className="form-control"
-                                                onChange={(e) => store.getSuggestions(e)}
-                                                value={store.selectedCharName || ""}
-                                            />
-                                            {
-                                                store.suggestions &&
-                                                <div className="suggestions-box">
-                                                    {store.suggestions.map((suggestion: any) => (
-                                                        <a href="" onClick={(e) => store.selectChar(e, suggestion)}>{suggestion.name}<br /></a>
-                                                    ))}
-                                                </div>
-
-                                            }
-                                        </td>
-                                        <td>
-                                            {store.selectedCharClass}
-                                        </td>
-                                        <td colSpan={6}></td>
-                                        <td>
-                                            {store.selectedCharIsStatic != null ?
-                                                <select
-                                                    className="form-control"
-                                                    onChange={(e) => store.selectIfStatic(e)}
-                                                    defaultValue={store.selectedCharIsStatic ? "static" : "sub"}
-                                                >
-                                                    <option value="static"> Static </option>
-                                                    <option value="sub"> Sub </option>
-                                                </select>
-                                                : ""
-                                            }
-                                        </td>
-                                        <td>
-                                            {store.selectedCharIsMain != null ? store.selectedCharIsMain ? "Main" : "Alt" : ""}
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            }
-                            {
-                                raid.isEditMode &&
-                                <tbody>
-                                    <tr>
-                                        <td colSpan={raid.isLeader ? 3 : 2}></td>
-                                        {raid.members.map((member: Member) => (
-                                            store.users.map((user: User) => {
-                                                if (member.id == user.id) {
-                                                    return (
-                                                        member.days.map((day: Day, id: number) => {
-                                                            return (
-                                                                <HourInput date={day.date} min={day.min} max={day.max} id={id} raidId={index} />
-                                                            )
-                                                        })
-                                                    )
-
-                                                }
-                                            })[0]
-                                        ))}
-                                        <td colSpan={2}></td>
-                                    </tr>
-                                </tbody>
-                            }
-
-                            {raid.members.map((member: Member) => (
-                                store.users.map((user: User) => {
-                                    if (member.id == user.id) {
-                                        return (
-                                            <Row
-                                                o={this.props.index}
-                                                user={user}
-                                                member={member}
-                                            />
-                                        )
-                                    }
-                                })
-                            ))}
-                        </table>
-                    </div>
+                    {raid.isLeader &&
+                        <div className="col-8">
+                            <div className="form-group row">
+                                <label htmlFor="token" className="col-2 col-form-label px-0 text-right">{raid.type} - Raid Token</label>
+                                <div className="col-10">
+                                    <input type="text" readOnly id="token" className="form-control" value="1273t21tguy6" />
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
-                <div className="card-footer">
-                    <div className="row">
-                        <div className="col-2 my-auto">
-                            {raid.members.length}/{raid.maxMembers}
-                        </div>
-                        <div className="col text-right">
-                            {raid.isLeader &&
-                                <button className="btn btn-outline-secondary btn-sm mr-2" >
-                                    Recruit players
+
+                <div className="table-responsive">
+                    <table className="table table-sm text-center">
+                        <Header index={index} />
+                        {
+                            raid.isAddMode &&
+                            <tbody>
+                                <tr>
+                                    <td colSpan={2}>
+                                        <button className="btn btn-outline-success" onClick={() => store.addUser(index)}>
+                                            <FontAwesomeIcon icon="save" />
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <input
+                                            type="text"
+                                            name="chars"
+                                            className="form-control"
+                                            onChange={(e) => store.getSuggestions(e)}
+                                            value={store.selectedCharName || ""}
+                                        />
+                                        {
+                                            store.suggestions &&
+                                            <div className="suggestions-box">
+                                                {store.suggestions.map((suggestion: any) => (
+                                                    <a href="" onClick={(e) => store.selectChar(e, suggestion)}>{suggestion.name}<br /></a>
+                                                ))}
+                                            </div>
+
+                                        }
+                                    </td>
+                                    <td>
+                                        {store.selectedCharClass}
+                                    </td>
+                                    <td colSpan={6}></td>
+                                    <td>
+                                        {store.selectedCharIsStatic != null ?
+                                            <select
+                                                className="form-control"
+                                                onChange={(e) => store.selectIfStatic(e)}
+                                                defaultValue={store.selectedCharIsStatic ? "static" : "sub"}
+                                            >
+                                                <option value="static"> Static </option>
+                                                <option value="sub"> Sub </option>
+                                            </select>
+                                            : ""
+                                        }
+                                    </td>
+                                    <td>
+                                        {store.selectedCharIsMain != null ? store.selectedCharIsMain ? "Main" : "Alt" : ""}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        }
+                        {
+                            raid.isEditMode &&
+                            <tbody>
+                                <tr>
+                                    <td colSpan={raid.isLeader ? 3 : 2}></td>
+                                    {raid.members.map((member: Member) => (
+                                        store.users.map((user: User) => {
+                                            if (member.id == user.id) {
+                                                return (
+                                                    member.days.map((day: Day, id: number) => {
+                                                        return (
+                                                            <HourInput date={day.date} min={day.min} max={day.max} id={id} raidId={index} />
+                                                        )
+                                                    })
+                                                )
+
+                                            }
+                                        })[0]
+                                    ))}
+                                    <td colSpan={2}></td>
+                                </tr>
+                            </tbody>
+                        }
+
+                        {raid.members.map((member: Member) => (
+                            store.users.map((user: User) => {
+                                if (member.id == user.id) {
+                                    return (
+                                        <Row
+                                            o={index}
+                                            user={user}
+                                            member={member}
+                                        />
+                                    )
+                                }
+                            })
+                        ))}
+                    </table>
+                </div>
+            </div>
+            <div className="card-footer">
+                <div className="row">
+                    <div className="col-2 my-auto">
+                        {raid.members.length}/{raid.maxMembers}
+                    </div>
+                    <div className="col text-right">
+                        {raid.isLeader &&
+                            <button className="btn btn-outline-secondary btn-sm mr-2" >
+                                Recruit players
                                     <Badge color="secondary" pill className="ml-1">58</Badge>
-                                </button>
-                            }
-                            {raid.isLeader &&
-                                <button className="btn btn-primary btn-sm" >Set raid time</button>
-                            }
-                            <button className="btn btn-success btn-sm ml-1">Save changes</button>
-                        </div>
+                            </button>
+                        }
+                        {raid.isLeader &&
+                            <button className="btn btn-primary btn-sm" >Set raid time</button>
+                        }
+                        <button className="btn btn-success btn-sm ml-1">Save changes</button>
                     </div>
                 </div>
             </div>
-        );
-    }
-}
+        </div>
+    );
+})
+

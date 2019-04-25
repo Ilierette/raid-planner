@@ -1,18 +1,17 @@
 import * as React from 'react';
-import "../../scss/characterData.scss";
 import { observer } from 'mobx-react-lite';
-import { user } from '../../store/userStore';
-import { Equipments } from '../../models/interfaces';
 import { CharacterStat } from './characterStat';
 import { CharacterGear } from './characterGear';
+import { Equipments } from '../../models/interfaces';
+import { user } from '../../store/userStore';
+import "../../scss/characterData.scss";
 
-
-interface CharacterDataProps {
+interface props {
   isMain: boolean,
   isBadge: boolean
 }
 
-export const CharacterData = observer(({isMain, isBadge}:CharacterDataProps) => {
+export const CharacterData = observer(({ isMain, isBadge }: props) => {
   return (
     <div className="card bg-dark text-white char-data mx-auto">
       {user.isLoadingData ? (

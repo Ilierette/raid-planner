@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-interface ParseProps {
+interface props {
     dpsCount: string,
     dpsImg: string
 }
 
-export const Parse = ({ dpsCount, dpsImg }: ParseProps) => {
+export const Parse = ({ dpsCount, dpsImg }: props) => {
     return (
         <div className="card text-center text-white bg-dark border-primary">
             <div className="card-body">

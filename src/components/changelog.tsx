@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-interface ChangelogProps {
+interface props {
     log: any;
 }
 
-export const Changelog = ({log}:ChangelogProps) =>{
+export const Changelog = ({log}:props) =>{
     return (
         <div className={log.checklist ? "card text-white bg-dark mb-3 border-primary" : "card text-white bg-dark mb-3 border-danger"}>
             <div className="card-header">

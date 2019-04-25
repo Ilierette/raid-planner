@@ -1,149 +1,134 @@
 import * as React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Input, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
-import { store } from '../../store/raidStore';
-import { observer } from 'mobx-react';
+import { observer, useObservable } from 'mobx-react-lite';
 import classnames from 'classnames';
-import { User, Member, Day } from '../../models/interfaces';
+import { Input, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CharacterDataSearch } from '../../components/characterDataSearch';
+import { User, Member, Day } from '../../models/interfaces';
+import { store } from '../../store/raidStore';
 
-interface RaidRowProps {
+interface props {
     o: number,
     user: User,
     member: Member,
 }
 
-interface RaidRowState {
-    activeTab: number;
-}
+export const RaidRow = observer(({ o, user, member }: props) => {
+    const state = useObservable({
+        activeTab: 1
+    })
 
-@observer
-export class RaidRow extends React.Component<RaidRowProps, RaidRowState>{
-    constructor(props: any) {
-        super(props)
-
-        this.state = {
-            activeTab: 1,
+    const changeTab = (tab: any) => {
+        if (state.activeTab !== tab) {
+            state.activeTab = tab
         }
     }
-    changeTab = (tab: any) => {
-        if (this.state.activeTab !== tab) {
-            this.setState({
-                activeTab: tab
-            });
-        }
-    }
-    render() {
-        const {
-            o,
-            user,
-            member,
-        } = this.props;
-        return (
-            <tbody key={user.id}>
-                <tr >
-                    {store.raids[o].isLeader &&
-                        <td>
-                            {
-                                user.id != store.currentMemberId ?
-                                    <button
-                                        className="btn btn-outline-danger" onClick={() => store.removeUser(o, user.id)}>
-                                        <FontAwesomeIcon icon="ban" />
-                                    </button> :
-                                    ""
-                            }
 
-                        </td>
-                    }
-                    <td className="text-left">
-                        <div className="name-col" onClick={() => store.toogle(o, user.id)}>
-                            <abbr title="Click to check character data">
-                                {user.name}
-                            </abbr>
-                            <FontAwesomeIcon icon="caret-down" className="ml-3" />
-                        </div>
-                    </td>
-                    <td className="text-left">
-                        {user.class}
-                    </td>
-                    {member.days.map((day: Day, index: number) => (
-                        <td key={index}>
-                            {day.min} - {day.max}
-                        </td>
-                    ))}
-                    <td className="form-group">
-                        {!store.raids[o].isLeader ?
-                            <span>
-                                {member.isStatic ? "static" : "sub"}
-                            </span> :
-                            <Input type="select"
-                                defaultValue={member.isStatic ? "static" : "sub"}
-                            >
-                                <option value="static"> static </option>
-                                <option value="sub"> sub </option>
-                            </Input>
+    return (
+        <tbody key={user.id}>
+            <tr >
+                {store.raids[o].isLeader &&
+                    <td>
+                        {
+                            user.id != store.currentMemberId ?
+                                <button
+                                    className="btn btn-outline-danger" onClick={() => store.removeUser(o, user.id)}>
+                                    <FontAwesomeIcon icon="ban" />
+                                </button> :
+                                ""
                         }
-                    </td>
-                    <td className="form-group">
-                        {user.isMain ? "main" : "alt"}
-                    </td>
 
-                </tr>
-                {
-                    member.isExpanded &&
-                    <tr>
-                        <td colSpan={12} className="text-left">
-                            <Nav tabs className="my-1">
-                                <NavItem>
-                                    <NavLink
-                                        className={classnames({ active: this.state.activeTab === 1 })}
-                                        onClick={() => { this.changeTab(1); }}>
-                                        Character Data
-                                    </NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink
-                                        className={classnames({ active: this.state.activeTab === 2 })}
-                                        onClick={() => { this.changeTab(2); }}>
-                                        Needs
-                                    </NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink
-                                        className={classnames({ active: this.state.activeTab === 3 })}
-                                        onClick={() => { this.changeTab(3); }}>
-                                        Parse
-                                    </NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink
-                                        className={classnames({ active: this.state.activeTab === 4 })}
-                                        onClick={() => { this.changeTab(4); }}>
-                                        Info
-                                    </NavLink>
-                                </NavItem>
-                            </Nav>
-                            <TabContent activeTab={this.state.activeTab}>
-                                <TabPane tabId={1} className="bg-dark">
-                                    <CharacterDataSearch name={user.name} region={store.region} isMain={user.isMain} isBadge={store.isBadge} />
-                                </TabPane>
-                                <TabPane tabId={2} className="bg-dark">
-                                
-                                </TabPane>
-                                <TabPane tabId={3} className="bg-dark">
-                                
-                                </TabPane>
-                                <TabPane tabId={4}>
-                                    {member.notes} <br />
-                                    User additional message <br />
-                                    Warnings
-                                </TabPane>
-                            </TabContent>
-                        </td>
-                    </tr>
+                    </td>
                 }
-            </tbody>
+                <td className="text-left">
+                    <div className="name-col" onClick={() => store.toogle(o, user.id)}>
+                        <abbr title="Click to check character data">
+                            {user.name}
+                        </abbr>
+                        <FontAwesomeIcon icon="caret-down" className="ml-3" />
+                    </div>
+                </td>
+                <td className="text-left">
+                    {user.class}
+                </td>
+                {member.days.map((day: Day, index: number) => (
+                    <td key={index}>
+                        {day.min} - {day.max}
+                    </td>
+                ))}
+                <td className="form-group">
+                    {!store.raids[o].isLeader ?
+                        <span>
+                            {member.isStatic ? "static" : "sub"}
+                        </span> :
+                        <Input type="select"
+                            defaultValue={member.isStatic ? "static" : "sub"}
+                        >
+                            <option value="static"> static </option>
+                            <option value="sub"> sub </option>
+                        </Input>
+                    }
+                </td>
+                <td className="form-group">
+                    {user.isMain ? "main" : "alt"}
+                </td>
 
-        );
-    }
-}
+            </tr>
+            {
+                member.isExpanded &&
+                <tr>
+                    <td colSpan={12} className="text-left">
+                        <Nav tabs className="my-1">
+                            <NavItem>
+                                <NavLink
+                                    className={classnames({ active: state.activeTab === 1 })}
+                                    onClick={() => { changeTab(1); }}>
+                                    Character Data
+                                    </NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink
+                                    className={classnames({ active: state.activeTab === 2 })}
+                                    onClick={() => { changeTab(2); }}>
+                                    Needs
+                                    </NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink
+                                    className={classnames({ active: state.activeTab === 3 })}
+                                    onClick={() => { changeTab(3); }}>
+                                    Parse
+                                    </NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink
+                                    className={classnames({ active: state.activeTab === 4 })}
+                                    onClick={() => { changeTab(4); }}>
+                                    Info
+                                    </NavLink>
+                            </NavItem>
+                        </Nav>
+                        <TabContent activeTab={state.activeTab}>
+                            <TabPane tabId={1} className="bg-dark">
+                                <CharacterDataSearch name={user.name} region={store.region} isMain={user.isMain} isBadge={store.isBadge} />
+                            </TabPane>
+                            <TabPane tabId={2} className="bg-dark">
+
+                            </TabPane>
+                            <TabPane tabId={3} className="bg-dark">
+
+                            </TabPane>
+                            <TabPane tabId={4}>
+                                {member.notes} <br />
+                                User additional message <br />
+                                Warnings
+                                </TabPane>
+                        </TabContent>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    );
+})
+
