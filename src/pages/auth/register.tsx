@@ -1,9 +1,9 @@
 import * as React from 'react';
-import '../scss/auth.scss';
+import '../../scss/auth.scss';
 import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
-import { auth, db } from '../store/config';
+import { auth, db } from '../../store/config';
 
 const initNeeds = [{
   name: "",

@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { PageHeader } from '../components/pageHeader';
-import { RaidTable } from '../components/raidTable/component';
-import '../scss/content.scss';
+import { PageHeader } from '../../components/pageHeader';
+import { RaidTable } from '../../components/raidTable/component';
+import '../../scss/content.scss';
 
 import { observer } from 'mobx-react';
-import { store } from '../store/raidStore';
-import { Raid } from '../models/interfaces';
+import { store } from '../../store/raidStore';
+import { Raid } from '../../models/interfaces';
 
-import { RaidRecruitTable } from '../components/raidTable/raidRecruitTable';
+import { RaidRecruitTable } from '../../components/raidTable/raidRecruitTable';
 import { Alert } from 'reactstrap';
 
 @observer
