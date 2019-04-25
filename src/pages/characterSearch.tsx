@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { PageHeader } from '../components/pageHeader';
-import { CharacterData } from '../components/characterData';
+import { CharacterData } from '../components/characterData/component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CharacterSelectDropdown } from '../components/characterSelectDropdown';
 import { CharacterNeeds } from '../components/characterNeeds';
@@ -130,7 +130,7 @@ export default class CharacterSearch extends React.Component {
                   {this.reload ?
                     <div>
                       {this.searchSwitch ?
-                        <CharacterData name={user.name} region={user.region} isMain={user.isMain} isBadge={this.isBadge} /> :
+                        <CharacterData isMain={user.isMain} isBadge={this.isBadge} /> :
                         <CharacterDataSearch name={this.searchName} region={this.searchRegion} isMain={null} isBadge={null} />
                       }
                     </div> :

@@ -1,13 +1,15 @@
 import * as React from 'react';
 import axios from 'axios';
 import "../scss/characterData.scss";
-import { CharacterDataRow } from './characterDataRow';
-import { CharacterDataGearRow } from './characterDataGearRow';
+import { CharacterDataRow } from './characterData/characterDataRow';
+import { CharacterDataGearRow } from './characterData/characterDataGearRow';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
 import { user } from '../store/userStore';
 import { Character, Equipments } from '../models/interfaces';
 import { character } from '../data/character';
+
+//TO DO - avoid duplicate code
 
 interface CharacterDataProps {
   name: string,

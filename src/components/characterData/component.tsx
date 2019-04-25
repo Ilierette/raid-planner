@@ -1,10 +1,10 @@
 import * as React from 'react';
-import "../scss/characterData.scss";
+import "../../scss/characterData.scss";
 import { CharacterDataRow } from './characterDataRow';
 import { CharacterDataGearRow } from './characterDataGearRow';
 import { observer } from 'mobx-react-lite';
-import { user } from '../store/userStore';
-import { Equipments } from '../models/interfaces';
+import { user } from '../../store/userStore';
+import { Equipments } from '../../models/interfaces';
 
 interface CharacterDataProps {
   isMain: boolean,
