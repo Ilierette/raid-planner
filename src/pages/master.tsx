@@ -19,15 +19,17 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { Home } from './home';
 import { Clan } from './clan';
-import CharacterSearch from './characterSearch';
+import { CharacterSearch } from './characterSearch';
 import Login from '../pages/auth/login';
 import Register from '../pages/auth/register';
 import Schedule from '../pages/tables/schedule';
 import Gear from '../pages/tables/upgradeGear';
 import Marketplace from '../pages/tables/marketplace';
-import { market } from '../store/marketStore';
-import { user } from '../store/userStore';
+
 import "../scss/navigation.scss"
+
+import GlobalStore from '../store/globalStore';
+import MarketStore from '../store/marketStore'
 
 library.add(
   fab, faPowerOff, faBars, faCaretDown,
@@ -40,15 +42,17 @@ library.add(
 
 
 export const MasterPage = observer(() => {
+  const { isLoading, isAuthUser, authListener, logout } = React.useContext(GlobalStore)
+  const { getStoreData } = React.useContext(MarketStore)
 
   useEffect(() => {
-    market.getStoreData();
-    user.authListener();
-  }, [])
+    getStoreData()
+    authListener()
+  })
 
   return (
     <div>
-      {user.isLoading ?
+      {isLoading ?
         <div className="loader"></div>
         :
         <Router>
@@ -56,7 +60,7 @@ export const MasterPage = observer(() => {
             <div className="container-fluid">
               <div className="row">
                 {
-                  user.isAuthUser ?
+                  isAuthUser ?
                     <div className="sidebar">
                       <div className="sidebar-sticky">
                         <ul className="nav side-nav flex-column">
@@ -109,7 +113,7 @@ export const MasterPage = observer(() => {
                             <hr className="hr-light" />
                           </li>
                           <li className="nav-item">
-                            <a className="nav-link text-light" href="#" onClick={user.logout}>
+                            <a className="nav-link text-light" href="#" onClick={logout}>
                               <FontAwesomeIcon icon="power-off" className="mr-2" />
                               Logout
                             </a>
@@ -123,28 +127,28 @@ export const MasterPage = observer(() => {
                   <div>
                     <Route
                       exact path="/"
-                      render={() => (!user.isAuthUser ? <Redirect to="/login" /> : <Home />)} />
+                      render={() => (!isAuthUser ? <Redirect to="/login" /> : <Home />)} />
                     <Route
                       path="/character"
-                      render={() => (!user.isAuthUser ? <Redirect to="/login" /> : <CharacterSearch />)} />
+                      render={() => (!isAuthUser ? <Redirect to="/login" /> : <CharacterSearch />)} />
                     <Route
                       path="/find-clan"
-                      render={() => (!user.isAuthUser ? <Redirect to="/login" /> : <Clan />)} />
+                      render={() => (!isAuthUser ? <Redirect to="/login" /> : <Clan />)} />
                     <Route
                       exact path="/raid-schedule"
-                      render={() => (!user.isAuthUser ? <Redirect to="/login" /> : <Schedule />)} />
+                      render={() => (!isAuthUser ? <Redirect to="/login" /> : <Schedule />)} />
                     <Route
                       exact path="/upgrade-gear"
-                      render={() => (!user.isAuthUser ? <Redirect to="/login" /> : <Gear />)} />
+                      render={() => (!isAuthUser ? <Redirect to="/login" /> : <Gear />)} />
                     <Route
                       exact path="/market"
-                      render={() => (!user.isAuthUser ? <Redirect to="/login" /> : <Marketplace />)} />
+                      render={() => (!isAuthUser ? <Redirect to="/login" /> : <Marketplace />)} />
                     <Route
                       exact path="/login"
-                      render={() => (user.isAuthUser ? <Redirect to="/" /> : <Login />)} />
+                      render={() => (isAuthUser ? <Redirect to="/" /> : <Login />)} />
                     <Route
                       exact path="/register"
-                      render={() => (user.isAuthUser ? <Redirect to="/" /> : <Register />)} />
+                      render={() => (isAuthUser ? <Redirect to="/" /> : <Register />)} />
                   </div>
                 </main>
               </div>

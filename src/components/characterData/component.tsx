@@ -3,8 +3,8 @@ import { observer } from 'mobx-react-lite';
 import { CharacterStat } from './characterStat';
 import { CharacterGear } from './characterGear';
 import { Equipments } from '../../models/interfaces';
-import { user } from '../../store/userStore';
 import "../../scss/characterData.scss";
+import GlobalStore from '../../store/globalStore'
 
 interface props {
   isMain: boolean,
@@ -12,16 +12,18 @@ interface props {
 }
 
 export const CharacterData = observer(({ isMain, isBadge }: props) => {
+  const { char, isLoadingData } = React.useContext(GlobalStore)
+
   return (
     <div className="card bg-dark text-white char-data mx-auto">
-      {user.isLoadingData ? (
+      {isLoadingData ? (
         <div className="loader"></div>
       ) :
         <div className="card-body">
           <div className="row text-light">
-            {user.char.class && <div className={"class ml-3 " + user.char.class.toLowerCase().replace(/ /g, '')}></div>}
+            {char.class && <div className={"class ml-3 " + char.class.toLowerCase().replace(/ /g, '')}></div>}
             <div className="col">
-              <span className="char-name"><strong>{user.char.name}</strong></span>
+              <span className="char-name"><strong>{char.name}</strong></span>
               {isBadge &&
                 <span>
                   {isMain ? (
@@ -31,14 +33,14 @@ export const CharacterData = observer(({ isMain, isBadge }: props) => {
                     )}
                 </span>}
               <ul className="list-inline char-data-list mt-1">
-                <li className="list-inline-item pl-0">{user.char.class}</li>
-                <li className="list-inline-item">Level {user.char.lvl} &bull; {user.char.lvlHM} HM</li>
-                <li className="list-inline-item">{user.char.server}</li>
-                {user.char.faction && <li className="list-inline-item">{user.char.faction} {user.char.factionRank}</li>}
-                {user.char.guild && <li className="list-inline-item">{user.char.guild}</li>}
+                <li className="list-inline-item pl-0">{char.class}</li>
+                <li className="list-inline-item">Level {char.lvl} &bull; {char.lvlHM} HM</li>
+                <li className="list-inline-item">{char.server}</li>
+                {char.faction && <li className="list-inline-item">{char.faction} {char.factionRank}</li>}
+                {char.guild && <li className="list-inline-item">{char.guild}</li>}
                 <li className="list-inline-item last">
-                  <span className={"elements " + user.char.activeElement} >
-                    {user.char.activeElement}
+                  <span className={"elements " + char.activeElement} >
+                    {char.activeElement}
                   </span>
                 </li>
               </ul>
@@ -46,18 +48,18 @@ export const CharacterData = observer(({ isMain, isBadge }: props) => {
           </div>
           <div className="row">
             <div className="col pr-0 character-profile border-dark">
-              <img src={user.char.img} className="card-img" />
+              <img src={char.img} className="card-img" />
             </div>
             <div className="col px-1">
               <div className="character-stats attack">
                 <div className="stats-header">
                   <h3>
                     Attack Power <br />
-                    <span className="accent">{user.char.ap}</span>
+                    <span className="accent">{char.ap}</span>
                   </h3>
                 </div>
                 <div className="split-point"></div>
-                {user.char.offensive && user.char.offensive.map((o: any) => (
+                {char.offensive && char.offensive.map((o: any) => (
                   <CharacterStat
                     key={o.id}
                     id={o.id}
@@ -76,11 +78,11 @@ export const CharacterData = observer(({ isMain, isBadge }: props) => {
                 <div className="stats-header">
                   <h3>
                     Health <br />
-                    <span className="accent">{user.char.hp}</span>
+                    <span className="accent">{char.hp}</span>
                   </h3>
                 </div>
                 <div className="split-point"></div>
-                {user.char.defensive && user.char.defensive.map((o: any) => (
+                {char.defensive && char.defensive.map((o: any) => (
                   <CharacterStat
                     key={o.id}
                     id={o.id}
@@ -97,7 +99,7 @@ export const CharacterData = observer(({ isMain, isBadge }: props) => {
             <div className="col-4 pl-4">
               <div className="card bg-dark ">
                 {
-                  user.char.equipment && user.char.equipment.map((item: Equipments, index: number) => (
+                  char.equipment && char.equipment.map((item: Equipments, index: number) => (
                     <CharacterGear
                       displayName={item.displayName}
                       key={index}

@@ -1,14 +1,15 @@
-import { observable } from 'mobx';
-import { users, mats, gear } from '../data/users';
+import { createContext } from "react";
+import { observable } from "mobx";
 import { auth, db } from './config';
-import { character } from '../data/character';
+import { character } from "../data/character";
 import axios from 'axios';
-import { Equipments } from '../models/interfaces';
+import { users } from "../data/users";
+import { Equipments } from "../models/interfaces";
 
-class UserStore {
+class GlobalStore {
     @observable isAuthUser = false;
-    @observable user: any = null
     @observable isLoading = true;
+    @observable user: any = null;
     @observable uid: any = null;
     @observable name: any = null;
     @observable region: any = null;
@@ -40,10 +41,13 @@ class UserStore {
                 }).then(() => {
                     this.callApi(this.name, this.region);
                 })
+
+
             }
             this.isLoading = false;
         })
     }
+
     logout = () => {
         event.preventDefault();
         auth.signOut();
@@ -52,7 +56,6 @@ class UserStore {
 
     callApi = (name: string, region: string) => {
         this.isLoadingData = true;
-        console.log('ok')
         let getCharacter = axios.get('https://api.silveress.ie/bns/v3/character/full/' + region + '/' + name).then(res => {
             let activeElement = res.data.activeElement;
             if (activeElement == "Ice") {
@@ -239,15 +242,13 @@ class UserStore {
                     })
                 })
             }
-            this.isLoadingData = false
             this.char = charEq;
+        }).then(()=>{
+            this.isLoadingData = false
         })
     }
 
     @observable users = users;
-    @observable mats = mats;
-    @observable gear = gear;
-
 }
 
-export const user = new UserStore();
+export default createContext(new GlobalStore())
