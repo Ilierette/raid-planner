@@ -4,16 +4,15 @@ import { CharacterStat } from './characterStat';
 import { CharacterGear } from './characterGear';
 import { Equipments } from '../../models/interfaces';
 import "../../scss/characterData.scss";
-import GlobalStore from '../../store/globalStore'
 
 interface props {
   isMain: boolean,
-  isBadge: boolean
+  isBadge: boolean,
+  char: any,
+  isLoadingData: boolean
 }
 
-export const CharacterData = observer(({ isMain, isBadge }: props) => {
-  const { char, isLoadingData } = React.useContext(GlobalStore)
-
+export const CharacterData = observer(({ isMain, isBadge, char, isLoadingData }: props) => {
   return (
     <div className="card bg-dark text-white char-data mx-auto">
       {isLoadingData ? (

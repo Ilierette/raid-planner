@@ -20,6 +20,9 @@ class GlobalStore {
     @observable isLoadingData = true;
     @observable char = character;
 
+    @observable searchLoading = true;
+    @observable searchChar = character
+
     authListener = () => {
         auth.onAuthStateChanged((user) => {
             if (user) {
@@ -38,7 +41,7 @@ class GlobalStore {
                         this.needs = doc.data().needs;
                     }
                 }).then(() => {
-                    this.callApi(this.name, this.region);
+                    this.callApi(this.name, this.region, false);
                 })
 
 
@@ -53,8 +56,12 @@ class GlobalStore {
         window.location.reload();
     }
 
-    callApi = (name: string, region: string) => {
-        this.isLoadingData = true;
+    callApi = (name: string, region: string, search: boolean) => {
+        if (search)
+            this.searchLoading = true
+        else
+            this.isLoadingData = true;
+
         let getCharacter = axios.get('https://api.silveress.ie/bns/v3/character/full/' + region + '/' + name).then(res => {
             let activeElement = res.data.activeElement;
             if (activeElement == "Ice") {
@@ -241,9 +248,15 @@ class GlobalStore {
                     })
                 })
             }
-            this.char = charEq;
-        }).then(()=>{
-            this.isLoadingData = false
+            if (search) {
+                console.log(charEq)
+                this.searchChar = charEq
+                this.searchLoading = false
+            }
+            else {
+                this.char = charEq;
+                this.isLoadingData = false;
+            }
         })
     }
 }

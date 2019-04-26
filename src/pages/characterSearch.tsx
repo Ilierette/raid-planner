@@ -16,7 +16,8 @@ import { Needs } from '../components/characterAdditionalData/needs';
 import GlobalStore from '../store/globalStore';
 
 export const CharacterSearch = observer(() => {
-  const { isLoadingData, needs, dpsCount, dpsImg, isMain } = React.useContext(GlobalStore)
+  const { char, isLoadingData, needs, dpsCount, dpsImg, isMain } = React.useContext(GlobalStore)
+
   const state = useObservable({
     searchName: "",
     searchRegion: "EU",
@@ -126,8 +127,8 @@ export const CharacterSearch = observer(() => {
                 {state.reload ?
                   <div>
                     {state.searchSwitch ?
-                      <CharacterData isMain={isMain} isBadge={state.isBadge} /> :
-                      <CharacterDataSearch name={state.searchName} region={state.searchRegion} isMain={null} isBadge={null} />
+                      <CharacterData char={char} isLoadingData={isLoadingData} isMain={isMain} isBadge={state.isBadge} /> :
+                      <CharacterDataSearch name={state.searchName} region={state.searchRegion} />
                     }
                   </div> :
                   <div className="card bg-dark text-white char-data mx-auto">
