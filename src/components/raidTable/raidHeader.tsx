@@ -31,7 +31,7 @@ export const RaidHeader = observer(({ index }: props) => {
                     <div className="row py-0">
                         <div className="col">Sign up</div>
                         <div className="col-1">
-                            <button className=" btn btn-outline-success" onClick={() => editHours(this.props.index)}>
+                            <button className=" btn btn-outline-success" onClick={() => editHours(index)}>
                                 {
                                     !raids[index].isEditMode ?
                                         <FontAwesomeIcon icon="pencil-alt" /> :

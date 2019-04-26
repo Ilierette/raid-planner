@@ -16,9 +16,7 @@ export const CharacterStat = ({ id, title, stat, rate, rate2, description, descr
     return (
         <div className="skill-tab">
             <button className="btn tab-button" id={id}>
-                <span>
-                    {title}:
-                    </span>
+                <span>{title}:</span>
                 <span>
                     <span className="accent">
                         {stat}

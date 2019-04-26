@@ -50,7 +50,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
                             raid.isAddMode &&
                             <tbody>
                                 <tr>
-                                    <td colSpan={2}>
+                                    <td>
                                         <button className="btn btn-outline-success" onClick={() => addUser(index)}>
                                             <FontAwesomeIcon icon="save" />
                                         </button>
@@ -66,8 +66,8 @@ export const RaidTable = observer(({ raid, index }: props) => {
                                         {
                                             suggestions &&
                                             <div className="suggestions-box">
-                                                {suggestions.map((suggestion: any) => (
-                                                    <a href="" onClick={(e) => selectChar(e, suggestion)}>{suggestion.name}<br /></a>
+                                                {suggestions.map((suggestion: any,id:any) => (
+                                                    <a href="" onClick={(e) => selectChar(e, suggestion)} key={id}>{suggestion.name}<br /></a>
                                                 ))}
                                             </div>
 
@@ -76,7 +76,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
                                     <td>
                                         {selectedCharClass}
                                     </td>
-                                    <td colSpan={6}></td>
+                                    <td colSpan={7}></td>
                                     <td>
                                         {selectedCharIsStatic != null ?
                                             <select
@@ -107,7 +107,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
                                                 return (
                                                     member.days.map((day: Day, id: number) => {
                                                         return (
-                                                            <HourInput date={day.date} min={day.min} max={day.max} id={id} raidId={index} />
+                                                            <HourInput date={day.date} min={day.min} max={day.max} id={id} raidId={index} key={id}/>
                                                         )
                                                     })
                                                 )
@@ -128,6 +128,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
                                             o={index}
                                             user={user}
                                             member={member}
+                                            key={user.id}
                                         />
                                     )
                                 }

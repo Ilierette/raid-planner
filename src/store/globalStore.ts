@@ -43,8 +43,6 @@ class GlobalStore {
                 }).then(() => {
                     this.callApi(this.name, this.region, false);
                 })
-
-
             }
             this.isLoading = false;
         })
@@ -249,7 +247,6 @@ class GlobalStore {
                 })
             }
             if (search) {
-                console.log(charEq)
                 this.searchChar = charEq
                 this.searchLoading = false
             }

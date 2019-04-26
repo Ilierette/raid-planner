@@ -23,10 +23,10 @@ export const MarketRow = observer(({ item, index, trade }: props) => {
       </td>
       <td>
         {
-          mats.map((mat: UserMats) => {
+          mats.map((mat: UserMats, id:number) => {
             if (item.id == mat.id) {
               return (
-                <span>{mat.totalAmount.toLocaleString()}</span>
+                <span key={mat.id+""+id}>{mat.totalAmount.toLocaleString()}</span>
               )
             }
           })
@@ -34,10 +34,10 @@ export const MarketRow = observer(({ item, index, trade }: props) => {
       </td>
       <td className={isMarketEditMode ? "edit-cell" : ""}>
         {
-          mats.map((mat: UserMats) => {
+          mats.map((mat: UserMats, id:number) => {
             if (item.id == mat.id) {
               return (
-                <div>
+                <div key={mat.id+""+id}>
                   {isMarketEditMode ?
                     <input
                       type="number"
@@ -59,10 +59,10 @@ export const MarketRow = observer(({ item, index, trade }: props) => {
       </td>
       <td>
         {
-          mats.map((mat: UserMats) => {
+          mats.map((mat: UserMats, id:number) => {
             if (item.id == mat.id) {
               return (
-                <span>{mat.totalAmount - mat.amount > 0 ? (mat.totalAmount - mat.amount).toLocaleString() : 0}</span>
+                <span key={mat.id+""+id}>{mat.totalAmount - mat.amount > 0 ? (mat.totalAmount - mat.amount).toLocaleString() : 0}</span>
               )
             }
           })

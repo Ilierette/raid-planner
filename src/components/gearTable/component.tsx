@@ -16,8 +16,8 @@ export const GearTable = observer(() => {
                 <th rowSpan={2} className="text-right" style={{ width: 220 }}>
                   Mats
                   </th>
-                {gear.map((item: Gears) => (
-                  <th colSpan={item.stages.length}>
+                {gear.map((item: Gears, id:number) => (
+                  <th colSpan={item.stages.length} key={item.name +""+id}>
                     {item.name}
                   </th>
                 ))}
@@ -26,9 +26,9 @@ export const GearTable = observer(() => {
                 <th rowSpan={2} style={{ width: 90 }} >Left</th>
               </tr>
               <tr>
-                {gear.map((item: Gears) => (
+                {gear.map((item: Gears, id:number) => (
                   item.stages.map((stage: Stages) => (
-                    <th>{stage.name}</th>
+                    <th key={stage.name+""+id}>{stage.name}</th>
                   ))
                 ))}
               </tr>
@@ -36,16 +36,16 @@ export const GearTable = observer(() => {
             <tbody>
               {
                 tradeable.map((trade: Mats) => (
-                  mats.map((mat: UserMats) => {
+                  mats.map((mat: UserMats, id:number) => {
                     if (mat.id == trade.id && mat.totalAmount != 0) {
                       return (
-                        <tr>
+                        <tr key={trade.name+""+id}>
                           <td className="text-right">
                             {trade.name}
                           </td>
                           {gear.map((item: Gears) => (
-                            item.stages.map((stage: any) => (
-                              <td>{stage[trade.id]}</td>
+                            item.stages.map((stage: any,id:number) => (
+                              <td key={item.name+stage.name+id}>{stage[trade.id]}</td>
                             ))
                           ))}
                           <td>
@@ -65,16 +65,16 @@ export const GearTable = observer(() => {
               }
               {
                 untradeable.map((trade: Mats) => (
-                  mats.map((mat: UserMats) => {
+                  mats.map((mat: UserMats, id:number) => {
                     if (mat.id == trade.id && mat.totalAmount != 0) {
                       return (
-                        <tr>
+                        <tr key={trade.name+""+id}>
                           <td className="text-right">
                             {trade.name}
                           </td>
-                          {gear.map((item: Gears) => (
+                          {gear.map((item: Gears,id:number) => (
                             item.stages.map((stage: any) => (
-                              <td>{stage[trade.id]}</td>
+                              <td key={stage.name+""+id}>{stage[trade.id]}</td>
                             ))
                           ))}
                           <td>

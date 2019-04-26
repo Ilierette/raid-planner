@@ -9,9 +9,7 @@ module.exports = function (env) {
         entry: {
             index: "./src/app.tsx"
         },
-
-        mode: 'development',
-        devtool: 'source-map',
+        devtool: 'inline-source-map',
 
         output: {
             path: path.join(__dirname, 'public'),

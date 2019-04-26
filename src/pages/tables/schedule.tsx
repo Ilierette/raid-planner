@@ -25,7 +25,7 @@ export const Schedule = observer(() => {
       <PageHeader title="Raid schedule" />
       <div className="content">
         {raids && raids.map((raid: Raid, index: number) => (
-          <RaidTable raid={raid} index={index} />
+          <RaidTable raid={raid} index={index} key={index} />
         ))}
         <div className="row mb-3">
           <div className="col-7">
