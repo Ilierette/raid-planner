@@ -2,6 +2,7 @@ import { observable } from 'mobx';
 import { raid, initDays } from '../data/raid';
 import { users } from '../data/users';
 import { Raid, User, Member } from '../models/interfaces';
+import { createContext } from 'react';
 
 class RaidStore {
     @observable raids: Raid[] = raid;
@@ -148,4 +149,4 @@ class RaidStore {
 
 }
 
-export const store = new RaidStore();
+export default createContext(new RaidStore())

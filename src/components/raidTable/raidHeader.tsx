@@ -1,22 +1,23 @@
 import * as React from 'react';
 import { observer } from 'mobx-react-lite';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { store } from '../../store/raidStore';
+import RaidStore from '../../store/raidStore'
 
 interface props {
     index: number
 }
 
 export const RaidHeader = observer(({ index }: props) => {
+    const { raids, addUserRow, editHours } = React.useContext(RaidStore)
     return (
         <thead>
             <tr>
-                {store.raids[index].isLeader &&
+                {raids[index].isLeader &&
                     <th rowSpan={2}>
                         <button
-                            className="btn btn-outline-primary" onClick={() => store.addUserRow(index)}>
+                            className="btn btn-outline-primary" onClick={() => addUserRow(index)}>
                             {
-                                !store.raids[index].isAddMode ?
+                                !raids[index].isAddMode ?
                                     <FontAwesomeIcon icon="plus" /> :
                                     <FontAwesomeIcon icon="times" />
                             }
@@ -30,9 +31,9 @@ export const RaidHeader = observer(({ index }: props) => {
                     <div className="row py-0">
                         <div className="col">Sign up</div>
                         <div className="col-1">
-                            <button className=" btn btn-outline-success" onClick={() => store.editHours(this.props.index)}>
+                            <button className=" btn btn-outline-success" onClick={() => editHours(this.props.index)}>
                                 {
-                                    !store.raids[index].isEditMode ?
+                                    !raids[index].isEditMode ?
                                         <FontAwesomeIcon icon="pencil-alt" /> :
                                         <FontAwesomeIcon icon="times" />
                                 }

@@ -6,8 +6,8 @@ import { RaidHeader as Header } from './raidHeader';
 import { RaidRow as Row } from './raidRow';
 import { HourInput } from './hourInput';
 import { Raid, Member, User, Day } from '../../models/interfaces';
-import { store } from '../../store/raidStore';
 import '../../scss/table.scss';
+import RaidStore from '../../store/raidStore'
 
 interface props {
     raid: Raid,
@@ -15,6 +15,11 @@ interface props {
 }
 
 export const RaidTable = observer(({ raid, index }: props) => {
+    const {
+        getSuggestions, selectedCharName, addUser, suggestions, selectChar,
+        selectedCharClass, selectedCharIsMain, selectedCharIsStatic, selectIfStatic,
+        users,
+    } = React.useContext(RaidStore);
     return (
         <div className="card mb-3">
             <div className="card-body">
@@ -46,7 +51,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
                             <tbody>
                                 <tr>
                                     <td colSpan={2}>
-                                        <button className="btn btn-outline-success" onClick={() => store.addUser(index)}>
+                                        <button className="btn btn-outline-success" onClick={() => addUser(index)}>
                                             <FontAwesomeIcon icon="save" />
                                         </button>
                                     </td>
@@ -55,29 +60,29 @@ export const RaidTable = observer(({ raid, index }: props) => {
                                             type="text"
                                             name="chars"
                                             className="form-control"
-                                            onChange={(e) => store.getSuggestions(e)}
-                                            value={store.selectedCharName || ""}
+                                            onChange={(e) => getSuggestions(e)}
+                                            value={selectedCharName || ""}
                                         />
                                         {
-                                            store.suggestions &&
+                                            suggestions &&
                                             <div className="suggestions-box">
-                                                {store.suggestions.map((suggestion: any) => (
-                                                    <a href="" onClick={(e) => store.selectChar(e, suggestion)}>{suggestion.name}<br /></a>
+                                                {suggestions.map((suggestion: any) => (
+                                                    <a href="" onClick={(e) => selectChar(e, suggestion)}>{suggestion.name}<br /></a>
                                                 ))}
                                             </div>
 
                                         }
                                     </td>
                                     <td>
-                                        {store.selectedCharClass}
+                                        {selectedCharClass}
                                     </td>
                                     <td colSpan={6}></td>
                                     <td>
-                                        {store.selectedCharIsStatic != null ?
+                                        {selectedCharIsStatic != null ?
                                             <select
                                                 className="form-control"
-                                                onChange={(e) => store.selectIfStatic(e)}
-                                                defaultValue={store.selectedCharIsStatic ? "static" : "sub"}
+                                                onChange={(e) => selectIfStatic(e)}
+                                                defaultValue={selectedCharIsStatic ? "static" : "sub"}
                                             >
                                                 <option value="static"> Static </option>
                                                 <option value="sub"> Sub </option>
@@ -86,7 +91,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
                                         }
                                     </td>
                                     <td>
-                                        {store.selectedCharIsMain != null ? store.selectedCharIsMain ? "Main" : "Alt" : ""}
+                                        {selectedCharIsMain != null ? selectedCharIsMain ? "Main" : "Alt" : ""}
                                     </td>
                                 </tr>
                             </tbody>
@@ -97,7 +102,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
                                 <tr>
                                     <td colSpan={raid.isLeader ? 3 : 2}></td>
                                     {raid.members.map((member: Member) => (
-                                        store.users.map((user: User) => {
+                                        users.map((user: User) => {
                                             if (member.id == user.id) {
                                                 return (
                                                     member.days.map((day: Day, id: number) => {
@@ -116,7 +121,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
                         }
 
                         {raid.members.map((member: Member) => (
-                            store.users.map((user: User) => {
+                            users.map((user: User) => {
                                 if (member.id == user.id) {
                                     return (
                                         <Row
