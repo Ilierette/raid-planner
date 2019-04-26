@@ -20,9 +20,9 @@ import {
 import { Home } from './home';
 import { Clan } from './clan';
 import { CharacterSearch } from './characterSearch';
-import Login from '../pages/auth/login';
-import Register from '../pages/auth/register';
-import Schedule from '../pages/tables/schedule';
+import { Login } from '../pages/auth/login';
+import { Register } from '../pages/auth/register';
+import { Schedule } from '../pages/tables/schedule';
 import { Gear } from '../pages/tables/upgradeGear';
 import { Marketplace } from '../pages/tables/marketplace';
 

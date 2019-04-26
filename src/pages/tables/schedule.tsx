@@ -3,16 +3,15 @@ import { PageHeader } from '../../components/pageHeader';
 import { RaidTable } from '../../components/raidTable/component';
 import '../../scss/content.scss';
 
-import { observer } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
 import { store } from '../../store/raidStore';
 import { Raid } from '../../models/interfaces';
 
 import { RaidRecruitTable } from '../../components/raidTable/raidRecruitTable';
 import { Alert } from 'reactstrap';
 
-@observer
-export default class Schedule extends React.Component {
-  render() {
+export const Schedule = observer(() => {
+
     return (
       <div className="content-wrapper">
         {
@@ -105,5 +104,4 @@ export default class Schedule extends React.Component {
         </div>
       </div>
     );
-  }
-}
+  })

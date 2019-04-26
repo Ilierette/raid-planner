@@ -3,10 +3,10 @@ import { PageHeader } from '../../components/pageHeader';
 import { MarketTable } from '../../components/marketTable/component';
 import { observer } from 'mobx-react-lite';
 import { Tiers } from '../../models/interfaces';
-import GearStore from '../../store/gearStore'
+import GearStore from '../../store/gearStore';
 
 export const Marketplace = observer(() => {
-    const { tierList, isMarketEditMode, untradeable, tradeable, handleTierChange } = React.useContext(GearStore);
+    const { tierList, isMarketEditMode, untradeable, tradeable, handleTierChange, toogleEditMode } = React.useContext(GearStore);
     return (
         <div className="content-wrapper">
             <PageHeader title="Marketplace" />
@@ -32,8 +32,8 @@ export const Marketplace = observer(() => {
                             </div>
                             <div className="col-2 text-right">
                                 {isMarketEditMode ?
-                                    <button className="btn btn-success btn-sm" onClick={() => isMarketEditMode = false}>Save changes</button> :
-                                    <button className="btn btn-primary btn-sm" onClick={() => isMarketEditMode = true}>Edit</button>
+                                    <button className="btn btn-success btn-sm" onClick={() => toogleEditMode()}>Save changes</button> :
+                                    <button className="btn btn-primary btn-sm" onClick={() => toogleEditMode()}>Edit</button>
                                 }
                             </div>
                         </div>

@@ -3,7 +3,6 @@ import { observable } from "mobx";
 import { auth, db } from './config';
 import { character } from "../data/character";
 import axios from 'axios';
-import { users } from "../data/users";
 import { Equipments } from "../models/interfaces";
 
 class GlobalStore {

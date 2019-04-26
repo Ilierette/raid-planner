@@ -3,7 +3,6 @@ import axios from 'axios';
 import "../scss/characterData.scss";
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
-import { user } from '../store/userStore';
 import { Character, Equipments } from '../models/interfaces';
 import { character } from '../data/character';
 import { CharacterStat } from './characterData/characterStat';

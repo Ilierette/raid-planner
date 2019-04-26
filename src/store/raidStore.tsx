@@ -1,32 +1,16 @@
 import { observable } from 'mobx';
 import { raid, initDays } from '../data/raid';
 import { users } from '../data/users';
-import { Raid, User, Member, Day } from '../models/interfaces';
+import { Raid, User, Member } from '../models/interfaces';
 
-interface RaidState {
-    currentMemberId: string,
-    raids: Raid[],
-    users: User[],
-    region: string,
-    isBadge: boolean,
-    suggestions: any,
-    selectedCharName: string,
-    selectedCharId: string,
-    selectedCharClass: string,
-    selectedCharIsMain: boolean,
-    selectedCharIsStatic: boolean,
-    selectedCharHours: any
-}
-
-class RaidStore implements RaidState {
-    @observable raids = raid;
-    @observable currentMemberId = "letty";
-    @observable isBadge = true;
-    @observable users = users;
-    @observable region = "eu";
-    @observable isEditMode = false;
-    @observable isAddMode = false;
-
+class RaidStore {
+    @observable raids: Raid[] = raid;
+    @observable currentMemberId: string = "letty";
+    @observable isBadge: boolean = true;
+    @observable users: User[] = users;
+    @observable region: string = "eu";
+    @observable isEditMode: boolean = false;
+    @observable isAddMode: boolean = false;
     @observable selectedCharName: any = null;
     @observable suggestions: any = null;
     @observable selectedCharId: string;
@@ -134,7 +118,7 @@ class RaidStore implements RaidState {
         this.selectedCharHours = null;
     }
 
-    editHoursMin(raidId: number, id: number, date: string, e: any) {
+    editHoursMin = (raidId: number, id: number, date: string, e: any) => {
         this.raids[raidId].members.map((member: Member) => {
             if (member.id == this.currentMemberId) {
                 return ({
@@ -146,7 +130,7 @@ class RaidStore implements RaidState {
 
         //this.getMin(raidId, id);
     }
-    editHoursMax(raidId: number, id: number, date: string, e: any) {
+    editHoursMax = (raidId: number, id: number, date: string, e: any) => {
         this.raids[raidId].members.map((member: Member) => {
             if (member.id == this.currentMemberId) {
                 return ({

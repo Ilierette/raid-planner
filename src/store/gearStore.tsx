@@ -25,10 +25,6 @@ class GearStore {
     @observable totalCost = 0;
     @observable isMarketEditMode = false;
 
-    constructor(){
-        console.log(this.tierList)
-    }
-
     handleInputChange = (e: any, id: any) => {
         let matList = this.mats.map((mat: any) => {
             if (mat.id == id) {
@@ -41,7 +37,7 @@ class GearStore {
         })
 
         this.mats = matList
-        
+
         this.calculateTotalPrice();
         this.calculateTotalCost();
 
@@ -60,7 +56,7 @@ class GearStore {
         this.tierList = allTiers
     }
 
-    getStoreData() {
+    getStoreData = () => {
         let allItems = axios.get('https://api.silveress.ie/bns/v3/market/eu/current/all').then(res => {
             let items = res.data.map((item: any) => {
                 return ({
@@ -84,7 +80,7 @@ class GearStore {
         })
     }
 
-    calculateTotalPrice() {
+    calculateTotalPrice = () => {
         let mats = this.mats.map((mat: UserMats) => {
             return ({
                 ...mat,
@@ -113,11 +109,15 @@ class GearStore {
         this.mats = matsCost;
     }
 
-    calculateTotalCost() {
+    calculateTotalCost = () => {
         let totalCost = this.mats.reduce((total: any, mat: UserMats) => {
             return total + mat.totalPrice
         }, 0)
         this.totalCost = totalCost
+    }
+
+    toogleEditMode = () => {
+        this.isMarketEditMode = !this.isMarketEditMode
     }
 }
 
