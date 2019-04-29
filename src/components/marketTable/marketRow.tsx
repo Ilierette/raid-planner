@@ -4,76 +4,93 @@ import { UserMats, Mats } from '../../models/interfaces';
 import GearStore from '../../store/gearStore'
 
 interface props {
-  item: Mats,
+  item: any,
   index: number,
   trade: boolean,
 }
 
 export const MarketRow = observer(({ item, index, trade }: props) => {
-  const { mats, isMarketEditMode, handleInputChange } = React.useContext(GearStore)
+  const { mats, isMarketEditMode, handleInputChange, isGodMode } = React.useContext(GearStore)
   return (
     <tr key={item.id}>
-      {!trade && index == 0 ?
+      {!trade && !isGodMode && index == 0 ?
         <td rowSpan={index}>
           {item.tier != "other" ? item.tier : ""}
         </td> : null
       }
-      <td className="text-right">
+      {
+        isGodMode &&
+        <td>
+          {item.id}
+        </td>
+      }
+      <td className={isGodMode ? "" : "text-right"}>
         {item.name}
       </td>
-      <td>
-        {
-          mats.map((mat: UserMats, id:number) => {
-            if (item.id == mat.id) {
-              return (
-                <span key={mat.id+""+id}>{mat.totalAmount.toLocaleString()}</span>
-              )
-            }
-          })
-        }
-      </td>
-      <td className={isMarketEditMode ? "edit-cell" : ""}>
-        {
-          mats.map((mat: UserMats, id:number) => {
-            if (item.id == mat.id) {
-              return (
-                <div key={mat.id+""+id}>
-                  {isMarketEditMode ?
-                    <input
-                      type="number"
-                      name={item.id}
-                      key={mat.id}
-                      defaultValue={mat.amount + ""}
-                      className="form-control text-center"
-                      onChange={(e) => handleInputChange(e, mat.id)}
-                      min="0"
-                    /> :
-                    <span>{mat.amount + ""}</span>
-                  }
-                </div>
+      {
+        !isGodMode &&
+        <td>
+          {
+            mats.map((mat: UserMats, id: number) => {
+              if (item.id == mat.id) {
+                return (
+                  <span key={mat.id + "" + id}>{mat.totalAmount.toLocaleString()}</span>
+                )
+              }
+            })
+          }
+        </td>
+      }
+      {
+        !isGodMode &&
+        <td className={isMarketEditMode ? "edit-cell" : ""}>
+          {
+            mats.map((mat: UserMats, id: number) => {
+              if (item.id == mat.id) {
+                return (
+                  <div key={mat.id + "" + id}>
+                    {isMarketEditMode ?
+                      <input
+                        type="number"
+                        name={item.id}
+                        key={mat.id}
+                        defaultValue={mat.amount + ""}
+                        className="form-control text-center"
+                        onChange={(e) => handleInputChange(e, mat.id)}
+                        min="0"
+                      /> :
+                      <span>{mat.amount + ""}</span>
+                    }
+                  </div>
 
-              )
-            }
-          })
-        }
-      </td>
-      <td>
-        {
-          mats.map((mat: UserMats, id:number) => {
-            if (item.id == mat.id) {
-              return (
-                <span key={mat.id+""+id}>{mat.totalAmount - mat.amount > 0 ? (mat.totalAmount - mat.amount).toLocaleString() : 0}</span>
-              )
-            }
-          })
-        }
-      </td>
-      {trade &&
+                )
+              }
+            })
+          }
+        </td>
+      }
+      {
+        !isGodMode &&
+        <td>
+          {
+            mats.map((mat: UserMats, id: number) => {
+              if (item.id == mat.id) {
+                return (
+                  <span key={mat.id + "" + id}>{mat.totalAmount - mat.amount > 0 ? (mat.totalAmount - mat.amount).toLocaleString() : 0}</span>
+                )
+              }
+            })
+          }
+        </td>
+      }
+      {
+        trade &&
         <td className="text-left">
           {item.price ? item.price.toLocaleString() : 0}
         </td>
       }
-      {trade &&
+      {
+        trade &&
         <td className="text-left">
           {
             mats.map((mat: UserMats) => {
@@ -86,6 +103,22 @@ export const MarketRow = observer(({ item, index, trade }: props) => {
           }
         </td>
       }
-    </tr>
+      {
+        isGodMode &&
+        <td>
+          {
+            mats.map((mat: UserMats) => {
+              if (item.id == mat.id) {
+                return (
+                  item.isOutdated ?
+                    <button className="btn btn-danger" onClick={() => item.isOutdated = false}>Outdated</button> :
+                    <button className="btn btn-success" onClick={() => item.isOutdated = true}> In stock </button>
+                )
+              }
+            })
+          }
+        </td>
+      }
+    </tr >
   )
 })

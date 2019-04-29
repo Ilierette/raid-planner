@@ -6,36 +6,48 @@ import GearStore from '../../store/gearStore'
 
 interface props {
   title: string,
-  items: Mats[],
+  items: any,
   trade: boolean,
 }
 
 export const MarketTable = observer(({ title, items, trade }: props) => {
-  const { tierList, totalCost } = React.useContext(GearStore);
+  const { tierList, totalCost, isGodMode } = React.useContext(GearStore);
   return (
     <div className="table-responsive">
       <table className="table table-sm text-center">
         <thead>
           <tr>
-            <th colSpan={6}>
+            <th colSpan={isGodMode ? 3 : 6}>
               {title}
             </th>
           </tr>
         </thead>
         <thead>
           <tr>
-            {!trade && <th style={{ width: "30px" }}>Tier</th>}
-            <th className="text-right">Name</th>
-            <th style={{ width: "100px" }}>All</th>
-            <th style={{ width: "100px" }}>Owned</th>
-            <th style={{ width: "100px" }}>Rest</th>
+            {isGodMode && <th style={{ width: "250px" }}>Id</th>}
+            {!trade && !isGodMode &&
+              <th style={{ width: "30px" }}>Tier</th>
+            }
+            <th className={isGodMode ? "" : "text-right"}>Name</th>
+            {!isGodMode && <th style={{ width: "100px" }}>All</th>}
+            {!isGodMode && <th style={{ width: "100px" }}>Owned</th>}
+            {!isGodMode && <th style={{ width: "100px" }}>Rest</th>}
             {trade && <th style={{ width: "100px" }}>Market price</th>}
             {trade && <th style={{ width: "250px" }} className="text-left">Total Price</th>}
+            {isGodMode && <th style={{ width: "250px" }} className="text-left">Delete</th>}
           </tr>
         </thead>
+
         {tierList.map((tier: Tiers) => (
           <tbody key={tier.name}>
-            {tier.show && items.filter((item: Mats) => { return item.tier == tier.name }).map((item: Mats, index: number) => (
+            {tier.show && items.filter((item: Mats) => {
+              return item.tier == tier.name
+            }).filter((item: any) => {
+              if (!isGodMode)
+                return !item.isOutdated
+              else
+                return item
+            }).map((item: Mats, index: number) => (
               <MarketRow
                 item={item}
                 key={index}
@@ -45,6 +57,7 @@ export const MarketTable = observer(({ title, items, trade }: props) => {
             ))}
           </tbody>
         ))}
+
         {trade &&
           <tbody>
             <tr>

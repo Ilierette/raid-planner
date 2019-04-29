@@ -9,8 +9,7 @@ class GearStore {
     @observable mats = mats;
     @observable gear = gear;
 
-    @observable tradeable = marketData.basic;
-    @observable untradeable = marketData.untradeable;
+    @observable marketMats = marketData;
 
     @observable tierList = [
         { name: "other", show: true },
@@ -24,6 +23,7 @@ class GearStore {
 
     @observable totalCost = 0;
     @observable isMarketEditMode = false;
+    @observable isGodMode = false;
 
     handleInputChange = (e: any, id: any) => {
         let matList = this.mats.map((mat: any) => {
@@ -64,7 +64,7 @@ class GearStore {
                     price: item.listings.map((list: any) => { return list.price })[0]
                 })
             })
-            let tradeable = this.tradeable.map((trade: Mats) => {
+            let tradeable = this.marketMats.map((trade: Mats) => {
                 let current = (items.filter((item: any) => { return item.name == trade.name }).map((item: any) => { return item.price })[0]) / 1000
                 return ({
                     ...trade,
@@ -74,7 +74,7 @@ class GearStore {
             return tradeable
         })
         Promise.all([allItems]).then((value: any) => {
-            this.tradeable = value[0];
+            this.marketMats = value[0];
             this.calculateTotalPrice();
             this.calculateTotalCost();
         })
@@ -96,7 +96,7 @@ class GearStore {
         let matsCost = mats.map((mat: UserMats) => {
             return ({
                 ...mat,
-                totalPrice: this.tradeable.reduce((total: any, trade: Mats) => {
+                totalPrice: this.marketMats.reduce((total: any, trade: Mats) => {
                     if (mat.id == trade.id && trade.price) {
                         let current = (trade.price * (mat.totalAmount - mat.amount))
                         return total + (current > 0 ? current : 0)
@@ -118,6 +118,11 @@ class GearStore {
 
     toogleEditMode = () => {
         this.isMarketEditMode = !this.isMarketEditMode
+        this.isGodMode = false;
+    }
+    toogleGodMode = () => {
+        this.isGodMode = !this.isGodMode
+        this.isMarketEditMode = false;
     }
 }
 
