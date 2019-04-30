@@ -34,14 +34,9 @@ export const CharacterData = observer(({ isMain, isBadge, char, isLoadingData }:
               <ul className="list-inline char-data-list mt-1">
                 <li className="list-inline-item pl-0">{char.class}</li>
                 <li className="list-inline-item">Level {char.lvl} &bull; {char.lvlHM} HM</li>
-                <li className="list-inline-item">{char.server}</li>
-                {char.faction && <li className="list-inline-item">{char.faction} {char.factionRank}</li>}
-                {char.guild && <li className="list-inline-item">{char.guild}</li>}
-                <li className="list-inline-item last">
-                  <span className={"elements " + char.activeElement} >
-                    {char.activeElement}
-                  </span>
-                </li>
+                <li className={char.faction || char.guild ? "list-inline-item" : "list-inline-item last"}>{char.server}</li>
+                {char.faction && <li className={char.guild ? "list-inline-item" : "list-inline-item last"}>{char.faction} {char.factionRank}</li>}
+                {char.guild && <li className="list-inline-item last">{char.guild}</li>}
               </ul>
             </div>
           </div>

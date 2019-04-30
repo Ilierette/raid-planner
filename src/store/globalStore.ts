@@ -61,16 +61,50 @@ class GlobalStore {
             this.isLoadingData = true;
 
         let getCharacter = axios.get('https://api.silveress.ie/bns/v3/character/full/' + region + '/' + name).then(res => {
-            let activeElement = res.data.activeElement;
-            if (activeElement == "Ice") {
-                activeElement = "Frost";
+            let shortClass = res.data.playerClass;
+            switch (shortClass) {
+                case "Blade Master":
+                    shortClass = "BM";
+                    break;
+                case "Destroyer":
+                    shortClass = "DES";
+                    break;
+                case "Summoner":
+                    shortClass = "SUM";
+                    break;
+                case "Force Master":
+                    shortClass = "FM";
+                    break;
+                case "Kung Fu Master":
+                    shortClass = "KFM";
+                    break;
+                case "Assassin":
+                    shortClass = "SIN";
+                    break;
+                case "Blade Dancer":
+                    shortClass = "BD"
+                    break;
+                case "Warlock":
+                    shortClass = "WL";
+                    break;
+                case "Soul Fighter":
+                    shortClass = "SF"
+                    break;
+                case "Gunslinger":
+                    shortClass = "GUN";
+                    break;
+                case "Warden":
+                    shortClass = "WAR";
+                    break;
             }
+
             const char = {
                 ap: res.data.ap,
                 hp: res.data.hp,
                 name: res.data.accountName,
                 displayName: res.data.characterName,
                 class: res.data.playerClass,
+                shortClass: shortClass,
                 lvl: res.data.playerLevel,
                 lvlHM: res.data.playerLevelHM,
                 faction: res.data.faction,
@@ -78,7 +112,6 @@ class GlobalStore {
                 server: res.data.server,
                 guild: res.data.guild,
                 img: res.data.characterImg,
-                activeElement: activeElement,
                 offensive: [
                     {
                         id: "piercing",
@@ -254,6 +287,14 @@ class GlobalStore {
                 this.char = charEq;
                 this.isLoadingData = false;
             }
+            if( this.char.shortClass){
+                db.collection("users").doc(this.uid).update({
+                    class: this.char.shortClass
+                })
+            }
+            
+
+            
         })
     }
 }
