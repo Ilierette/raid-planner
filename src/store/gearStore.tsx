@@ -1,13 +1,12 @@
 import { createContext } from "react";
 import { observable, toJS } from "mobx";
-import { gear } from "../data/users";
 import { UserMats, Mats, Tiers, Gears } from "../models/interfaces";
 import axios from 'axios';
 import { db, auth } from "./config";
 
 class GearStore {
     @observable mats: any = [];
-    @observable gear = gear;
+    @observable gear: any = [];
 
     @observable tierList = [
         { name: "other", show: true },
@@ -23,6 +22,7 @@ class GearStore {
     @observable isMarketEditMode = false;
     @observable isGodMode = false;
     @observable uid: any = null;
+    @observable marketMats: any = [];
 
     handleInputChange = (e: any, id: any) => {
         let matList = this.mats.map((mat: any) => {
@@ -55,7 +55,6 @@ class GearStore {
         this.tierList = allTiers
     }
 
-    @observable marketMats: any = [];
 
     getData = () => {
         auth.onAuthStateChanged((user) => {
@@ -70,6 +69,39 @@ class GearStore {
                     ));
                     this.calculateTotalPrice();
                     this.calculateTotalCost();
+                })
+
+                db.collection("users").doc(this.uid).onSnapshot((doc) => {
+                    const userGears: any = []
+                    const userStages: any = [];
+
+                    doc.data().gears.map((gear: any) => {
+                        gear.stages.map((stage: any) => {
+                            userStages.push(stage)
+                        })
+
+                        db.collection("gears").doc(gear.id).onSnapshot((doc) => {
+                            const mainStage: any = [];
+                            
+                            userStages.map((userStage: any) => {
+                                doc.data().stages.map((stage: any) => {
+                                    if (stage.name == userStage.name) {
+                                        mainStage.push(stage)
+                                    }
+                                })
+                            })
+
+                            userGears.push({
+                                ...doc.data(),
+                                stages: mainStage
+                            })
+
+                            this.gear = userGears
+                        })
+                    })
+
+
+                    
                 })
             }
         })

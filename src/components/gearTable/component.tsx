@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { observer } from 'mobx-react-lite';
-import { Gears, Mats, UserMats, Stages } from '../../models/interfaces';
+import { Gears, Stages } from '../../models/interfaces';
 import GearStore from '../../store/gearStore'
 
 export const GearTable = observer(() => {
-  const { gear, mats, tradeable, untradeable } = React.useContext(GearStore)
+  const { gear, mats, marketMats } = React.useContext(GearStore)
   return (
     <div className="card">
       <div className="card-body">
@@ -35,8 +35,8 @@ export const GearTable = observer(() => {
             </thead>
             <tbody>
               {
-                tradeable.map((trade: Mats) => (
-                  mats.map((mat: UserMats, id:number) => {
+                marketMats.map((trade: any) => (
+                  mats.map((mat: any, id:any) => {
                     if (mat.id == trade.id && mat.totalAmount != 0) {
                       return (
                         <tr key={trade.name+""+id}>
@@ -63,35 +63,7 @@ export const GearTable = observer(() => {
                   })
                 ))
               }
-              {
-                untradeable.map((trade: Mats) => (
-                  mats.map((mat: UserMats, id:number) => {
-                    if (mat.id == trade.id && mat.totalAmount != 0) {
-                      return (
-                        <tr key={trade.name+""+id}>
-                          <td className="text-right">
-                            {trade.name}
-                          </td>
-                          {gear.map((item: Gears,id:number) => (
-                            item.stages.map((stage: any) => (
-                              <td key={stage.name+""+id}>{stage[trade.id]}</td>
-                            ))
-                          ))}
-                          <td>
-                            {mat.totalAmount}
-                          </td>
-                          <td>
-                            {mat.amount}
-                          </td>
-                          <td>
-                            {mat.totalAmount - mat.amount}
-                          </td>
-                        </tr>
-                      )
-                    }
-                  })
-                ))
-              }
+              
             </tbody>
           </table>
         </div>
