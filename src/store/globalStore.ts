@@ -21,7 +21,7 @@ class GlobalStore {
     @observable char = character;
 
     @observable searchLoading = true;
-    @observable searchChar = character
+    @observable searchChar = character;
 
     authListener = () => {
         auth.onAuthStateChanged((user) => {

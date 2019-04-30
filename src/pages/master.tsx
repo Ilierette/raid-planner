@@ -44,10 +44,10 @@ library.add(
 
 export const MasterPage = observer(() => {
   const { isLoading, isAuthUser, authListener, logout } = React.useContext(GlobalStore)
-  const { getStoreData } = React.useContext(GearStore)
+  const { getData } = React.useContext(GearStore)
 
   useEffect(() => {
-    getStoreData()
+    getData()
     authListener()
   })
 

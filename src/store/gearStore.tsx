@@ -1,15 +1,13 @@
 import { createContext } from "react";
-import { observable } from "mobx";
-import { mats, gear } from "../data/users";
-import { marketData } from "../data/market";
+import { observable, toJS } from "mobx";
+import { gear } from "../data/users";
 import { UserMats, Mats, Tiers, Gears } from "../models/interfaces";
 import axios from 'axios';
+import { db, auth } from "./config";
 
 class GearStore {
-    @observable mats = mats;
+    @observable mats: any = [];
     @observable gear = gear;
-
-    @observable marketMats = marketData;
 
     @observable tierList = [
         { name: "other", show: true },
@@ -24,6 +22,7 @@ class GearStore {
     @observable totalCost = 0;
     @observable isMarketEditMode = false;
     @observable isGodMode = false;
+    @observable uid: any = null;
 
     handleInputChange = (e: any, id: any) => {
         let matList = this.mats.map((mat: any) => {
@@ -54,6 +53,36 @@ class GearStore {
             else return tier
         })
         this.tierList = allTiers
+    }
+
+    @observable marketMats: any = [];
+
+    getData = () => {
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                this.uid = user.uid;
+                db.collection("users").doc(this.uid).onSnapshot((doc) => {
+                    this.mats = doc.data().mats.map((mat: any) => (
+                        {
+                            ...mat,
+                            totalAmount: mat.totalAmount ? mat.totalAmount : 0
+                        }
+                    ));
+                    this.calculateTotalPrice();
+                    this.calculateTotalCost();
+                })
+            }
+        })
+        db.collection("mats").onSnapshot((querySnapshot) => {
+            let items: any = [];
+
+            querySnapshot.forEach(function (doc) {
+                items.push(doc.data())
+            });
+
+            this.marketMats = items
+            this.getStoreData()
+        })
     }
 
     getStoreData = () => {

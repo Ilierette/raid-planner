@@ -20,11 +20,23 @@ export const Register = observer(() => {
     email: "",
     passwordOne: "",
     passwordTwo: "",
-    error: null
+    error: null,
+    matsList: []
   })
 
   const onSubmit = (e: any) => {
     e.preventDefault();
+    let mats: any = [];
+    db.collection("mats").get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        mats.push({
+          amount: 0,
+          id: doc.id,
+          show: true
+        })
+      })
+      state.matsList = mats;
+    })
     auth.createUserWithEmailAndPassword(state.email, state.passwordOne).then((authUser: any) => {
       return db.collection("users").doc(authUser.user.uid).set({
         region: state.region,
@@ -35,7 +47,8 @@ export const Register = observer(() => {
         needs: initNeeds,
         raidMember: initRaid,
         raidLeader: initRaid,
-        isMain: true
+        isMain: true,
+        mats: state.matsList
       }).then(() => {
         this.props.history.push('/');
       }).catch((error) => {
