@@ -6,5 +6,4 @@ public
 *.cache
 .firebase
 webpack-assets.json
-src/store/config.tsx
-webpack-assets.json
+keys.ts
