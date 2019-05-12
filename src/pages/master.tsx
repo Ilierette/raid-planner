@@ -52,7 +52,7 @@ export const MasterPage = observer(() => {
     getData()
     authListener()
     getRaidData()
-  })
+  },[])
 
   return (
     <div>

@@ -30,8 +30,7 @@ class GlobalStore {
                 this.user = user;
                 this.uid = user.uid;
 
-                const docRef = db.collection("users").doc(this.uid);
-                docRef.get().then((doc) => {
+                db.collection("users").doc(this.uid).get().then((doc) => {
                     if (doc.exists) {
                         this.name = doc.data().name;
                         this.region = doc.data().region;

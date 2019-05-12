@@ -1,13 +1,13 @@
 import { observable, toJS } from 'mobx';
-import { Raid, User, Member } from '../models/interfaces';
+import { User, Member } from '../models/interfaces';
 import { createContext } from 'react';
 import { db, auth } from './config';
 import { initDays } from '../data/character';
 
 class RaidStore {
-    @observable raids:any = [];
+    @observable raids: any = [];
     @observable isBadge: boolean = true;
-    @observable users:any = [];
+    @observable users: any = [];
     @observable region: string = "eu";
     @observable isEditMode: boolean = false;
     @observable isAddMode: boolean = false;
@@ -18,19 +18,33 @@ class RaidStore {
     @observable selectedCharIsMain: boolean;
     @observable selectedCharIsStatic: boolean;
     @observable selectedCharHours: any;
-    @observable uid:any;
+    @observable uid: any;
 
     getRaidData = () => {
         auth.onAuthStateChanged((user) => {
-            this.uid = user.uid;
+            if(user){
+                this.uid = user.uid;
+                db.collection("users").onSnapshot((snap) => {
+                    let comp = this;
+                    snap.forEach((doc) => {
+                        comp.users.push(doc.data())
+                    })
+                })
+                db.collection("users").doc(this.uid).onSnapshot((doc)=>{
+                    let comp = this;
+                    let raidIdList:any = [];
+                    doc.data().raids.map((raid:any)=>{
+                        raidIdList.push(raid.raidId)
+                    })
+                    raidIdList.map((id:any)=>{
+                        db.collection("raids").doc(id).onSnapshot((snap)=>{
+                            comp.raids.push(snap.data())
+                        })
+                    })
+                })
+            }
         })
-        let user:any = []
-        db.collection("users").onSnapshot((snap)=>{
-            snap.forEach((doc)=>{
-                user.push(doc.data())
-            })
-            this.users = user;
-        })
+
     }
 
     toogle = (raidId: number, id: string) => {
@@ -62,7 +76,7 @@ class RaidStore {
     }
 
     removeUser = (id: number, userId: string) => {
-        const index = this.raids[id].members.findIndex((m:any) => m.id == userId);
+        const index = this.raids[id].members.findIndex((m: any) => m.id == userId);
         const all = this.raids[id].members
 
         if (index > -1) {

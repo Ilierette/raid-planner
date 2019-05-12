@@ -2,10 +2,8 @@ import * as React from 'react';
 import { PageHeader } from '../../components/pageHeader';
 import { RaidTable } from '../../components/raidTable/component';
 import '../../scss/content.scss';
-
 import { observer } from 'mobx-react-lite';
 import { Raid } from '../../models/interfaces';
-
 import { RaidRecruitTable } from '../../components/raidTable/raidRecruitTable';
 import { Alert } from 'reactstrap';
 import RaidStore from '../../store/raidStore'
@@ -24,7 +22,7 @@ export const Schedule = observer(() => {
       }
       <PageHeader title="Raid schedule" />
       <div className="content">
-        {raids && raids.map((raid: Raid, index: number) => (
+        {raids.map((raid: Raid, index: number) => (
           <RaidTable raid={raid} index={index} key={index} />
         ))}
         <div className="row mb-3">
