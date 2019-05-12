@@ -20,6 +20,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
         selectedCharClass, selectedCharIsMain, selectedCharIsStatic, selectIfStatic,
         users, uid
     } = React.useContext(RaidStore);
+
     return (
         <div className="card mb-3">
             <div className="card-body">
@@ -143,13 +144,13 @@ export const RaidTable = observer(({ raid, index }: props) => {
                         {raid.members.length}/{raid.maxMembers}
                     </div>
                     <div className="col text-right">
-                        {raid.isLeader &&
+                        {raid.raidLeaderId == uid &&
                             <button className="btn btn-outline-secondary btn-sm mr-2" >
                                 Recruit players
                                     <Badge color="secondary" pill className="ml-1">58</Badge>
                             </button>
                         }
-                        {raid.isLeader &&
+                        {raid.raidLeaderId == uid &&
                             <button className="btn btn-primary btn-sm" >Set raid time</button>
                         }
                         <button className="btn btn-success btn-sm ml-1">Save changes</button>

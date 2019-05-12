@@ -36,6 +36,7 @@ class RaidStore {
                     doc.data().raids.map((raid:any)=>{
                         raidIdList.push(raid.raidId)
                     })
+                    console.log(raidIdList)
                     raidIdList.map((id:any)=>{
                         db.collection("raids").doc(id).onSnapshot((snap)=>{
                             comp.raids.push(snap.data())
