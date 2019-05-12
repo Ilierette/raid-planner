@@ -7,12 +7,12 @@ export const links = [
     {
         link: "https://github.com/Ilierette/raid-planner",
         color: "secondary",
-        title: "Repository"        
+        title: "Repository"
     },
     {
         link: "https://slate.silveress.ie/docs_bns#introduction",
         color: "success",
-        title: "BNS API"        
+        title: "BNS API"
     },
     {
         link: "https://reactjs.org/docs/hello-world.html",
@@ -22,7 +22,7 @@ export const links = [
     {
         link: "http://eu-bns.ncsoft.com/ingame/bs/character/profile?c=Letty&s=207",
         color: "warning",
-        title: "Ingame F2"       
+        title: "Ingame F2"
     }
 ]
 

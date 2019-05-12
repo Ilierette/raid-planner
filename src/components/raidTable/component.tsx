@@ -7,7 +7,7 @@ import { RaidRow as Row } from './raidRow';
 import { HourInput } from './hourInput';
 import { Raid, Member, User, Day } from '../../models/interfaces';
 import '../../scss/table.scss';
-import RaidStore from '../../store/raidStore'
+import RaidStore from '../../store/raidStore';
 
 interface props {
     raid: Raid,
@@ -18,25 +18,25 @@ export const RaidTable = observer(({ raid, index }: props) => {
     const {
         getSuggestions, selectedCharName, addUser, suggestions, selectChar,
         selectedCharClass, selectedCharIsMain, selectedCharIsStatic, selectIfStatic,
-        users,
+        users, uid
     } = React.useContext(RaidStore);
     return (
         <div className="card mb-3">
             <div className="card-body">
                 <div className="row">
                     <div className="col-4 my-auto">
-                        {raid.isLeader &&
+                        {raid.raidLeaderId == uid &&
                             <span>
                                 <FontAwesomeIcon icon="crown" /> <strong>Raid leader </strong>
                             </span>
                         }
                     </div>
-                    {raid.isLeader &&
+                    {raid.raidLeaderId == uid &&
                         <div className="col-8">
                             <div className="form-group row">
                                 <label htmlFor="token" className="col-2 col-form-label px-0 text-right">{raid.type} - Raid Token</label>
                                 <div className="col-10">
-                                    <input type="text" readOnly id="token" className="form-control" value="1273t21tguy6" />
+                                    <input type="text" readOnly id="token" className="form-control" value={raid.id} />
                                 </div>
                             </div>
                         </div>
@@ -66,7 +66,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
                                         {
                                             suggestions &&
                                             <div className="suggestions-box">
-                                                {suggestions.map((suggestion: any,id:any) => (
+                                                {suggestions.map((suggestion: any, id: any) => (
                                                     <a href="" onClick={(e) => selectChar(e, suggestion)} key={id}>{suggestion.name}<br /></a>
                                                 ))}
                                             </div>
@@ -107,7 +107,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
                                                 return (
                                                     member.days.map((day: Day, id: number) => {
                                                         return (
-                                                            <HourInput date={day.date} min={day.min} max={day.max} id={id} raidId={index} key={id}/>
+                                                            <HourInput date={day.date} min={day.min} max={day.max} id={id} raidId={index} key={id} />
                                                         )
                                                     })
                                                 )
@@ -120,20 +120,20 @@ export const RaidTable = observer(({ raid, index }: props) => {
                             </tbody>
                         }
 
-                        {raid.members.map((member: Member) => (
-                            users.map((user: User) => {
-                                if (member.id == user.id) {
+                        {raid.members.map((member: Member) => {
+                            return users.map((us: User) => {
+                                if (member.id == us.id) {
                                     return (
                                         <Row
                                             o={index}
-                                            user={user}
+                                            user={us}
                                             member={member}
-                                            key={user.id}
+                                            key={us.id}
                                         />
                                     )
                                 }
                             })
-                        ))}
+                        })}
                     </table>
                 </div>
             </div>

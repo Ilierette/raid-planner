@@ -30,6 +30,7 @@ import "../scss/navigation.scss"
 
 import GlobalStore from '../store/globalStore';
 import GearStore from '../store/gearStore';
+import RaidStore from '../store/raidStore';
 
 
 library.add(
@@ -45,10 +46,12 @@ library.add(
 export const MasterPage = observer(() => {
   const { isLoading, isAuthUser, authListener, logout } = React.useContext(GlobalStore)
   const { getData } = React.useContext(GearStore)
+  const { getRaidData } = React.useContext(RaidStore)
 
   useEffect(() => {
     getData()
     authListener()
+    getRaidData()
   })
 
   return (

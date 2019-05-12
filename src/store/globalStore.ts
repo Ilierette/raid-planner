@@ -33,7 +33,7 @@ class GlobalStore {
                 const docRef = db.collection("users").doc(this.uid);
                 docRef.get().then((doc) => {
                     if (doc.exists) {
-                        this.name = doc.data().username;
+                        this.name = doc.data().name;
                         this.region = doc.data().region;
                         this.dpsCount = doc.data().dpsParseValue;
                         this.dpsImg = doc.data().dpsParse;
@@ -287,14 +287,14 @@ class GlobalStore {
                 this.char = charEq;
                 this.isLoadingData = false;
             }
-            if( this.char.shortClass){
+            if (this.char.shortClass) {
                 db.collection("users").doc(this.uid).update({
                     class: this.char.shortClass
                 })
             }
-            
 
-            
+
+
         })
     }
 }

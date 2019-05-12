@@ -14,7 +14,7 @@ interface props {
 }
 
 export const RaidRow = observer(({ o, user, member }: props) => {
-    const { raids, currentMemberId, removeUser, toogle, region, isBadge } = React.useContext(RaidStore)
+    const { raids, removeUser, toogle, region, isBadge, uid } = React.useContext(RaidStore)
     const state = useObservable({
         activeTab: 1
     })
@@ -28,10 +28,10 @@ export const RaidRow = observer(({ o, user, member }: props) => {
     return (
         <tbody key={user.id}>
             <tr >
-                {raids[o].isLeader &&
+                {raids[o].raidLeaderId == uid &&
                     <td>
                         {
-                            user.id != currentMemberId ?
+                            user.id != uid ?
                                 <button
                                     className="btn btn-outline-danger" onClick={() => removeUser(o, user.id)}>
                                     <FontAwesomeIcon icon="ban" />

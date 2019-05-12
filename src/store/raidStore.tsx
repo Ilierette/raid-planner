@@ -1,14 +1,13 @@
-import { observable } from 'mobx';
-import { raid, initDays } from '../data/raid';
-import { users } from '../data/users';
+import { observable, toJS } from 'mobx';
 import { Raid, User, Member } from '../models/interfaces';
 import { createContext } from 'react';
+import { db, auth } from './config';
+import { initDays } from '../data/character';
 
 class RaidStore {
-    @observable raids: Raid[] = raid;
-    @observable currentMemberId: string = "letty";
+    @observable raids:any = [];
     @observable isBadge: boolean = true;
-    @observable users: User[] = users;
+    @observable users:any = [];
     @observable region: string = "eu";
     @observable isEditMode: boolean = false;
     @observable isAddMode: boolean = false;
@@ -19,7 +18,20 @@ class RaidStore {
     @observable selectedCharIsMain: boolean;
     @observable selectedCharIsStatic: boolean;
     @observable selectedCharHours: any;
+    @observable uid:any;
 
+    getRaidData = () => {
+        auth.onAuthStateChanged((user) => {
+            this.uid = user.uid;
+        })
+        let user:any = []
+        db.collection("users").onSnapshot((snap)=>{
+            snap.forEach((doc)=>{
+                user.push(doc.data())
+            })
+            this.users = user;
+        })
+    }
 
     toogle = (raidId: number, id: string) => {
         let raidList = this.raids[raidId].members.map((item: Member) => {
@@ -50,7 +62,7 @@ class RaidStore {
     }
 
     removeUser = (id: number, userId: string) => {
-        const index = this.raids[id].members.findIndex(m => m.id == userId);
+        const index = this.raids[id].members.findIndex((m:any) => m.id == userId);
         const all = this.raids[id].members
 
         if (index > -1) {
@@ -60,7 +72,7 @@ class RaidStore {
     }
 
     getSuggestions = (e: any) => {
-        const suggest = this.users.filter((user: User) => (
+        const suggest = this.users.filter((user: any) => (
             e.target.value.length > 0 && user.name.toLowerCase().includes(e.target.value.toLowerCase()))
         ).map((user: User) => {
             return user
@@ -121,7 +133,7 @@ class RaidStore {
 
     editHoursMin = (raidId: number, id: number, date: string, e: any) => {
         this.raids[raidId].members.map((member: Member) => {
-            if (member.id == this.currentMemberId) {
+            if (member.id == this.uid) {
                 return ({
                     date: date,
                     min: member.days[id].min = e.target.value,
@@ -133,7 +145,7 @@ class RaidStore {
     }
     editHoursMax = (raidId: number, id: number, date: string, e: any) => {
         this.raids[raidId].members.map((member: Member) => {
-            if (member.id == this.currentMemberId) {
+            if (member.id == this.uid) {
                 return ({
                     date: date,
                     max: member.days[id].max = e.target.value

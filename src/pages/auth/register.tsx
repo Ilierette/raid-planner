@@ -10,13 +10,15 @@ const initNeeds = [{
 }]
 
 const initRaid = [{
-  raidId: ""
+  raidId: "",
+  isLeader: false,
 }]
+const initGears: any = []
 
 export const Register = observer(() => {
   const state = useObservable({
     region: "EU",
-    username: "",
+    name: "",
     email: "",
     passwordOne: "",
     passwordTwo: "",
@@ -40,13 +42,13 @@ export const Register = observer(() => {
     auth.createUserWithEmailAndPassword(state.email, state.passwordOne).then((authUser: any) => {
       return db.collection("users").doc(authUser.user.uid).set({
         region: state.region,
-        username: state.username,
+        name: state.name,
         email: state.email,
         dpsParse: "",
         dpsParseValue: "",
         needs: initNeeds,
-        raidMember: initRaid,
-        raidLeader: initRaid,
+        raids: initRaid,
+        gears: initGears,
         isMain: true,
         mats: state.matsList
       }).then(() => {
@@ -80,12 +82,12 @@ export const Register = observer(() => {
             <div className="form-group">
               <input
                 type="text"
-                name="username"
-                value={state.username}
-                onChange={(e) => state.username = e.target.value}
+                name="name"
+                value={state.name}
+                onChange={(e) => state.name = e.target.value}
                 className="form-control"
               />
-              <label htmlFor="username" className="">Nazwa postaci</label>
+              <label htmlFor="name" className="">Nazwa postaci</label>
             </div>
             <div className="form-group">
               <input

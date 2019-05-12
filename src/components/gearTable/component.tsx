@@ -28,7 +28,7 @@ export const GearTable = observer(() => {
               <tr>
                 {gear.map((item: Gears, id:number) => (
                   item.stages.map((stage: Stages) => (
-                    <th key={stage.name+""+id}>{stage.name}</th>
+                    <th key={item.name +" - "+ stage.name}>{stage.name}</th>
                   ))
                 ))}
               </tr>

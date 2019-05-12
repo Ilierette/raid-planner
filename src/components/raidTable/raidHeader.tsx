@@ -8,11 +8,11 @@ interface props {
 }
 
 export const RaidHeader = observer(({ index }: props) => {
-    const { raids, addUserRow, editHours } = React.useContext(RaidStore)
+    const { raids, addUserRow, editHours, uid } = React.useContext(RaidStore)
     return (
         <thead>
             <tr>
-                {raids[index].isLeader &&
+                {raids[index].raidLeaderId == uid &&
                     <th rowSpan={2}>
                         <button
                             className="btn btn-outline-primary" onClick={() => addUserRow(index)}>
