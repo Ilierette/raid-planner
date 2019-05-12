@@ -65,7 +65,7 @@ export const Register = observer(() => {
       <div className="card">
         <div className="card-body">
           <div className="text-center">
-            <h1 className="white-text">Raid Planner</h1>
+            <h1 className="white-text">Game tools</h1>
             <hr className="hr-light" />
           </div>
           <form>
@@ -87,7 +87,7 @@ export const Register = observer(() => {
                 onChange={(e) => state.name = e.target.value}
                 className="form-control"
               />
-              <label htmlFor="name" className="">Nazwa postaci</label>
+              <label htmlFor="name" className="">Character Name</label>
             </div>
             <div className="form-group">
               <input
@@ -107,7 +107,7 @@ export const Register = observer(() => {
                 onChange={(e) => state.passwordOne = e.target.value}
                 className="form-control"
               />
-              <label htmlFor="passwordOne" className="">Hasło</label>
+              <label htmlFor="passwordOne" className="">Password</label>
             </div>
             <div className="form-group">
               <input
@@ -117,7 +117,7 @@ export const Register = observer(() => {
                 onChange={(e) => state.passwordTwo = e.target.value}
                 className="form-control"
               />
-              <label htmlFor="passwordTwo" className="">Powtórz hasło</label>
+              <label htmlFor="passwordTwo" className="">Confirm password</label>
             </div>
             <div className="col-12">
               <small className="text-danger">
@@ -130,7 +130,7 @@ export const Register = observer(() => {
               <div className="row">
                 <div className="col">
                   <Link to="/login" className="btn btn-outline-secondary">
-                    Logowanie
+                    Login
                   </Link>
                 </div>
                 <div className="col text-right">
@@ -139,7 +139,7 @@ export const Register = observer(() => {
                     className="btn btn-primary"
                     onClick={(e) => onSubmit(e)}
                   >
-                    Rejestracja
+                    Register
                   </button>
                 </div>
               </div>

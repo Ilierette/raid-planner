@@ -71,7 +71,7 @@ export const MasterPage = observer(() => {
                           <li className="nav-item">
                             <a className="navbar-brand col-sm-3 col-md-2 mr-0 text-light" href="#">
                               <FontAwesomeIcon icon={['fab', 'react']} />
-                              <span className="ml-2 brand-name">BNS Raid Planner</span>
+                              <span className="ml-2 brand-name">Game tools</span>
                             </a>
                           </li>
                           <li>

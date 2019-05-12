@@ -23,7 +23,7 @@ export const Login = observer(() => {
       <div className="card">
         <div className="card-body">
           <div className="text-center">
-            <h1 className="white-text">Raid Planner</h1>
+            <h1 className="white-text">Game tools</h1>
             <hr className="hr-light" />
           </div>
           <form>
@@ -45,7 +45,7 @@ export const Login = observer(() => {
                 onChange={(e) => state.password = e.target.value}
                 className="form-control"
               />
-              <label htmlFor="form4">Hasło</label>
+              <label htmlFor="form4">Password</label>
               <div className="mt-1">
                 <p className="text-right"></p>
               </div>
@@ -55,7 +55,7 @@ export const Login = observer(() => {
               <div className="row">
                 <div className="col">
                   <Link to="/register" className="btn btn-outline-secondary">
-                    Rejestracja
+                    Register
                   </Link>
                 </div>
                 <div className="col text-right">
@@ -64,7 +64,7 @@ export const Login = observer(() => {
                     className="btn btn-primary"
                     onClick={(e) => onSubmit(e)}
                   >
-                    Zaloguj się
+                    Login
                       </button>
                 </div>
               </div>
