@@ -8,6 +8,7 @@ import { HourInput } from './hourInput';
 import '../../scss/table.scss';
 import RaidStore from '../../store/raidStore';
 import { db } from '../../store/config';
+import { toJS } from 'mobx';
 
 interface props {
     raid: any,
@@ -46,32 +47,32 @@ export const RaidTable = observer(({ raid, index }: props) => {
         raidControls.isAddMode = false;
     }
 
-    const editHoursMin = (e: any, memberId: any, dayId:any) => {
+    const editHoursMin = (e: any, memberId: any, dayId: any) => {
         raidData.members[memberId].days[dayId].min = e.target.value
     }
 
-    const editHoursMax = (e: any, memberId: any, dayId:any) => {
+    const editHoursMax = (e: any, memberId: any, dayId: any) => {
         raidData.members[memberId].days[dayId].max = e.target.value
     }
     const addUser = () => {
-
+        let id = selectedCharId
         raidControls.isAddMode = false;
-        db.collection("raids").doc(raid.id).collection("members").doc(selectedCharId).set({
+        db.collection("raids").doc(raid.id).collection("members").doc(id).set({
             id: selectedCharId,
             isConfirmed: false,
             isStatic: selectedCharIsStatic,
             notes: "",
             days: selectedCharHours
+        }).then(() => {
+            db.collection("users").doc(id).collection("raids").doc(raid.id).set({
+                id: raid.id,
+                isLeader: false
+            })
         })
-        db.collection("users").doc(selectedCharId).collection("raids").doc(raid.id).set({
-            id: raid.id,
-            isLeader: false
-        })
-
     }
 
     React.useEffect(() => {
-        db.collection("raids").doc(raid.id).onSnapshot((snap) => {
+        db.collection("raids").doc(raid.id).get().then((snap) => {
             raidData.maxMembers = snap.data().maxMembers;
             raidData.minMembers = snap.data().minMembers;
             raidData.raidLeaderId = snap.data().raidLeaderId;
@@ -81,12 +82,15 @@ export const RaidTable = observer(({ raid, index }: props) => {
         })
 
         db.collection("raids").doc(raid.id).collection("members").onSnapshot((snap) => {
-            snap.forEach((doc) => {
-                raidData.members.push(doc.data())
+            const raidMembers = snap.docs.map((doc) => {
+                return doc.data()
             })
+            console.log(raidMembers)
+            
+            raidData.members = raidMembers
         })
 
-    }, [])
+    },[])
     return (
         <div className="card mb-3">
             <div className="card-body">
@@ -174,8 +178,8 @@ export const RaidTable = observer(({ raid, index }: props) => {
                                                 <HourInput
                                                     day={day}
                                                     editHoursMax={editHoursMax} editHoursMin={editHoursMin}
-                                                    memberId={memberId} 
-                                                    dayId={dayId}/>
+                                                    memberId={memberId}
+                                                    dayId={dayId} />
                                             ))
                                         ))
                                     }

@@ -45,7 +45,8 @@ export const Register = observer(() => {
         needs: initNeeds,
         gears: initGears,
         isMain: true,
-        mats: state.matsList
+        mats: state.matsList,
+        id: authUser.user.uid
       }).then(() => {
         this.props.history.push('/');
       }).catch((error) => {

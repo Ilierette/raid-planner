@@ -25,7 +25,7 @@ class RaidStore {
         auth.onAuthStateChanged((user) => {
             if (user) {
                 this.uid = user.uid;
-                db.collection("users").onSnapshot((snap) => {
+                db.collection("users").get().then((snap) => {
                     let comp = this;
                     snap.forEach((doc) => {
                         comp.users.push(doc.data())
