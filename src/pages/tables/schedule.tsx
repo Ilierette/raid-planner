@@ -2,14 +2,50 @@ import * as React from 'react';
 import { PageHeader } from '../../components/pageHeader';
 import { RaidTable } from '../../components/raidTable/component';
 import '../../scss/content.scss';
-import { observer } from 'mobx-react-lite';
+import { observer, useObservable } from 'mobx-react-lite';
 import { Raid } from '../../models/interfaces';
 import { RaidRecruitTable } from '../../components/raidTable/raidRecruitTable';
 import { Alert } from 'reactstrap';
 import RaidStore from '../../store/raidStore'
+import { db } from '../../store/config';
+import { initDays } from '../../data/character';
 
 export const Schedule = observer(() => {
-  const { raids } = React.useContext(RaidStore);
+  const { raids, uid } = React.useContext(RaidStore);
+  const createRaid = useObservable({
+    type: "BT",
+    maxMembers: 12,
+  })
+  const handleCreateRaid = (e: any) => {
+    e.preventDefault();
+
+    db.collection("raids").add({
+      id: "",
+      isAddMode: false,
+      isEditMode: false,
+      maxMembers: createRaid.maxMembers,
+      minMembers: 4,
+      raidLeaderId: uid,
+      ratio: "",
+      timestamp: "",
+      type: createRaid.type
+    }).then((docRef) => {
+      db.collection("raids").doc(docRef.id).set({
+        id: docRef.id,
+      }, { merge: true })
+      db.collection("raids").doc(docRef.id).collection('members').doc(uid).set({
+        id: uid,
+        isConfirmed: false,
+        isStatic: true,
+        days: initDays,
+        notes: ""
+      })
+      db.collection("users").doc(uid).collection('raids').doc(docRef.id).set({
+        id: docRef.id,
+        isLeader: true
+      })
+    })
+  }
   return (
     <div className="content-wrapper">
       {
@@ -52,14 +88,26 @@ export const Schedule = observer(() => {
               <div className="card-body">
                 <div className="form-group row">
                   <label htmlFor="raid" className="col-3 col-form-label text-right">Raid type</label>
-                  <select className="form-control col-6">
+                  <select className="form-control col-8" onChange={(e) => createRaid.type = e.target.value}>
                     <option value="BT">BT</option>
                     <option value="VT">VT</option>
                     <option value="BT">TT</option>
                     <option value="VT">ET</option>
                   </select>
-                  <div className="col-2 d-flex">
-                    <button className="btn btn-primary btn-sm align-self-center">Create </button>
+                  <label htmlFor="raid" className="col-3 col-form-label text-right">Raid size</label>
+                  <select className="form-control col-8" onChange={(e) => createRaid.maxMembers = parseInt(e.target.value)}>
+                    <option value="12">12</option>
+                    <option value="6">6</option>
+                    <option value="4">4</option>
+                  </select>
+                  <label htmlFor="raid" className="col-3 col-form-label text-right">Loot</label>
+                  <select className="form-control col-8">
+                    <option value="gold">Gold bid</option>
+                    <option value="dkp">DKP</option>
+                    <option value="priority">Priority list</option>
+                  </select>
+                  <div className="col-12 mt-2 text-right">
+                    <button className="btn btn-primary btn-sm align-self-center" onClick={(e) => handleCreateRaid(e)}>Create </button>
                   </div>
                 </div>
               </div>

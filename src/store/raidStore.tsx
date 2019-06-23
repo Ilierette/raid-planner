@@ -1,5 +1,5 @@
-import { observable, toJS } from 'mobx';
-import { User, Member } from '../models/interfaces';
+import { observable } from 'mobx';
+import { User } from '../models/interfaces';
 import { createContext } from 'react';
 import { db, auth } from './config';
 import { initDays } from '../data/character';
@@ -22,7 +22,7 @@ class RaidStore {
 
     getRaidData = () => {
         auth.onAuthStateChanged((user) => {
-            if(user){
+            if (user) {
                 this.uid = user.uid;
                 db.collection("users").onSnapshot((snap) => {
                     let comp = this;
@@ -30,60 +30,17 @@ class RaidStore {
                         comp.users.push(doc.data())
                     })
                 })
-                db.collection("users").doc(this.uid).onSnapshot((doc)=>{
-                    let comp = this;
-                    let raidIdList:any = [];
-                    doc.data().raids.map((raid:any)=>{
-                        raidIdList.push(raid.raidId)
+
+                db.collection("users").doc(this.uid).collection("raids").onSnapshot((snap) => {
+                    let raidIdList: any = [];
+                    snap.forEach((doc) => {
+                        raidIdList.push(doc.data())
                     })
-                    console.log(raidIdList)
-                    raidIdList.map((id:any)=>{
-                        db.collection("raids").doc(id).onSnapshot((snap)=>{
-                            comp.raids.push(snap.data())
-                        })
-                    })
+                    this.raids = raidIdList
                 })
             }
         })
 
-    }
-
-    toogle = (raidId: number, id: string) => {
-        let raidList = this.raids[raidId].members.map((item: Member) => {
-            if (item.id == id) {
-                return ({
-                    ...item,
-                    isExpanded: !item.isExpanded
-                })
-            }
-            else {
-                return ({
-                    ...item,
-                    isExpanded: false
-                })
-            }
-        })
-        this.raids[raidId].members = raidList
-    }
-
-    addUserRow = (id: number) => {
-        this.raids[id].isEditMode = false;
-        this.raids[id].isAddMode = !this.raids[id].isAddMode;
-    }
-
-    editHours = (id: number) => {
-        this.raids[id].isEditMode = !this.raids[id].isEditMode;
-        this.raids[id].isAddMode = false;
-    }
-
-    removeUser = (id: number, userId: string) => {
-        const index = this.raids[id].members.findIndex((m: any) => m.id == userId);
-        const all = this.raids[id].members
-
-        if (index > -1) {
-            all.splice(index, 1);
-        }
-        this.raids[id].members = all
     }
 
     getSuggestions = (e: any) => {
@@ -146,28 +103,7 @@ class RaidStore {
         this.selectedCharHours = null;
     }
 
-    editHoursMin = (raidId: number, id: number, date: string, e: any) => {
-        this.raids[raidId].members.map((member: Member) => {
-            if (member.id == this.uid) {
-                return ({
-                    date: date,
-                    min: member.days[id].min = e.target.value,
-                })
-            }
-        })
-
-        //this.getMin(raidId, id);
-    }
-    editHoursMax = (raidId: number, id: number, date: string, e: any) => {
-        this.raids[raidId].members.map((member: Member) => {
-            if (member.id == this.uid) {
-                return ({
-                    date: date,
-                    max: member.days[id].max = e.target.value
-                })
-            }
-        })
-    }
+    
     // getMin(raidId: number, id:number){
     //     let min = store.raids[raidId].members.map((member: Member)=>{
     //         return member.days[id]

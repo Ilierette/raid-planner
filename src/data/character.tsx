@@ -41,42 +41,49 @@ export const character = {
 export const initDays = [
     //Wednesday
     {
+        title: "Wednesday",
         date: "",
         min: "",
         max: ""
     },
     //Thursday
     {
+        title: "Thursday",
         date: "",
         min: "",
         max: ""
     },
     //Friday
     {
+        title: "Friday",
         date: "",
         min: "",
         max: ""
     },
     //Saturday
     {
+        title: "Saturday",
         date: "",
         min: "",
         max: ""
     },
     //Sunday
     {
+        title: "Sunday",
         date: "",
         min: "",
         max: ""
     },
     //Monday
     {
+        title: "Monday",
         date: "",
         min: "",
         max: ""
     },
     //Tuesday
     {
+        title: "Tuesday",
         date: "",
         min: "",
         max: ""

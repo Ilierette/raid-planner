@@ -4,19 +4,27 @@ import classnames from 'classnames';
 import { Input, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CharacterDataSearch } from '../../components/characterDataSearch';
-import { User, Member, Day } from '../../models/interfaces';
+import { Member, Day } from '../../models/interfaces';
 import RaidStore from '../../store/raidStore'
+import { db } from '../../store/config';
 
 interface props {
-    o: number,
-    user: User,
+    isLeader: boolean
     member: Member,
 }
 
-export const RaidRow = observer(({ o, user, member }: props) => {
-    const { raids, removeUser, toogle, region, isBadge, uid } = React.useContext(RaidStore)
+export const RaidRow = observer(({ isLeader, member }: props) => {
+    const { isBadge, uid } = React.useContext(RaidStore)
     const state = useObservable({
-        activeTab: 1
+        activeTab: 1,
+        isExpanded: false
+    })
+
+    const memberData = useObservable({
+        name: "",
+        class: "",
+        isMain: false,
+        region: ""
     })
 
     const changeTab = (tab: any) => {
@@ -24,16 +32,37 @@ export const RaidRow = observer(({ o, user, member }: props) => {
             state.activeTab = tab
         }
     }
+    const toogle = () => {
+        state.isExpanded = !state.isExpanded
+    }
+    const removeUser = () => {
+        // const index = this.raids[id].members.findIndex((m: any) => m.id == userId);
+        // const all = this.raids[id].members
+
+        // if (index > -1) {
+        //     all.splice(index, 1);
+        // }
+        // this.raids[id].members = all
+    }
+
+    React.useEffect(()=>{
+        db.collection('users').doc(member.id).onSnapshot((snap)=>{
+            memberData.name = snap.data().name;
+            memberData.class = snap.data().class;
+            memberData.isMain = snap.data().isMain;
+            memberData.region = snap.data().region;
+        })
+    },[])
 
     return (
-        <tbody key={user.id}>
+        <tbody key={member.id}>
             <tr >
-                {raids[o].raidLeaderId == uid &&
+                {isLeader &&
                     <td>
                         {
-                            user.id != uid ?
+                            member.id != uid ?
                                 <button
-                                    className="btn btn-outline-danger" onClick={() => removeUser(o, user.id)}>
+                                    className="btn btn-outline-danger" onClick={() => removeUser()}>
                                     <FontAwesomeIcon icon="ban" />
                                 </button> :
                                 ""
@@ -42,15 +71,15 @@ export const RaidRow = observer(({ o, user, member }: props) => {
                     </td>
                 }
                 <td className="text-left">
-                    <div className="name-col" onClick={() => toogle(o, user.id)}>
+                    <div className="name-col" onClick={() => toogle()}>
                         <abbr title="Click to check character data">
-                            {user.name}
+                            {memberData.name}
                         </abbr>
                         <FontAwesomeIcon icon="caret-down" className="ml-3" />
                     </div>
                 </td>
                 <td className="text-left">
-                    {user.class}
+                    {memberData.class}
                 </td>
                 {member.days.map((day: Day, index: number) => (
                     <td key={index}>
@@ -58,7 +87,7 @@ export const RaidRow = observer(({ o, user, member }: props) => {
                     </td>
                 ))}
                 <td className="form-group">
-                    {!raids[o].isLeader ?
+                    {!isLeader ?
                         <span>
                             {member.isStatic ? "static" : "sub"}
                         </span> :
@@ -71,12 +100,12 @@ export const RaidRow = observer(({ o, user, member }: props) => {
                     }
                 </td>
                 <td className="form-group">
-                    {user.isMain ? "main" : "alt"}
+                    {memberData.isMain ? "main" : "alt"}
                 </td>
 
             </tr>
             {
-                member.isExpanded &&
+                state.isExpanded &&
                 <tr>
                     <td colSpan={12} className="text-left">
                         <Nav tabs className="my-1">
@@ -111,7 +140,7 @@ export const RaidRow = observer(({ o, user, member }: props) => {
                         </Nav>
                         <TabContent activeTab={state.activeTab}>
                             <TabPane tabId={1} className="bg-dark">
-                                <CharacterDataSearch name={user.name} region={region} isMain={user.isMain} isBadge={isBadge} />
+                                <CharacterDataSearch name={memberData.name} region={memberData.region} isMain={memberData.isMain} isBadge={isBadge} />
                             </TabPane>
                             <TabPane tabId={2} className="bg-dark">
 
@@ -123,7 +152,7 @@ export const RaidRow = observer(({ o, user, member }: props) => {
                                 {member.notes} <br />
                                 User additional message <br />
                                 Warnings
-                                </TabPane>
+                            </TabPane>
                         </TabContent>
                     </td>
                 </tr>

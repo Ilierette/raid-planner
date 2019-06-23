@@ -18,16 +18,16 @@ export const RaidRecruitTable = () => {
                 <tbody>
                     <tr>
                         <td>
-
+                            Faustynian
                         </td>
                         <td>
                             TT
                             </td>
                         <td>
-
+                            High dps
                         </td>
                         <td>
-
+                            1kkk + 
                         </td>
                         <td>
                             no

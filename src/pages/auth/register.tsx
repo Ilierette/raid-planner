@@ -9,10 +9,6 @@ const initNeeds = [{
   isAwakened: false
 }]
 
-const initRaid = [{
-  raidId: "",
-  isLeader: false,
-}]
 const initGears: any = []
 
 export const Register = observer(() => {
@@ -47,7 +43,6 @@ export const Register = observer(() => {
         dpsParse: "",
         dpsParseValue: "",
         needs: initNeeds,
-        raids: initRaid,
         gears: initGears,
         isMain: true,
         mats: state.matsList

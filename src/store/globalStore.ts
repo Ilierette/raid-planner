@@ -40,7 +40,7 @@ class GlobalStore {
                         this.needs = doc.data().needs;
                     }
                 }).then(() => {
-                    this.callApi(this.name, this.region, false);
+                    //this.callApi(this.name, this.region, false);
                 })
             }
             this.isLoading = false;
@@ -59,7 +59,8 @@ class GlobalStore {
         else
             this.isLoadingData = true;
 
-        let getCharacter = axios.get('https://api.silveress.ie/bns/v3/character/full/' + region + '/' + name).then(res => {
+        let getCharacter = axios.get('https://api.silveress.ie/bns/v3/character/full/' + region + '/' + name
+        ).then(res => {
             let shortClass = res.data.playerClass;
             switch (shortClass) {
                 case "Blade Master":
@@ -258,7 +259,8 @@ class GlobalStore {
             }
             return char;
         })
-        let getEQ = axios.get('https://api.silveress.ie/bns/v3/equipment/new').then(res => {
+        let getEQ = axios.get('https://api.silveress.ie/bns/v3/equipment/new'
+        ).then(res => {
             const items = res.data;
             return items;
         })

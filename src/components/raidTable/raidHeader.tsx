@@ -1,23 +1,24 @@
 import * as React from 'react';
 import { observer } from 'mobx-react-lite';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import RaidStore from '../../store/raidStore'
 
 interface props {
-    index: number
+    raid: any,
+    addUserRow: any,
+    editHours: any,
+    raidControls: any
 }
 
-export const RaidHeader = observer(({ index }: props) => {
-    const { raids, addUserRow, editHours, uid } = React.useContext(RaidStore)
+export const RaidHeader = observer(({ raid, addUserRow, editHours, raidControls }: props) => {
     return (
         <thead>
             <tr>
-                {raids[index].raidLeaderId == uid &&
+                {raid.isLeader &&
                     <th rowSpan={2}>
                         <button
-                            className="btn btn-outline-primary" onClick={() => addUserRow(index)}>
+                            className="btn btn-outline-primary" onClick={() => addUserRow()}>
                             {
-                                !raids[index].isAddMode ?
+                                !raidControls.isAddMode ?
                                     <FontAwesomeIcon icon="plus" /> :
                                     <FontAwesomeIcon icon="times" />
                             }
@@ -31,9 +32,9 @@ export const RaidHeader = observer(({ index }: props) => {
                     <div className="row py-0">
                         <div className="col">Sign up</div>
                         <div className="col-1">
-                            <button className=" btn btn-outline-success" onClick={() => editHours(index)}>
+                            <button className=" btn btn-outline-success" onClick={() => editHours()}>
                                 {
-                                    !raids[index].isEditMode ?
+                                    !raidControls.isEditMode ?
                                         <FontAwesomeIcon icon="pencil-alt" /> :
                                         <FontAwesomeIcon icon="times" />
                                 }

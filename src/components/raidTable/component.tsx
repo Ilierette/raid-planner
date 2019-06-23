@@ -1,16 +1,16 @@
 import * as React from 'react';
-import { observer } from 'mobx-react-lite';
+import { observer, useObservable } from 'mobx-react-lite';
 import { Badge } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { RaidHeader as Header } from './raidHeader';
 import { RaidRow as Row } from './raidRow';
 import { HourInput } from './hourInput';
-import { Raid, Member, User, Day } from '../../models/interfaces';
 import '../../scss/table.scss';
 import RaidStore from '../../store/raidStore';
+import { db } from '../../store/config';
 
 interface props {
-    raid: Raid,
+    raid: any,
     index: number
 }
 
@@ -21,21 +21,71 @@ export const RaidTable = observer(({ raid, index }: props) => {
         users, uid
     } = React.useContext(RaidStore);
 
+    const raidData = useObservable({
+        id: "",
+        maxMembers: 0,
+        minMembers: 0,
+        raidLeaderId: "",
+        ratio: "",
+        timestamp: "",
+        type: "",
+        members: []
+    })
+
+    const raidControls = useObservable({
+        isAddMode: false,
+        isEditMode: false,
+    })
+
+    const addUserRow = () => {
+        raidControls.isEditMode = false;
+        raidControls.isAddMode = !raidControls.isAddMode;
+    }
+    const editHours = () => {
+        raidControls.isEditMode = !raidControls.isEditMode;
+        raidControls.isAddMode = false;
+    }
+
+    const editHoursMin = () => {
+
+    }
+
+    const editHoursMax = () => {
+
+    }
+
+    React.useEffect(() => {
+        db.collection("raids").doc(raid.id).onSnapshot((snap) => {
+            raidData.maxMembers = snap.data().maxMembers;
+            raidData.minMembers = snap.data().minMembers;
+            raidData.raidLeaderId = snap.data().raidLeaderId;
+            raidData.ratio = snap.data().ratio;
+            raidData.timestamp = snap.data().timestamp;
+            raidData.type = snap.data().type;
+        })
+
+        db.collection("raids").doc(raid.id).collection("members").onSnapshot((snap) => {
+            snap.forEach((doc) => {
+                raidData.members.push(doc.data())
+            })
+        })
+
+    }, [])
     return (
         <div className="card mb-3">
             <div className="card-body">
                 <div className="row">
                     <div className="col-4 my-auto">
-                        {raid.raidLeaderId == uid &&
+                        {raid.isLeader &&
                             <span>
                                 <FontAwesomeIcon icon="crown" /> <strong>Raid leader </strong>
                             </span>
                         }
                     </div>
-                    {raid.raidLeaderId == uid &&
+                    {raid.isLeader &&
                         <div className="col-8">
                             <div className="form-group row">
-                                <label htmlFor="token" className="col-2 col-form-label px-0 text-right">{raid.type} - Raid Token</label>
+                                <label htmlFor="token" className="col-2 col-form-label px-0 text-right">{raidData.type} - Raid Token</label>
                                 <div className="col-10">
                                     <input type="text" readOnly id="token" className="form-control" value={raid.id} />
                                 </div>
@@ -46,9 +96,9 @@ export const RaidTable = observer(({ raid, index }: props) => {
 
                 <div className="table-responsive">
                     <table className="table table-sm text-center">
-                        <Header index={index} />
+                        <Header raid={raid} addUserRow={addUserRow} editHours={editHours} raidControls={raidControls} />
                         {
-                            raid.isAddMode &&
+                            raidControls.isAddMode &&
                             <tbody>
                                 <tr>
                                     <td>
@@ -98,59 +148,45 @@ export const RaidTable = observer(({ raid, index }: props) => {
                             </tbody>
                         }
                         {
-                            raid.isEditMode &&
+                            raidControls.isEditMode &&
                             <tbody>
                                 <tr>
                                     <td colSpan={raid.isLeader ? 3 : 2}></td>
-                                    {raid.members.map((member: Member) => (
-                                        users.map((user: User) => {
-                                            if (member.id == user.id) {
-                                                return (
-                                                    member.days.map((day: Day, id: number) => {
-                                                        return (
-                                                            <HourInput date={day.date} min={day.min} max={day.max} id={id} raidId={index} key={id} />
-                                                        )
-                                                    })
-                                                )
-
-                                            }
-                                        })[0]
-                                    ))}
+                                    {
+                                        raidData.members && raidData.members.map((member: any) => (
+                                            member.days.map((day: any) => (
+                                                <HourInput day={day} />
+                                            ))
+                                        ))
+                                    }
                                     <td colSpan={2}></td>
                                 </tr>
                             </tbody>
                         }
 
-                        {raid.members.map((member: Member) => {
-                            return users.map((us: User) => {
-                                if (member.id == us.id) {
-                                    return (
-                                        <Row
-                                            o={index}
-                                            user={us}
-                                            member={member}
-                                            key={us.id}
-                                        />
-                                    )
-                                }
-                            })
-                        })}
+                        {raidData.members && raidData.members.map((member: any) => (
+                            <Row
+                                isLeader={raid.isLeader}
+                                member={member}
+                            />
+                        ))}
+
                     </table>
                 </div>
             </div>
             <div className="card-footer">
                 <div className="row">
                     <div className="col-2 my-auto">
-                        {raid.members.length}/{raid.maxMembers}
+                        {raidData.members.length}/{raidData.maxMembers}
                     </div>
                     <div className="col text-right">
-                        {raid.raidLeaderId == uid &&
+                        {raid.isLeader &&
                             <button className="btn btn-outline-secondary btn-sm mr-2" >
                                 Recruit players
                                     <Badge color="secondary" pill className="ml-1">58</Badge>
                             </button>
                         }
-                        {raid.raidLeaderId == uid &&
+                        {raid.isLeader &&
                             <button className="btn btn-primary btn-sm" >Set raid time</button>
                         }
                         <button className="btn btn-success btn-sm ml-1">Save changes</button>
