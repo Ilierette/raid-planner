@@ -40,7 +40,7 @@ class GlobalStore {
                         this.needs = doc.data().needs;
                     }
                 }).then(() => {
-                    //this.callApi(this.name, this.region, false);
+                    this.callApi(this.name, this.region, false);
                 })
             }
             this.isLoading = false;

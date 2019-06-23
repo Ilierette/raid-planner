@@ -8,7 +8,6 @@ import { HourInput } from './hourInput';
 import '../../scss/table.scss';
 import RaidStore from '../../store/raidStore';
 import { db } from '../../store/config';
-import { toJS } from 'mobx';
 
 interface props {
     raid: any,
@@ -17,9 +16,9 @@ interface props {
 
 export const RaidTable = observer(({ raid, index }: props) => {
     const {
-        getSuggestions, selectedCharName, addUser, suggestions, selectChar,
+        getSuggestions, selectedCharId, selectedCharName, suggestions, selectChar,
         selectedCharClass, selectedCharIsMain, selectedCharIsStatic, selectIfStatic,
-        users, uid
+        selectedCharHours
     } = React.useContext(RaidStore);
 
     const raidData = useObservable({
@@ -53,6 +52,22 @@ export const RaidTable = observer(({ raid, index }: props) => {
 
     const editHoursMax = (e: any, memberId: any, dayId:any) => {
         raidData.members[memberId].days[dayId].max = e.target.value
+    }
+    const addUser = () => {
+
+        raidControls.isAddMode = false;
+        db.collection("raids").doc(raid.id).collection("members").doc(selectedCharId).set({
+            id: selectedCharId,
+            isConfirmed: false,
+            isStatic: selectedCharIsStatic,
+            notes: "",
+            days: selectedCharHours
+        })
+        db.collection("users").doc(selectedCharId).collection("raids").doc(raid.id).set({
+            id: raid.id,
+            isLeader: false
+        })
+
     }
 
     React.useEffect(() => {
@@ -103,7 +118,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
                             <tbody>
                                 <tr>
                                     <td>
-                                        <button className="btn btn-outline-success" onClick={() => addUser(index)}>
+                                        <button className="btn btn-outline-success" onClick={() => addUser()}>
                                             <FontAwesomeIcon icon="save" />
                                         </button>
                                     </td>

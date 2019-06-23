@@ -47,6 +47,7 @@ export const RaidRow = observer(({ isLeader, member }: props) => {
 
     React.useEffect(()=>{
         db.collection('users').doc(member.id).onSnapshot((snap)=>{
+
             memberData.name = snap.data().name;
             memberData.class = snap.data().class;
             memberData.isMain = snap.data().isMain;

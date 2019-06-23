@@ -9,15 +9,16 @@ class RaidStore {
     @observable isBadge: boolean = true;
     @observable users: any = [];
     @observable region: string = "eu";
-    @observable isEditMode: boolean = false;
-    @observable isAddMode: boolean = false;
-    @observable selectedCharName: any = null;
+
     @observable suggestions: any = null;
+
+    @observable selectedCharName: any = null;
     @observable selectedCharId: string;
     @observable selectedCharClass: string;
     @observable selectedCharIsMain: boolean;
     @observable selectedCharIsStatic: boolean;
     @observable selectedCharHours: any;
+
     @observable uid: any;
 
     getRaidData = () => {
@@ -78,38 +79,6 @@ class RaidStore {
             this.selectedCharIsStatic = false
         }
     }
-    addUser = (id: number) => {
-        const selectedChar = {
-            id: this.selectedCharId,
-            name: this.selectedCharName,
-            isFounder: false,
-            isLeader: false,
-            isStatic: this.selectedCharIsStatic,
-            isConfirmed: false,
-            isExpanded: false,
-            notes: "",
-            days: this.selectedCharHours
-
-        }
-        this.raids[id].members.push(selectedChar);
-        this.raids[id].isAddMode = false;
-        this.selectedCharName = null;
-        this.suggestions = null;
-        this.selectedCharId = null;
-        this.selectedCharClass = null;
-        this.selectedCharIsMain = null;
-        this.selectedCharIsStatic = null;
-        this.selectedCharHours = null;
-        this.selectedCharHours = null;
-    }
-
-    
-    // getMin(raidId: number, id:number){
-    //     let min = store.raids[raidId].members.map((member: Member)=>{
-    //         return member.days[id]
-    //     })
-    // }
-
 }
 
 export default createContext(new RaidStore())
