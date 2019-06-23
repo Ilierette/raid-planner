@@ -1,12 +1,14 @@
 import * as React from 'react';
-import RaidStore from '../../store/raidStore'
 
 interface props {
-    day: any
+    day: any,
+    editHoursMax: any,
+    editHoursMin: any,
+    memberId: any,
+    dayId:any
 }
 
-export const HourInput = ({ day }: props) => {
-    const { editHoursMax, editHoursMin } = React.useContext(RaidStore)
+export const HourInput = ({ day, editHoursMax, editHoursMin, memberId, dayId }: props) => {
     return (
         <td>
             <div className="row">
@@ -16,7 +18,7 @@ export const HourInput = ({ day }: props) => {
                         name="min"
                         className="form-control"
                         defaultValue={day.min}
-                        onChange={(e) => editHoursMin(raidId, id, date, e)}
+                        onChange={(e) => editHoursMin(e, memberId, dayId)}
                     />
                 </div>
                 <div className="col">
@@ -25,7 +27,7 @@ export const HourInput = ({ day }: props) => {
                         name="max"
                         className="form-control"
                         defaultValue={day.max}
-                        onChange={(e) => editHoursMax(raidId, id, date, e)}
+                        onChange={(e) => editHoursMax(e, memberId, dayId)}
                     />
                 </div>
             </div>

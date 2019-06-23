@@ -8,6 +8,7 @@ import { HourInput } from './hourInput';
 import '../../scss/table.scss';
 import RaidStore from '../../store/raidStore';
 import { db } from '../../store/config';
+import { toJS } from 'mobx';
 
 interface props {
     raid: any,
@@ -46,12 +47,12 @@ export const RaidTable = observer(({ raid, index }: props) => {
         raidControls.isAddMode = false;
     }
 
-    const editHoursMin = () => {
-
+    const editHoursMin = (e: any, memberId: any, dayId:any) => {
+        raidData.members[memberId].days[dayId].min = e.target.value
     }
 
-    const editHoursMax = () => {
-
+    const editHoursMax = (e: any, memberId: any, dayId:any) => {
+        raidData.members[memberId].days[dayId].max = e.target.value
     }
 
     React.useEffect(() => {
@@ -153,9 +154,13 @@ export const RaidTable = observer(({ raid, index }: props) => {
                                 <tr>
                                     <td colSpan={raid.isLeader ? 3 : 2}></td>
                                     {
-                                        raidData.members && raidData.members.map((member: any) => (
-                                            member.days.map((day: any) => (
-                                                <HourInput day={day} />
+                                        raidData.members && raidData.members.map((member: any, memberId: any) => (
+                                            member.days.map((day: any, dayId: any) => (
+                                                <HourInput
+                                                    day={day}
+                                                    editHoursMax={editHoursMax} editHoursMin={editHoursMin}
+                                                    memberId={memberId} 
+                                                    dayId={dayId}/>
                                             ))
                                         ))
                                     }
