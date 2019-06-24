@@ -11,7 +11,7 @@ import { db } from '../../store/config';
 import { initDays } from '../../data/character';
 
 export const Schedule = observer(() => {
-  const { raids, uid } = React.useContext(RaidStore);
+  const { raids, uid, isLoading } = React.useContext(RaidStore);
   const createRaid = useObservable({
     type: "BT",
     maxMembers: 12,
@@ -78,7 +78,7 @@ export const Schedule = observer(() => {
       }
       <PageHeader title="Raid schedule" />
       <div className="content">
-        {raids.map((raid: Raid, index: number) => (
+        {!isLoading && raids.map((raid: Raid, index: number) => (
           <RaidTable raid={raid} index={index} key={index} />
         ))}
         <div className="row mb-3">

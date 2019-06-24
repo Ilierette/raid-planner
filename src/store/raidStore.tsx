@@ -20,6 +20,7 @@ class RaidStore {
     @observable selectedCharHours: any;
 
     @observable uid: any;
+    @observable isLoading = true;
 
     getRaidData = () => {
         auth.onAuthStateChanged((user) => {
@@ -33,11 +34,14 @@ class RaidStore {
                 })
 
                 db.collection("users").doc(this.uid).collection("raids").onSnapshot((snap) => {
+
                     let raidIdList: any = [];
                     snap.forEach((doc) => {
+                        this.isLoading = true;
                         raidIdList.push(doc.data())
                     })
                     this.raids = raidIdList
+                    this.isLoading = false
                 })
             }
         })
