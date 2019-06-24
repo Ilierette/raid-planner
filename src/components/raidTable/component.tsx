@@ -36,6 +36,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
     const raidControls = useObservable({
         isAddMode: false,
         isEditMode: false,
+        isLoading: true
     })
 
     const addUserRow = () => {
@@ -83,14 +84,14 @@ export const RaidTable = observer(({ raid, index }: props) => {
 
         db.collection("raids").doc(raid.id).collection("members").onSnapshot((snap) => {
             const raidMembers = snap.docs.map((doc) => {
+                raidControls.isLoading = true;
                 return doc.data()
             })
-            console.log(raidMembers)
-            
             raidData.members = raidMembers
+            raidControls.isLoading = false;
         })
 
-    },[])
+    }, [])
     return (
         <div className="card mb-3">
             <div className="card-body">
@@ -188,7 +189,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
                             </tbody>
                         }
 
-                        {raidData.members && raidData.members.map((member: any) => (
+                        {!raidControls.isLoading && raidData.members.map((member: any) => (
                             <Row
                                 isLeader={raid.isLeader}
                                 member={member}
