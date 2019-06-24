@@ -12,8 +12,6 @@ class GlobalStore {
     @observable uid: any = null;
     @observable name: any = null;
     @observable region: any = null;
-    @observable dpsCount: any = null;
-    @observable dpsImg: any = null;
     @observable isMain: any = null;
     @observable needs: any = null;
 
@@ -34,8 +32,6 @@ class GlobalStore {
                     if (doc.exists) {
                         this.name = doc.data().name;
                         this.region = doc.data().region;
-                        this.dpsCount = doc.data().dpsParseValue;
-                        this.dpsImg = doc.data().dpsParse;
                         this.isMain = doc.data().isMain;
                         this.needs = doc.data().needs;
                     }

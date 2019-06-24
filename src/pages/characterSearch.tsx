@@ -16,7 +16,7 @@ import { Needs } from '../components/characterAdditionalData/needs';
 import GlobalStore from '../store/globalStore';
 
 export const CharacterSearch = observer(() => {
-  const { char, isLoadingData, needs, dpsCount, dpsImg, isMain } = React.useContext(GlobalStore)
+  const { char, isLoadingData, needs, isMain } = React.useContext(GlobalStore)
 
   const state = useObservable({
     searchName: "",
@@ -88,7 +88,7 @@ export const CharacterSearch = observer(() => {
             >
               <FontAwesomeIcon icon="comments" className="mr-2" />
               Messages
-              <Badge color="success" pill className="ml-1">58</Badge>
+              <Badge color="success" pill className="ml-1">0</Badge>
             </NavLink>
           </NavItem>
           <NavItem>
@@ -151,7 +151,7 @@ export const CharacterSearch = observer(() => {
                     </div>
                     <div className="row mt-2">
                       <div className="col-12">
-                        <Parse dpsCount={dpsCount} dpsImg={dpsImg} />
+                        <Parse />
                       </div>
                     </div>
                   </div>

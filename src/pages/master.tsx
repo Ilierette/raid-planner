@@ -49,7 +49,7 @@ export const MasterPage = observer(() => {
   const { getRaidData } = React.useContext(RaidStore)
 
   useEffect(() => {
-    getData()
+    //getData()
     authListener()
     getRaidData()
   },[])

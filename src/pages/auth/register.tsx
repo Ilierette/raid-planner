@@ -54,7 +54,7 @@ export const Register = observer(() => {
             show: mat.show
           })
         })
-
+      }).then(()=>{
         this.props.history.push('/');
       }).catch((error) => {
         console.log(error)
