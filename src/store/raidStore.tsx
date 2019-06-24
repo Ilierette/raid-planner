@@ -21,20 +21,23 @@ class RaidStore {
 
     @observable uid: any;
     @observable isLoading = true;
+    @observable isLoadingUsers = true;
 
     getRaidData = () => {
         auth.onAuthStateChanged((user) => {
             if (user) {
                 this.uid = user.uid;
-                db.collection("users").get().then((snap) => {
-                    let comp = this;
+                db.collection("users").onSnapshot((snap) => {
+                    let users:any =[];
                     snap.forEach((doc) => {
-                        comp.users.push(doc.data())
+                        this.isLoadingUsers = true
+                        users.push(doc.data())
                     })
+                    this.users = users
+                    this.isLoadingUsers = false
                 })
 
                 db.collection("users").doc(this.uid).collection("raids").onSnapshot((snap) => {
-
                     let raidIdList: any = [];
                     snap.forEach((doc) => {
                         this.isLoading = true;

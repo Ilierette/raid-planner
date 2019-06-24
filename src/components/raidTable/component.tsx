@@ -19,7 +19,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
     const {
         getSuggestions, selectedCharId, selectedCharName, suggestions, selectChar,
         selectedCharClass, selectedCharIsMain, selectedCharIsStatic, selectIfStatic,
-        selectedCharHours, uid
+        selectedCharHours, uid, isLoadingUsers
     } = React.useContext(RaidStore);
 
     const raidData = useObservable({
@@ -161,7 +161,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
                                             value={selectedCharName || ""}
                                         />
                                         {
-                                            suggestions &&
+                                            !isLoadingUsers && suggestions &&
                                             <div className="suggestions-box">
                                                 {suggestions.map((suggestion: any, id: any) => (
                                                     <a href="" onClick={(e) => selectChar(e, suggestion)} key={id}>{suggestion.name}<br /></a>
