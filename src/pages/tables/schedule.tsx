@@ -16,6 +16,9 @@ export const Schedule = observer(() => {
     type: "BT",
     maxMembers: 12,
   })
+  const joinToRaid = useObservable({
+    token: ""
+  })
   const handleCreateRaid = (e: any) => {
     e.preventDefault();
 
@@ -46,6 +49,23 @@ export const Schedule = observer(() => {
       })
     })
   }
+
+  const joinByToken = (e: any) => {
+    e.preventDefault()
+    db.collection("raids").doc(joinToRaid.token).collection("members").doc(uid).set({
+      id: uid,
+      isConfirmed: false,
+      isStatic: false,
+      notes: "",
+      days: initDays
+    }).then(() => {
+      db.collection("users").doc(uid).collection("raids").doc(joinToRaid.token).set({
+        id: joinToRaid.token,
+        isLeader: false
+      })
+    })
+  }
+
   return (
     <div className="content-wrapper">
       {
@@ -71,10 +91,10 @@ export const Schedule = observer(() => {
                 <div className="form-group row">
                   <label htmlFor="token" className="col-3 col-form-label text-right">Raid Token</label>
                   <div className="col-6">
-                    <input type="text" className="form-control" />
+                    <input type="text" className="form-control" onChange={(e) => joinToRaid.token = e.target.value} />
                   </div>
                   <div className="col-2 d-flex">
-                    <button className="btn btn-primary btn-sm align-self-center" > Apply </button>
+                    <button className="btn btn-primary btn-sm align-self-center" onClick={(e) => joinByToken(e)} > Apply </button>
                   </div>
                 </div>
               </div>

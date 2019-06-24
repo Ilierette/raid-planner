@@ -4,11 +4,10 @@ interface props {
     day: any,
     editHoursMax: any,
     editHoursMin: any,
-    memberId: any,
     dayId:any
 }
 
-export const HourInput = ({ day, editHoursMax, editHoursMin, memberId, dayId }: props) => {
+export const HourInput = ({ day, editHoursMax, editHoursMin, dayId }: props) => {
     return (
         <td>
             <div className="row">
@@ -18,7 +17,7 @@ export const HourInput = ({ day, editHoursMax, editHoursMin, memberId, dayId }: 
                         name="min"
                         className="form-control"
                         defaultValue={day.min}
-                        onChange={(e) => editHoursMin(e, memberId, dayId)}
+                        onChange={(e) => editHoursMin(e, dayId)}
                     />
                 </div>
                 <div className="col">
@@ -27,7 +26,7 @@ export const HourInput = ({ day, editHoursMax, editHoursMin, memberId, dayId }: 
                         name="max"
                         className="form-control"
                         defaultValue={day.max}
-                        onChange={(e) => editHoursMax(e, memberId, dayId)}
+                        onChange={(e) => editHoursMax(e, dayId)}
                     />
                 </div>
             </div>

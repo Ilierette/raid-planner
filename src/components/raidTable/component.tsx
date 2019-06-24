@@ -19,7 +19,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
     const {
         getSuggestions, selectedCharId, selectedCharName, suggestions, selectChar,
         selectedCharClass, selectedCharIsMain, selectedCharIsStatic, selectIfStatic,
-        selectedCharHours
+        selectedCharHours, uid
     } = React.useContext(RaidStore);
 
     const raidData = useObservable({
@@ -48,13 +48,32 @@ export const RaidTable = observer(({ raid, index }: props) => {
         raidControls.isAddMode = false;
     }
 
-    const editHoursMin = (e: any, memberId: any, dayId: any) => {
-        raidData.members[memberId].days[dayId].min = e.target.value
+    const editHoursMin = (e: any, dayId: any) => {
+        raidData.members.map((member: any) => {
+            if (member.id == uid) {
+                member.days[dayId].min = e.target.value
+            }
+        })
     }
 
-    const editHoursMax = (e: any, memberId: any, dayId: any) => {
-        raidData.members[memberId].days[dayId].max = e.target.value
+    const editHoursMax = (e: any, dayId: any) => {
+        raidData.members.map((member: any) => {
+            if (member.id == uid) {
+                member.days[dayId].max = e.target.value
+            }
+        })
     }
+    const saveHours = () => {
+        const members = toJS(raidData.members)
+        const hours = members.filter((member: any) => { return member.id == uid })[0].days
+
+        console.log(hours)
+
+        db.collection("raids").doc(raid.id).collection("members").doc(uid).update({
+            days: hours
+        })
+    }
+
     const addUser = () => {
         let id = selectedCharId
         raidControls.isAddMode = false;
@@ -172,16 +191,25 @@ export const RaidTable = observer(({ raid, index }: props) => {
                             raidControls.isEditMode &&
                             <tbody>
                                 <tr>
-                                    <td colSpan={raid.isLeader ? 3 : 2}></td>
+                                    <td colSpan={raid.isLeader ? 2 : 1}></td>
+                                    <td>
+                                        <button className="btn btn-outline-success" onClick={() => saveHours()}>
+                                            <FontAwesomeIcon icon="save" />
+                                        </button>
+                                    </td>
                                     {
-                                        raidData.members && raidData.members.map((member: any, memberId: any) => (
-                                            member.days.map((day: any, dayId: any) => (
-                                                <HourInput
-                                                    day={day}
-                                                    editHoursMax={editHoursMax} editHoursMin={editHoursMin}
-                                                    memberId={memberId}
-                                                    dayId={dayId} />
-                                            ))
+                                        raidData.members && raidData.members.map((member: any) => (
+                                            member.days.map((day: any, dayId: any) => {
+                                                if (member.id == uid) {
+                                                    return (
+                                                        <HourInput
+                                                            day={day}
+                                                            editHoursMax={editHoursMax} editHoursMin={editHoursMin}
+                                                            dayId={dayId}
+                                                        />
+                                                    )
+                                                }
+                                            })
                                         ))
                                     }
                                     <td colSpan={2}></td>
