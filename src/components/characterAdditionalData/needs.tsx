@@ -11,6 +11,7 @@ export const Needs = ({need}:props) => {
             <div className="card-body">
                 <h5>Needs</h5>
                 <ul className="list-unstyled">
+                    <li>Comming soon ...</li>
                     {
                         need && need.map((need: any, id:number) => (
                             <li key={need.name+"-"+id}>{need.name} {need.isAwakened && <span className="badge badge-success ml-1 my-auto">awakened</span>}  </li>
@@ -19,7 +20,7 @@ export const Needs = ({need}:props) => {
                 </ul>
             </div>
             <div className="card-footer text-muted">
-                <a href="" ><FontAwesomeIcon icon="plus" className="mr-1" /> Add / edit</a>
+                <a href="#"><FontAwesomeIcon icon="plus" className="mr-1" /> Add / edit</a>
             </div>
         </div>
     );

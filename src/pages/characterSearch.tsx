@@ -9,8 +9,7 @@ import Badge from 'reactstrap/lib/Badge';
 import classnames = require('classnames');
 import { CharacterDataSearch } from '../components/characterDataSearch';
 import { Parse } from '../components/characterAdditionalData/parse';
-import { Leader } from '../components/characterAdditionalData/leader';
-import { Member } from '../components/characterAdditionalData/member';
+import { Member, Leader } from '../components/characterAdditionalData/member';
 import { Needs } from '../components/characterAdditionalData/needs';
 
 import GlobalStore from '../store/globalStore';
