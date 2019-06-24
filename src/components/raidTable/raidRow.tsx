@@ -11,9 +11,10 @@ import { db } from '../../store/config';
 interface props {
     isLeader: boolean
     member: Member,
+    removeUser: any
 }
 
-export const RaidRow = observer(({ isLeader, member }: props) => {
+export const RaidRow = observer(({ isLeader, member, removeUser }: props) => {
     const { isBadge, uid } = React.useContext(RaidStore)
     const state = useObservable({
         activeTab: 1,
@@ -35,25 +36,17 @@ export const RaidRow = observer(({ isLeader, member }: props) => {
     const toogle = () => {
         state.isExpanded = !state.isExpanded
     }
-    const removeUser = () => {
-        // const index = this.raids[id].members.findIndex((m: any) => m.id == userId);
-        // const all = this.raids[id].members
 
-        // if (index > -1) {
-        //     all.splice(index, 1);
-        // }
-        // this.raids[id].members = all
-    }
 
-    React.useEffect(()=>{
-        db.collection('users').doc(member.id).onSnapshot((snap)=>{
+    React.useEffect(() => {
+        db.collection('users').doc(member.id).onSnapshot((snap) => {
 
             memberData.name = snap.data().name;
             memberData.class = snap.data().class;
             memberData.isMain = snap.data().isMain;
             memberData.region = snap.data().region;
         })
-    },[])
+    }, [])
 
     return (
         <tbody key={member.id}>
@@ -63,7 +56,7 @@ export const RaidRow = observer(({ isLeader, member }: props) => {
                         {
                             member.id != uid ?
                                 <button
-                                    className="btn btn-outline-danger" onClick={() => removeUser()}>
+                                    className="btn btn-outline-danger" onClick={() => removeUser(member.id)}>
                                     <FontAwesomeIcon icon="ban" />
                                 </button> :
                                 ""

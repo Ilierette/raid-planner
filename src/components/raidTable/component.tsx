@@ -66,9 +66,6 @@ export const RaidTable = observer(({ raid, index }: props) => {
     const saveHours = () => {
         const members = toJS(raidData.members)
         const hours = members.filter((member: any) => { return member.id == uid })[0].days
-
-        console.log(hours)
-
         db.collection("raids").doc(raid.id).collection("members").doc(uid).update({
             days: hours
         })
@@ -89,6 +86,19 @@ export const RaidTable = observer(({ raid, index }: props) => {
                 isLeader: false
             })
         })
+    }
+    const removeUser = (id:any) => {
+        db.collection("raids").doc(raid.id).collection("members").doc(id).delete()
+        db.collection("users").doc(id).collection("raids").doc(raid.id).delete()
+    }
+
+    const removeRaid = () => {
+        const id = raid.id
+        raidData.members.map((member:any)=>{
+            db.collection("users").doc(member.id).collection("raids").doc(id).delete()
+            db.collection("raids").doc(raid.id).collection("members").doc(member.id).delete()
+        })
+        db.collection("raids").doc(id).delete()
     }
 
     React.useEffect(() => {
@@ -141,11 +151,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
                             raidControls.isAddMode &&
                             <tbody>
                                 <tr>
-                                    <td>
-                                        <button className="btn btn-outline-success" onClick={() => addUser()}>
-                                            <FontAwesomeIcon icon="save" />
-                                        </button>
-                                    </td>
+                                    <td></td>
                                     <td>
                                         <input
                                             type="text"
@@ -191,12 +197,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
                             raidControls.isEditMode &&
                             <tbody>
                                 <tr>
-                                    <td colSpan={raid.isLeader ? 2 : 1}></td>
-                                    <td>
-                                        <button className="btn btn-outline-success" onClick={() => saveHours()}>
-                                            <FontAwesomeIcon icon="save" />
-                                        </button>
-                                    </td>
+                                    <td colSpan={raid.isLeader ? 3 : 2}></td>
                                     {
                                         raidData.members && raidData.members.map((member: any) => (
                                             member.days.map((day: any, dayId: any) => {
@@ -221,6 +222,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
                             <Row
                                 isLeader={raid.isLeader}
                                 member={member}
+                                removeUser={removeUser}
                             />
                         ))}
 
@@ -236,13 +238,26 @@ export const RaidTable = observer(({ raid, index }: props) => {
                         {raid.isLeader &&
                             <button className="btn btn-outline-secondary btn-sm mr-2" >
                                 Recruit players
-                                    <Badge color="secondary" pill className="ml-1">58</Badge>
+                                    <Badge color="secondary" pill className="ml-1">0</Badge>
                             </button>
                         }
                         {raid.isLeader &&
                             <button className="btn btn-primary btn-sm" >Set raid time</button>
                         }
-                        <button className="btn btn-success btn-sm ml-1">Save changes</button>
+                        {
+                            raidControls.isAddMode ?
+                                <button className="btn btn-success btn-sm ml-1" onClick={() => addUser()} >
+                                    Add user
+                                </button> :
+                                raidControls.isEditMode &&
+                                <button className="btn btn-success btn-sm ml-1" onClick={() => saveHours()} >
+                                    Save hours
+                                </button>
+                        }
+                         {raid.isLeader &&
+                            <button className="btn btn-danger btn-sm ml-1" onClick={() => removeRaid()} >Remove raid</button>
+                        }
+
                     </div>
                 </div>
             </div>
