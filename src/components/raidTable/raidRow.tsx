@@ -4,13 +4,13 @@ import classnames from 'classnames';
 import { Input, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CharacterDataSearch } from '../../components/characterDataSearch';
-import { Member, Day } from '../../models/interfaces';
+import { Day } from '../../models/interfaces';
 import RaidStore from '../../store/raidStore'
 import { db } from '../../store/config';
 
 interface props {
     isLeader: boolean
-    member: Member,
+    member: any,
     removeUser: any
 }
 
@@ -49,7 +49,7 @@ export const RaidRow = observer(({ isLeader, member, removeUser }: props) => {
     }, [])
 
     return (
-        <tbody key={member.id}>
+        <tbody>
             <tr >
                 {isLeader &&
                     <td>
@@ -75,7 +75,7 @@ export const RaidRow = observer(({ isLeader, member, removeUser }: props) => {
                 <td className="text-left">
                     {memberData.class}
                 </td>
-                {member.days.map((day: Day, index: number) => (
+                {member.days && member.days.map((day: Day, index: number) => (
                     <td key={index}>
                         {day.min} - {day.max}
                     </td>

@@ -30,7 +30,8 @@ export const RaidTable = observer(({ raid, index }: props) => {
         ratio: "",
         timestamp: "",
         type: "",
-        members: []
+        members: [],
+        currentMember: []
     })
 
     const raidControls = useObservable({
@@ -49,7 +50,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
     }
 
     const editHoursMin = (e: any, dayId: any) => {
-        raidData.members.map((member: any) => {
+        raidData.currentMember.map((member: any) => {
             if (member.id == uid) {
                 member.days[dayId].min = e.target.value
             }
@@ -57,14 +58,14 @@ export const RaidTable = observer(({ raid, index }: props) => {
     }
 
     const editHoursMax = (e: any, dayId: any) => {
-        raidData.members.map((member: any) => {
+        raidData.currentMember.map((member: any) => {
             if (member.id == uid) {
                 member.days[dayId].max = e.target.value
             }
         })
     }
     const saveHours = () => {
-        const members = toJS(raidData.members)
+        const members = toJS(raidData.currentMember)
         const hours = members.filter((member: any) => { return member.id == uid })[0].days
         db.collection("raids").doc(raid.id).collection("members").doc(uid).update({
             days: hours
@@ -87,14 +88,14 @@ export const RaidTable = observer(({ raid, index }: props) => {
             })
         })
     }
-    const removeUser = (id:any) => {
+    const removeUser = (id: any) => {
         db.collection("raids").doc(raid.id).collection("members").doc(id).delete()
         db.collection("users").doc(id).collection("raids").doc(raid.id).delete()
     }
 
     const removeRaid = () => {
         const id = raid.id
-        raidData.members.map((member:any)=>{
+        raidData.members.map((member: any) => {
             db.collection("users").doc(member.id).collection("raids").doc(id).delete()
             db.collection("raids").doc(raid.id).collection("members").doc(member.id).delete()
         })
@@ -110,16 +111,20 @@ export const RaidTable = observer(({ raid, index }: props) => {
             raidData.timestamp = snap.data().timestamp;
             raidData.type = snap.data().type;
         })
-
         db.collection("raids").doc(raid.id).collection("members").onSnapshot((snap) => {
-            const raidMembers = snap.docs.map((doc) => {
+            const members:any = []
+            snap.docs.map((doc) => {
+                if(doc.data().id!=uid){
+                    members.push(doc.data())
+                }
                 raidControls.isLoading = true;
-                return doc.data()
             })
-            raidData.members = raidMembers
+            raidData.members = members
             raidControls.isLoading = false;
         })
-
+        db.collection("raids").doc(raid.id).collection("members").doc(uid).get().then((doc) => {
+            raidData.currentMember = [doc.data()]
+        })
     }, [])
     return (
         <div className="card mb-3">
@@ -199,7 +204,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
                                 <tr>
                                     <td colSpan={raid.isLeader ? 3 : 2}></td>
                                     {
-                                        raidData.members && raidData.members.map((member: any) => (
+                                        raidData.currentMember && raidData.currentMember.map((member: any) => (
                                             member.days.map((day: any, dayId: any) => {
                                                 if (member.id == uid) {
                                                     return (
@@ -217,6 +222,14 @@ export const RaidTable = observer(({ raid, index }: props) => {
                                 </tr>
                             </tbody>
                         }
+
+                        {raidData.currentMember && raidData.currentMember.map((member) => (
+                            <Row
+                                isLeader={raid.isLeader}
+                                member={member}
+                                removeUser={removeUser}
+                            />
+                        ))}
 
                         {!raidControls.isLoading && raidData.members.map((member: any) => (
                             <Row
@@ -254,7 +267,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
                                     Save hours
                                 </button>
                         }
-                         {raid.isLeader &&
+                        {raid.isLeader &&
                             <button className="btn btn-danger btn-sm ml-1" onClick={() => removeRaid()} >Remove raid</button>
                         }
 
