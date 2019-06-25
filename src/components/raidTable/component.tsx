@@ -96,8 +96,9 @@ export const RaidTable = observer(({ raid, index }: props) => {
     }
 
     const removeRaid = () => {
-        const id = raid.id
-        raidData.members.map((member: any) => {
+        const id = raid.id;
+        const allMembers = [...raidData.members, ...raidData.currentMember]
+        allMembers.map((member: any) => {
             db.collection("users").doc(member.id).collection("raids").doc(id).delete()
             db.collection("raids").doc(raid.id).collection("members").doc(member.id).delete()
         })
@@ -242,8 +243,8 @@ export const RaidTable = observer(({ raid, index }: props) => {
                             />
                         ))}
                         {
-                            !raidControls.isLoading &&
-                            <Footer raid={raid} current={raidData.currentMember} members={raidData.members} />
+                            false && !raidControls.isLoading &&
+                            <Footer raid={raid} />
                         }
                     </table>
                 </div>

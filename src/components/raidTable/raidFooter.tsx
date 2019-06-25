@@ -2,72 +2,73 @@ import * as React from 'react';
 import { useObservable, observer } from 'mobx-react-lite';
 import * as moment from 'moment';
 import { toJS } from 'mobx';
+import { db } from '../../store/config';
 
 interface props {
-    current: any,
-    members: any,
     raid: any
 }
 
-export const RaidFooter = observer(({ current, members, raid }: props) => {
-    const allMembers = [...current, ...members]
-    const days = useObservable({
-        hours: []
+export const RaidFooter = observer(({ raid }: props) => {
+    const state = useObservable({
+        isLoading: true,
+        members: []
     })
     const findHours = () => {
-        const totalDays: any = []
-        const max = [];
-        const min = [];
-
+        const allHours: any = [];
         for (let i = 0; i < 7; i++) {
-            const minHours: any = [];
-            const maxHours: any = [];
-
-            allMembers.map((member: any) => {
-                {
-                    if (member.days[i].max) {
-                        const hour = member.days[i].max.split(':')
-                        maxHours.push(moment().day(i + 3).hour(hour[0]).minute(hour[1]).second(0))
-                    }
-                    if (member.days[i].min) {
-                        const hour = member.days[i].min.split(':')
-                        minHours.push(moment().day(i + 3).hour(hour[0]).minute(hour[1]).second(0))
-                    }
-                }
+            const max: any = [];
+            const min: any = []
+            state.members.map((member) => {
+                max.push(member.days[i].max)
+                min.push(member.days[i].min)
             })
-            max.push(maxHours)
-            min.push(minHours)
+            const maxHour = max.filter((max: any) => { return max }).map((max: any) => {
+                const hour = max.split(':')
+                return moment().day(i + 3).hour(hour[0]).minute(hour[1]).second(0)
+            })
+            const minHour = min.filter((min: any) => { return min }).map((min: any) => {
+                const hour = min.split(':')
+                return moment().day(i + 3).hour(hour[0]).minute(hour[1]).second(0)
+            })
+            console.log(moment().max(maxHour))
+            allHours.push({
+                max: moment().max(maxHour),
+                min: moment().max(minHour)
+            })
         }
-        let maxHours = max.filter((max) => { return max.length })
-        let minHours = max.filter((min) => { return min.length })
+        console.log(allHours)
 
-        // totalDays.push({
-        //     max: moment.max(maxHours),
-        //     min: moment.min(minHours)
-        // })
-
-        // console.log(totalDays)
-
-        // days.hours = totalDays
 
     }
 
     React.useEffect(() => {
-        findHours()
+        db.collection("raids").doc(raid.id).collection("members").onSnapshot((snap) => {
+            const members: any = []
+            snap.docs.map((doc) => {
+                members.push(doc.data())
+                state.isLoading = true;
+            })
+            state.members = members
+            state.isLoading = false;
+            findHours()
+        })
     }, [])
     return (
         <tbody>
-            <tr>
-                <td colSpan={raid.isLeader ? 3 : 2}></td>
-                {/* {
+            {
+                state.isLoading &&
+                <tr>
+                    <td colSpan={raid.isLeader ? 3 : 2}></td>
+                    {/* {
                     days.hours && days.hours.map((day) => (
                         <td>
                             {moment(day.min).format("HH:mm")} - {moment(day.max).format("HH:mm")}
                         </td>
                     ))
                 } */}
-                <td colSpan={2}></td>
-            </tr>
+                    <td colSpan={2}></td>
+                </tr>
+            }
         </tbody>
     );
 })

@@ -35,8 +35,6 @@ export const Register = observer(() => {
       })
       state.matsList = mats;
     })
-
-
     auth.createUserWithEmailAndPassword(state.email, state.passwordOne).then((authUser: any) => {
       return db.collection("users").doc(authUser.user.uid).set({
         region: state.region,
@@ -54,11 +52,7 @@ export const Register = observer(() => {
             show: mat.show
           })
         })
-      }).then(()=>{
-        this.props.history.push('/');
-      }).catch((error) => {
-        console.log(error)
-      })
+      }).then(() => { this.props.history.push('/'); }).catch((error) => { console.log(error) })
     }).catch((error: any) => this.error = error);
   }
 
