@@ -4,7 +4,7 @@ interface props {
     day: any,
     editHoursMax: any,
     editHoursMin: any,
-    dayId:any
+    dayId: any,
 }
 
 export const HourInput = ({ day, editHoursMax, editHoursMin, dayId }: props) => {

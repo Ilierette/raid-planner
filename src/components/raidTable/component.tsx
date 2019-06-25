@@ -9,6 +9,7 @@ import '../../scss/table.scss';
 import RaidStore from '../../store/raidStore';
 import { db } from '../../store/config';
 import { toJS } from 'mobx';
+import { RaidFooter as Footer } from './raidFooter';
 
 interface props {
     raid: any,
@@ -64,6 +65,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
             }
         })
     }
+
     const saveHours = () => {
         const members = toJS(raidData.currentMember)
         const hours = members.filter((member: any) => { return member.id == uid })[0].days
@@ -110,20 +112,21 @@ export const RaidTable = observer(({ raid, index }: props) => {
             raidData.ratio = snap.data().ratio;
             raidData.timestamp = snap.data().timestamp;
             raidData.type = snap.data().type;
-        })
-        db.collection("raids").doc(raid.id).collection("members").onSnapshot((snap) => {
-            const members:any = []
-            snap.docs.map((doc) => {
-                if(doc.data().id!=uid){
-                    members.push(doc.data())
-                }
-                raidControls.isLoading = true;
+
+            db.collection("raids").doc(raid.id).collection("members").onSnapshot((snap) => {
+                const members: any = []
+                snap.docs.map((doc) => {
+                    if (doc.data().id != uid) {
+                        members.push(doc.data())
+                    }
+                    raidControls.isLoading = true;
+                })
+                raidData.members = members
+                raidControls.isLoading = false;
             })
-            raidData.members = members
-            raidControls.isLoading = false;
-        })
-        db.collection("raids").doc(raid.id).collection("members").doc(uid).get().then((doc) => {
-            raidData.currentMember = [doc.data()]
+            db.collection("raids").doc(raid.id).collection("members").doc(uid).get().then((doc) => {
+                raidData.currentMember = [doc.data()]
+            })
         })
     }, [])
     return (
@@ -238,7 +241,10 @@ export const RaidTable = observer(({ raid, index }: props) => {
                                 removeUser={removeUser}
                             />
                         ))}
-
+                        {
+                            !raidControls.isLoading &&
+                            <Footer raid={raid} current={raidData.currentMember} members={raidData.members} />
+                        }
                     </table>
                 </div>
             </div>
