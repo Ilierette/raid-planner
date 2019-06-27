@@ -10,6 +10,7 @@ import RaidStore from '../../store/raidStore';
 import { db } from '../../store/config';
 import { toJS } from 'mobx';
 import { RaidFooter as Footer } from './raidFooter';
+import * as moment from 'moment';
 
 interface props {
     raid: any,
@@ -38,7 +39,8 @@ export const RaidTable = observer(({ raid, index }: props) => {
     const raidControls = useObservable({
         isAddMode: false,
         isEditMode: false,
-        isLoading: true
+        isLoading: true,
+        goodHours: true
     })
 
     const addUserRow = () => {
@@ -46,6 +48,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
         raidControls.isAddMode = !raidControls.isAddMode;
     }
     const editHours = () => {
+        raidControls.goodHours = true
         raidControls.isEditMode = !raidControls.isEditMode;
         raidControls.isAddMode = false;
     }
@@ -66,7 +69,34 @@ export const RaidTable = observer(({ raid, index }: props) => {
         })
     }
 
+    const checkHours = (dayId: any) => {
+        raidControls.goodHours = true
+        raidData.currentMember.map((member: any) => {
+            if (member.id == uid) {
+                let max = member.days[dayId].max
+                let min = member.days[dayId].min;
+                let minMoment
+                let maxMoment
+                if (max) {
+                    let maxHour = max.split(':')
+                    maxMoment = moment().day(dayId + 3).hour(maxHour[0]).minute(maxHour[1]).second(0)
+                }
+
+                if (min) {
+                    let minHour = min.split(':')
+                    minMoment = moment().day(dayId + 3).hour(minHour[0]).minute(minHour[1]).second(0)
+                }
+
+                if (moment(maxMoment).isAfter(minMoment)) {
+                    raidControls.goodHours = false
+                }
+            }
+        })
+    }
+
     const saveHours = () => {
+        raidControls.goodHours = true;
+        raidControls.isEditMode = false;
         const members = toJS(raidData.currentMember)
         const hours = members.filter((member: any) => { return member.id == uid })[0].days
         db.collection("raids").doc(raid.id).collection("members").doc(uid).update({
@@ -215,6 +245,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
                                                         <HourInput
                                                             day={day}
                                                             editHoursMax={editHoursMax} editHoursMin={editHoursMin}
+                                                            checkHours={checkHours}
                                                             dayId={dayId}
                                                         />
                                                     )
@@ -243,7 +274,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
                             />
                         ))}
                         {
-                            false && !raidControls.isLoading &&
+                            !raidControls.isLoading &&
                             <Footer raid={raid} />
                         }
                     </table>
@@ -270,7 +301,10 @@ export const RaidTable = observer(({ raid, index }: props) => {
                                     Add user
                                 </button> :
                                 raidControls.isEditMode &&
-                                <button className="btn btn-success btn-sm ml-1" onClick={() => saveHours()} >
+                                <button
+                                    className="btn btn-success btn-sm ml-1"
+                                    disabled={raidControls.goodHours}
+                                    onClick={() => saveHours()} >
                                     Save hours
                                 </button>
                         }

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useObservable, observer } from 'mobx-react-lite';
 import * as moment from 'moment';
-import { toJS } from 'mobx';
 import { db } from '../../store/config';
 
 interface props {
@@ -11,7 +10,8 @@ interface props {
 export const RaidFooter = observer(({ raid }: props) => {
     const state = useObservable({
         isLoading: true,
-        members: []
+        members: [],
+        hours: []
     })
     const findHours = () => {
         const allHours: any = [];
@@ -23,22 +23,24 @@ export const RaidFooter = observer(({ raid }: props) => {
                 min.push(member.days[i].min)
             })
             const maxHour = max.filter((max: any) => { return max }).map((max: any) => {
-                const hour = max.split(':')
-                return moment().day(i + 3).hour(hour[0]).minute(hour[1]).second(0)
+                if (max) {
+                    const hour = max.split(':')
+                    return moment().day(i + 3).hour(hour[0]).minute(hour[1]).second(0)
+                }
             })
             const minHour = min.filter((min: any) => { return min }).map((min: any) => {
-                const hour = min.split(':')
-                return moment().day(i + 3).hour(hour[0]).minute(hour[1]).second(0)
+                if (min) {
+                    const hour = min.split(':')
+                    return moment().day(i + 3).hour(hour[0]).minute(hour[1]).second(0)
+                }
             })
-            console.log(moment().max(maxHour))
+
             allHours.push({
-                max: moment().max(maxHour),
-                min: moment().max(minHour)
+                max: maxHour.length != 0 ? moment.min(maxHour) : "",
+                min: minHour.length != 0 ? moment.max(minHour) : ""
             })
         }
-        console.log(allHours)
-
-
+        state.hours = allHours
     }
 
     React.useEffect(() => {
@@ -56,16 +58,41 @@ export const RaidFooter = observer(({ raid }: props) => {
     return (
         <tbody>
             {
-                state.isLoading &&
+                !state.isLoading &&
                 <tr>
                     <td colSpan={raid.isLeader ? 3 : 2}></td>
-                    {/* {
-                    days.hours && days.hours.map((day) => (
+                    {
+                        state.hours && state.hours.map((day) => (
+                            <td>
+                                {
+                                    day.min &&
+                                    moment(day.min).format("HH:mm")
+                                }
+                                <span> - </span>
+                                {
+                                    day.max &&
+                                    moment(day.max).format("HH:mm")
+                                }
+                            </td>
+                        ))
+                    }
+                    <td colSpan={2}></td>
+                </tr>
+            }
+            {
+                !state.isLoading &&
+                <tr>
+                    <td colSpan={raid.isLeader ? 3 : 2}></td>
+                    {state.hours && state.hours.map((day) => (
                         <td>
-                            {moment(day.min).format("HH:mm")} - {moment(day.max).format("HH:mm")}
+                            {
+                                day.min && day.max &&
+                                <span>
+                                    {moment(moment.duration(day.max.diff(day.min)).asMilliseconds()).utc().format('HH:mm')}
+                                </span>
+                            }
                         </td>
-                    ))
-                } */}
+                    ))}
                     <td colSpan={2}></td>
                 </tr>
             }
