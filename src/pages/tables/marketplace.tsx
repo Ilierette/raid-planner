@@ -15,7 +15,7 @@ export const Marketplace = observer(() => {
                         <div className="row mb-2">
                             <div className="col text-right">
                                 {isGodMode ?
-                                    <button className="btn btn-success btn-sm mr-3" onClick={() => toogleGodMode()}>Save changes</button> :
+                                    <button className="btn btn-secondary btn-sm mr-3" onClick={() => toogleGodMode()}>Cancel</button> :
                                     <button className="btn btn-danger btn-sm mr-3" onClick={() => toogleGodMode()}>Edit mats</button>
                                 }
                                 {isMarketEditMode ?

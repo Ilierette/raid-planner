@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { observer } from 'mobx-react-lite';
 import gearContext from '../../store/gearContext'
+import { db } from '../../store/firebase';
 
 interface props {
   item: any,
@@ -10,6 +11,12 @@ interface props {
 
 export const MarketRow = observer(({ item, index, trade }: props) => {
   const { mats, isMarketEditMode, handleInputChange, isGodMode } = React.useContext(gearContext)
+  const updateItem = (item:any) => {
+    item.isOutdated = !item.isOutdated;
+    db.collection("mats").doc(item.id).update({
+      isOutdated: item.isOutdated
+    })
+  }
   return (
     <tr key={item.id}>
       {!trade && !isGodMode && index == 0 ?
@@ -112,8 +119,8 @@ export const MarketRow = observer(({ item, index, trade }: props) => {
                   <span key={id}>
                     {
                       item.isOutdated ?
-                        <button className="btn btn-danger" onClick={() => item.isOutdated = false}>Outdated</button> :
-                        <button className="btn btn-success" onClick={() => item.isOutdated = true}> In stock </button>
+                        <button className="btn btn-danger" onClick={() => { updateItem(item) }}>Outdated</button> :
+                        <button className="btn btn-success" onClick={() => { updateItem(item) }}> In stock </button>
                     }
                   </span>
 
