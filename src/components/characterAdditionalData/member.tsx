@@ -24,7 +24,7 @@ export const MemberRaidList = observer(({ raid }: props) => {
     })
     return (
         <li className="text-primary">
-            {state.name} Raid List
+            {state.name} 
             {
                 state.isStatic ?
                     <span className="badge badge-primary ml-2 my-auto">static</span> :
@@ -42,10 +42,10 @@ export const Member = observer(() => {
                 <h5>Raid member</h5>
                 <ul className="list-unstyled">
                     {
-                        raids && raids.map((raid: any) => {
+                        raids && raids.map((raid: any, id:any) => {
                             if (!raid.isLeader) {
                                 return (
-                                    <MemberRaidList raid={raid} />
+                                    <MemberRaidList raid={raid} key={id}/>
                                 )
                             }
                         })
@@ -67,10 +67,10 @@ export const Leader = observer(() => {
                 <h5>Raid leader</h5>
                 <ul className="list-unstyled">
                     {
-                        raids && raids.map((raid: any) => {
+                        raids && raids.map((raid: any, id:any) => {
                             if (raid.isLeader) {
                                 return (
-                                    <MemberRaidList raid={raid} />
+                                    <MemberRaidList raid={raid} key={id}/>
                                 )
                             }
                         })

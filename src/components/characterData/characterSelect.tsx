@@ -9,16 +9,27 @@ export const CharacterSelect = () => {
                 Select your character
                     <FontAwesomeIcon icon="caret-down" className="text-white ml-3" />
             </DropdownToggle>
-            <DropdownMenu>
-                <DropdownItem>
-                    Letty
+            {
+                false ?
+                    <DropdownMenu>
+                        <DropdownItem>
+                            Letty
                     </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>
-                    <FontAwesomeIcon icon="plus" className="fa-xs mr-1" />
-                    Add character
+                        <DropdownItem divider />
+                        <DropdownItem>
+                            <FontAwesomeIcon icon="plus" className="fa-xs mr-1" />
+                            Add character
                     </DropdownItem>
-            </DropdownMenu>
+                    </DropdownMenu> :
+                    <DropdownMenu>
+                        <DropdownItem>
+                            Comming soon
+                        </DropdownItem>
+                    </DropdownMenu>
+
+
+            }
+
         </UncontrolledDropdown>
     );
 }

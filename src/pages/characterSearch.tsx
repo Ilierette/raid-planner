@@ -161,14 +161,14 @@ export const CharacterSearch = observer(() => {
           <TabPane tabId={3}>
             <div className="card">
               <div className="card-body">
-                <h4>Messages</h4>
+                <h4>Comming soon...</h4>
               </div>
             </div>
           </TabPane>
           <TabPane tabId={4}>
             <div className="card">
               <div className="card-body">
-                <h4>Settings</h4>
+                <h4>Comming soon...</h4>
               </div>
             </div>
           </TabPane>

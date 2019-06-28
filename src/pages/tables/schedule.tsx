@@ -78,7 +78,7 @@ export const Schedule = observer(() => {
       <PageHeader title="Raid schedule" />
       <div className="content">
         {!isLoading && raids.map((raid: any, index: number) => (
-          <RaidTable raid={raid} index={index} key={index} />
+          <RaidTable raid={raid} key={index} />
         ))}
         <div className="row mb-3">
           <div className="col-7">
@@ -140,28 +140,35 @@ export const Schedule = observer(() => {
                 Look for raid
                 </div>
               <div className="card-body">
-                <div className="row">
-                  <div className="col-6">
-                    <div className="form-group row">
-                      <label htmlFor="raid" className="col-3 col-form-label text-right">Select character</label>
-                      <select className="form-control col-3">
-                        <option value="letty">Letty</option>
-                      </select>
-                      <div className="col-3 d-flex">
-                        <div className="form-check align-self-center mx-auto">
-                          <input type="checkbox" className="form-check-input" id="class" />
-                          <label className="form-check-label" htmlFor="class">Only my class</label>
+                {
+                  false ?
+                    <div className="row">
+                      <div className="col-6">
+                        <div className="form-group row">
+                          <label htmlFor="raid" className="col-3 col-form-label text-right">Select character</label>
+                          <select className="form-control col-3">
+                            <option value="letty">Letty</option>
+                          </select>
+                          <div className="col-3 d-flex">
+                            <div className="form-check align-self-center mx-auto">
+                              <input type="checkbox" className="form-check-input" id="class" />
+                              <label className="form-check-label" htmlFor="class">Only my class</label>
+                            </div>
+                          </div>
+                          <div className="col-1 d-flex">
+                            <button className="btn btn-primary btn-sm align-self-center mx-auto">Search </button>
+                          </div>
                         </div>
                       </div>
-                      <div className="col-1 d-flex">
-                        <button className="btn btn-primary btn-sm align-self-center mx-auto">Search </button>
+                      <div className="col-12">
+                        <RaidRecruitTable />
                       </div>
+                    </div> :
+                    <div className="text-center">
+                      Comming soon
                     </div>
-                  </div>
-                  <div className="col-12">
-                    <RaidRecruitTable />
-                  </div>
-                </div>
+                }
+
               </div>
             </div>
           </div>

@@ -106,12 +106,17 @@ export const MarketRow = observer(({ item, index, trade }: props) => {
         isGodMode &&
         <td>
           {
-            mats.map((mat: any) => {
+            mats.map((mat: any, id:any) => {
               if (item.id == mat.id) {
                 return (
-                  item.isOutdated ?
-                    <button className="btn btn-danger" onClick={() => item.isOutdated = false}>Outdated</button> :
-                    <button className="btn btn-success" onClick={() => item.isOutdated = true}> In stock </button>
+                  <span key={id}>
+                    {
+                      item.isOutdated ?
+                        <button className="btn btn-danger" onClick={() => item.isOutdated = false}>Outdated</button> :
+                        <button className="btn btn-success" onClick={() => item.isOutdated = true}> In stock </button>
+                    }
+                  </span>
+
                 )
               }
             })

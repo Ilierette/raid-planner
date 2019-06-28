@@ -291,6 +291,7 @@ export const RaidTable = observer(({ raid }: props) => {
                                                     return (
                                                         <HourInput
                                                             day={day}
+                                                            key={member.id + "-" + dayId}
                                                             editHoursMax={editHoursMax} editHoursMin={editHoursMin}
                                                             checkHours={checkHours}
                                                             dayId={dayId}
@@ -309,6 +310,7 @@ export const RaidTable = observer(({ raid }: props) => {
                             <Row
                                 isLeader={raid.isLeader}
                                 member={member}
+                                key={member.id}
                                 removeUser={removeUser}
                             />
                         ))}
@@ -317,6 +319,7 @@ export const RaidTable = observer(({ raid }: props) => {
                             <Row
                                 isLeader={raid.isLeader}
                                 member={member}
+                                key={member.id}
                                 removeUser={removeUser}
                             />
                         ))}

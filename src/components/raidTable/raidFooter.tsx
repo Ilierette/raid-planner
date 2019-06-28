@@ -74,8 +74,8 @@ export const RaidFooter = observer(({ raid }: props) => {
                         Available hours
                     </td>
                     {
-                        state.hours && state.hours.map((day) => (
-                            <td>
+                        state.hours && state.hours.map((day, id) => (
+                            <td key={id}>
                                 {
                                     day.min &&
                                     moment(day.min).format("HH:mm")
@@ -94,11 +94,11 @@ export const RaidFooter = observer(({ raid }: props) => {
             {
                 !state.isLoading &&
                 <tr>
-                    <td colSpan={raid.isLeader ? 3 : 2}  className="text-right">
+                    <td colSpan={raid.isLeader ? 3 : 2} className="text-right">
                         Available time
                     </td>
-                    {state.hours && state.hours.map((day) => (
-                        <td>
+                    {state.hours && state.hours.map((day, id) => (
+                        <td key={id}>
                             {
                                 day.min && day.max &&
                                 <span>
