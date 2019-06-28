@@ -1,11 +1,49 @@
 import * as React from 'react';
 import { PageHeader } from '../../components/pageHeader';
 import { MarketTable } from '../../components/marketTable/component';
-import { observer } from 'mobx-react-lite';
+import { observer, useObservable } from 'mobx-react-lite';
 import gearContext from '../../store/gearContext';
+import { db } from '../../store/firebase';
+import raidContext from '../../store/raidContext';
 
 export const Marketplace = observer(() => {
     const { isMarketEditMode, marketMats, toogleEditMode, isGodMode, toogleGodMode, handleSaveMats, goodAmount } = React.useContext(gearContext);
+    const { users } = React.useContext(raidContext)
+    const mat = useObservable({
+        id: "",
+        name: "",
+        tradeable: "",
+        tier: "other",
+        goodMats: true
+    })
+    const addMat = (e: any) => {
+        e.preventDefault()
+
+        let tradeBool = false;
+        if (mat.tradeable == "true") {
+            tradeBool = true
+        }
+
+        db.collection("mats").doc(mat.id).set({
+            id: mat.id,
+            isActive: true,
+            isOutdated: false,
+            isTradeable: tradeBool,
+            name: mat.name,
+            tier: mat.tier
+        }).then(() => {
+            users.map((user: any) => {
+                db.collection("users").doc(user.id).collection("mats").doc(mat.id).set({
+                    id: mat.id,
+                    show: true,
+                    amount: 0
+                }, { merge: true })
+            })
+        })
+
+        toogleGodMode();
+        mat.goodMats = true
+    }
     return (
         <div className="content-wrapper">
             <PageHeader title="Marketplace" />
@@ -15,7 +53,9 @@ export const Marketplace = observer(() => {
                         <div className="row mb-2">
                             <div className="col text-right">
                                 {isGodMode ?
-                                    <button className="btn btn-secondary btn-sm mr-3" onClick={() => toogleGodMode()}>Cancel</button> :
+                                    mat.goodMats ?
+                                        <button className="btn btn-secondary btn-sm mr-3" onClick={() => toogleGodMode()}>Cancel</button> :
+                                        <button className="btn btn-success btn-sm mr-3" onClick={((e) => addMat(e))}> Add mats </button> :
                                     <button className="btn btn-danger btn-sm mr-3" onClick={() => toogleGodMode()}>Edit mats</button>
                                 }
                                 {isMarketEditMode ?
@@ -34,6 +74,8 @@ export const Marketplace = observer(() => {
                                             className="form-control form-control-sm"
                                             type="text"
                                             name="id"
+                                            value={mat.id}
+                                            onChange={(e) => { mat.id = e.target.value; mat.goodMats = false }}
                                             placeholder="Mat id"
                                         />
                                     </div>
@@ -41,14 +83,27 @@ export const Marketplace = observer(() => {
                                         <input
                                             className="form-control form-control-sm"
                                             type="text"
-                                            name="id"
+                                            name="name"
+                                            value={mat.name}
+                                            onChange={(e) => { mat.name = e.target.value; mat.goodMats = false }}
                                             placeholder="Mat name"
                                         />
                                     </div>
                                     <div className="col">
-                                        <select className="form-control form-control-sm">
-                                            <option>Tradeable</option>
-                                            <option>Bound</option>
+                                        <select className="form-control form-control-sm" onChange={(e) => { mat.tradeable = e.target.value; mat.goodMats = false }}>
+                                            <option value="true">Tradeable</option>
+                                            <option value="false">Bound</option>
+                                        </select>
+                                    </div>
+                                    <div className="col">
+                                        <select className="form-control form-control-sm" onChange={(e) => { mat.tier = e.target.value; mat.goodMats = false }}>
+                                            <option value="other">other</option>
+                                            <option value="common">common</option>
+                                            <option value="BT">BT</option>
+                                            <option value="VT">VT</option>
+                                            <option value="TT">TT</option>
+                                            <option value="ET">ET</option>
+                                            <option value="PVP">PVP</option>
                                         </select>
                                     </div>
                                 </div>
