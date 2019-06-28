@@ -1,9 +1,8 @@
 import { createContext } from "react";
 import { observable } from "mobx";
 import { auth, db } from './firebase';
-import { character } from "../data/character";
 import axios from 'axios';
-import { Equipments } from "../models/interfaces";
+import { character } from "../models/data";
 
 class GlobalContext {
     @observable isAuthUser = false;
@@ -266,13 +265,13 @@ class GlobalContext {
 
             const charEq = {
                 ...char,
-                equipment: char.equipment.map((c: Equipments) => {
+                equipment: char.equipment.map((c: any) => {
                     return ({
                         displayName: c.displayName,
                         name: c.name,
-                        rank: eq.filter((e: Equipments) => { return e.name == c.name }).map((e: Equipments) => { return e.rank })[0],
-                        type: eq.filter((e: Equipments) => { return e.name == c.name }).map((e: Equipments) => { return e.type })[0],
-                        img: eq.filter((e: Equipments) => { return e.name == c.name }).map((e: Equipments) => { return e.img })[0]
+                        rank: eq.filter((e: any) => { return e.name == c.name }).map((e: any) => { return e.rank })[0],
+                        type: eq.filter((e: any) => { return e.name == c.name }).map((e: any) => { return e.type })[0],
+                        img: eq.filter((e: any) => { return e.name == c.name }).map((e: any) => { return e.img })[0]
                     })
                 })
             }

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { observer } from 'mobx-react-lite';
 import { CharacterStat } from './characterStat';
 import { CharacterGear } from './characterGear';
-import { Equipments } from '../../models/interfaces';
 import "../../scss/characterData.scss";
 
 interface props {
@@ -93,7 +92,7 @@ export const CharacterData = observer(({ isMain, isBadge, char, isLoadingData }:
             <div className="col-4 pl-4">
               <div className="card bg-dark ">
                 {
-                  char.equipment && char.equipment.map((item: Equipments, index: number) => (
+                  char.equipment && char.equipment.map((item: any, index: number) => (
                     <CharacterGear
                       displayName={item.displayName}
                       key={index}

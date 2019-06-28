@@ -1,6 +1,5 @@
 import { createContext } from "react";
 import { observable } from "mobx";
-import { UserMats, Mats, Tiers, Gears } from "../models/interfaces";
 import axios from 'axios';
 import { db, auth } from "./firebase";
 
@@ -43,7 +42,7 @@ class gearContext {
     }
 
     handleTierChange = (e: any) => {
-        let allTiers = this.tierList.map((tier: Tiers) => {
+        let allTiers = this.tierList.map((tier: any) => {
             if (tier.name == e.target.value) {
                 return ({
                     ...tier,
@@ -125,7 +124,7 @@ class gearContext {
                     price: item.listings.map((list: any) => { return list.price })[0]
                 })
             })
-            let tradeable = this.marketMats.map((trade: Mats) => {
+            let tradeable = this.marketMats.map((trade: any) => {
                 let current = (items.filter((item: any) => { return item.name == trade.name }).map((item: any) => { return item.price })[0]) / 1000
                 return ({
                     ...trade,
@@ -142,10 +141,10 @@ class gearContext {
     }
 
     calculateTotalPrice = () => {
-        let mats = this.mats.map((mat: UserMats) => {
+        let mats = this.mats.map((mat: any) => {
             return ({
                 ...mat,
-                totalAmount: this.gear.reduce((total: any, gear: Gears) => {
+                totalAmount: this.gear.reduce((total: any, gear: any) => {
                     return total + gear.stages.reduce((acc: any, stage: any) => {
                         if (stage[mat.id])
                             return acc + stage[mat.id]
@@ -154,10 +153,10 @@ class gearContext {
                 }, 0)
             })
         })
-        let matsCost = mats.map((mat: UserMats) => {
+        let matsCost = mats.map((mat: any) => {
             return ({
                 ...mat,
-                totalPrice: this.marketMats.reduce((total: any, trade: Mats) => {
+                totalPrice: this.marketMats.reduce((total: any, trade: any) => {
                     if (mat.id == trade.id && trade.price) {
                         let current = (trade.price * (mat.totalAmount - mat.amount))
                         return total + (current > 0 ? current : 0)
@@ -171,7 +170,7 @@ class gearContext {
     }
 
     calculateTotalCost = () => {
-        let totalCost = this.mats.reduce((total: any, mat: UserMats) => {
+        let totalCost = this.mats.reduce((total: any, mat: any) => {
             return total + mat.totalPrice
         }, 0)
         this.totalCost = totalCost

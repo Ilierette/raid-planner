@@ -2,7 +2,8 @@ import * as React from 'react';
 import { PageHeader } from '../components/pageHeader';
 import Badge from 'reactstrap/lib/Badge';
 import { Changelog } from '../components/changelog';
-import { data, links } from '../data/changelog';
+import { links, data } from '../models/data';
+
 
 export const Home = () => {
   return (

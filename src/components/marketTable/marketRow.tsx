@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { observer } from 'mobx-react-lite';
-import { UserMats, Mats } from '../../models/interfaces';
 import gearContext from '../../store/gearContext'
 
 interface props {
@@ -31,7 +30,7 @@ export const MarketRow = observer(({ item, index, trade }: props) => {
         !isGodMode &&
         <td>
           {
-            mats.map((mat: UserMats, id: number) => {
+            mats.map((mat: any, id: number) => {
               if (item.id == mat.id) {
                 return (
                   <span key={mat.id + "" + id}>{mat.totalAmount.toLocaleString()}</span>
@@ -45,7 +44,7 @@ export const MarketRow = observer(({ item, index, trade }: props) => {
         !isGodMode &&
         <td className={isMarketEditMode ? "edit-cell" : ""}>
           {
-            mats.map((mat: UserMats, id: number) => {
+            mats.map((mat: any, id: number) => {
               if (item.id == mat.id) {
                 return (
                   <div key={mat.id + "" + id}>
@@ -73,7 +72,7 @@ export const MarketRow = observer(({ item, index, trade }: props) => {
         !isGodMode &&
         <td>
           {
-            mats.map((mat: UserMats, id: number) => {
+            mats.map((mat: any, id: number) => {
               if (item.id == mat.id) {
                 return (
                   <span key={mat.id + "" + id}>{mat.totalAmount - mat.amount > 0 ? (mat.totalAmount - mat.amount).toLocaleString() : 0}</span>
@@ -93,7 +92,7 @@ export const MarketRow = observer(({ item, index, trade }: props) => {
         trade &&
         <td className="text-left">
           {
-            mats.map((mat: UserMats) => {
+            mats.map((mat: any) => {
               if (item.id == mat.id) {
                 return (
                   <span key={mat.id}>{mat.totalPrice && mat.totalPrice.toLocaleString()}</span>
@@ -107,7 +106,7 @@ export const MarketRow = observer(({ item, index, trade }: props) => {
         isGodMode &&
         <td>
           {
-            mats.map((mat: UserMats) => {
+            mats.map((mat: any) => {
               if (item.id == mat.id) {
                 return (
                   item.isOutdated ?

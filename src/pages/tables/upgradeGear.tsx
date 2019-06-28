@@ -2,7 +2,6 @@ import * as React from 'react';
 import { PageHeader } from '../../components/pageHeader';
 import { GearTable } from '../../components/gearTable/component';
 import { observer } from 'mobx-react-lite';
-import gearContext from '../../store/gearContext'
 
 export const Gear = observer(() => {
   return (

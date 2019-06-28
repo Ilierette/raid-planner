@@ -2,7 +2,6 @@ import * as React from 'react';
 import { PageHeader } from '../../components/pageHeader';
 import { MarketTable } from '../../components/marketTable/component';
 import { observer } from 'mobx-react-lite';
-import { Tiers } from '../../models/interfaces';
 import gearContext from '../../store/gearContext';
 
 export const Marketplace = observer(() => {
@@ -16,7 +15,7 @@ export const Marketplace = observer(() => {
                         <div className="row mb-2">
                             <div className="col-8">
                                 <form>
-                                    {tierList.map((tier: Tiers) => (
+                                    {tierList.map((tier: any) => (
                                         <div className="form-check form-check-inline" key={tier.name}>
                                             <input
                                                 className="form-check-input"

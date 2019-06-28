@@ -4,9 +4,9 @@ import classnames from 'classnames';
 import { Input, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CharacterDataSearch } from '../../components/characterDataSearch';
-import { Day } from '../../models/interfaces';
 import { db } from '../../store/firebase';
 import RaidStore from '../../store/raidContext'
+import { Day } from '../../models/interface';
 
 interface props {
     isLeader: boolean

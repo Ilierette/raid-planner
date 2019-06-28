@@ -10,8 +10,8 @@ import { db } from '../../store/firebase';
 import { toJS } from 'mobx';
 import { RaidFooter as Footer } from './raidFooter';
 import * as moment from 'moment';
-import { initDays } from '../../data/character';
 import RaidStore from '../../store/raidContext'
+import { initDays } from '../../models/data';
 
 interface props {
     raid: any,

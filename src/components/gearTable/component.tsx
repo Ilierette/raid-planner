@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { observer } from 'mobx-react-lite';
-import { Gears, Stages } from '../../models/interfaces';
 import gearContext from '../../store/gearContext'
 
 export const GearTable = observer(() => {
@@ -16,7 +15,7 @@ export const GearTable = observer(() => {
                 <th rowSpan={2} className="text-right" style={{ width: 220 }}>
                   Mats
                   </th>
-                {gear.map((item: Gears, id:number) => (
+                {gear.map((item: any, id:number) => (
                   <th colSpan={item.stages.length} key={item.name +""+id}>
                     {item.name}
                   </th>
@@ -26,8 +25,8 @@ export const GearTable = observer(() => {
                 <th rowSpan={2} style={{ width: 90 }} >Left</th>
               </tr>
               <tr>
-                {gear.map((item: Gears, id:number) => (
-                  item.stages.map((stage: Stages) => (
+                {gear.map((item: any) => (
+                  item.stages.map((stage: any) => (
                     <th key={item.name +" - "+ stage.name}>{stage.name}</th>
                   ))
                 ))}
@@ -43,7 +42,7 @@ export const GearTable = observer(() => {
                           <td className="text-right">
                             {trade.name}
                           </td>
-                          {gear.map((item: Gears) => (
+                          {gear.map((item: any) => (
                             item.stages.map((stage: any,id:number) => (
                               <td key={item.name+stage.name+id}>{stage[trade.id]}</td>
                             ))

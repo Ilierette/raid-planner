@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { observer } from 'mobx-react-lite';
-import { MarketRow } from './marketRow'
-import { Mats, Tiers } from '../../models/interfaces';
-import gearContext from '../../store/gearContext'
+import { MarketRow } from './marketRow';
+import gearContext from '../../store/gearContext';
 
 interface props {
   title: string,
@@ -38,16 +37,16 @@ export const MarketTable = observer(({ title, items, trade }: props) => {
           </tr>
         </thead>
 
-        {tierList.map((tier: Tiers) => (
+        {tierList.map((tier: any) => (
           <tbody key={tier.name}>
-            {tier.show && items.filter((item: Mats) => {
+            {tier.show && items.filter((item: any) => {
               return item.tier == tier.name
             }).filter((item: any) => {
               if (!isGodMode)
                 return !item.isOutdated
               else
                 return item
-            }).map((item: Mats, index: number) => (
+            }).map((item: any, index: number) => (
               <MarketRow
                 item={item}
                 key={index}

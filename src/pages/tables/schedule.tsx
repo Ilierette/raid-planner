@@ -3,12 +3,11 @@ import { PageHeader } from '../../components/pageHeader';
 import { RaidTable } from '../../components/raidTable/component';
 import '../../scss/content.scss';
 import { observer, useObservable } from 'mobx-react-lite';
-import { Raid } from '../../models/interfaces';
 import { RaidRecruitTable } from '../../components/raidTable/raidRecruitTable';
 import { Alert } from 'reactstrap';
 import { db } from '../../store/firebase';
-import { initDays } from '../../data/character';
 import RaidStore from '../../store/raidContext'
+import { initDays } from '../../models/data';
 
 export const Schedule = observer(() => {
   const { raids, uid, isLoading } = React.useContext(RaidStore);
@@ -78,7 +77,7 @@ export const Schedule = observer(() => {
       }
       <PageHeader title="Raid schedule" />
       <div className="content">
-        {!isLoading && raids.map((raid: Raid, index: number) => (
+        {!isLoading && raids.map((raid: any, index: number) => (
           <RaidTable raid={raid} index={index} key={index} />
         ))}
         <div className="row mb-3">
