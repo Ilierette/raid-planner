@@ -23,6 +23,8 @@ class gearContext {
     @observable uid: any = null;
     @observable marketMats: any = [];
 
+    @observable goodAmount = true;
+
     handleInputChange = (e: any, id: any) => {
         let matList = this.mats.map((mat: any) => {
             if (mat.id == id) {
@@ -35,10 +37,18 @@ class gearContext {
         })
 
         this.mats = matList
+        this.goodAmount = true;
+        
+    }
 
-        this.calculateTotalPrice();
-        this.calculateTotalCost();
-
+    handleSaveMats = (e:any) => {
+        e.preventDefault()
+        this.mats.map((mat:any)=>{
+            db.collection("users").doc(this.uid).collection("mats").doc(mat.id).update({
+                amount: mat.amount
+            })
+        })
+        this.isMarketEditMode = false
     }
 
     handleTierChange = (e: any) => {
@@ -59,49 +69,61 @@ class gearContext {
         auth.onAuthStateChanged((user) => {
             if (user) {
                 this.uid = user.uid;
-                db.collection("users").doc(this.uid).onSnapshot((doc) => {
-                    this.mats = doc.data().mats.map((mat: any) => (
-                        {
+
+                db.collection("users").doc(this.uid).collection("mats").onSnapshot((snap) => {
+                    let mats: any = [];
+                    snap.forEach((doc) => {
+                        mats.push(doc.data())
+                    })
+                    let amount = mats.map((mat: any) => {
+                        return ({
                             ...mat,
                             totalAmount: mat.totalAmount ? mat.totalAmount : 0
-                        }
-                    ));
-                    this.calculateTotalPrice();
-                    this.calculateTotalCost();
-                })
-
-                db.collection("users").doc(this.uid).onSnapshot((doc) => {
-                    const userGears: any = []
-                    const userStages: any = [];
-
-                    doc.data().gears.map((gear: any) => {
-                        gear.stages.map((stage: any) => {
-                            userStages.push(stage)
-                        })
-
-                        db.collection("gears").doc(gear.id).onSnapshot((doc) => {
-                            const mainStage: any = [];
-                            
-                            userStages.map((userStage: any) => {
-                                doc.data().stages.map((stage: any) => {
-                                    if (stage.name == userStage.name) {
-                                        mainStage.push(stage)
-                                    }
-                                })
-                            })
-
-                            userGears.push({
-                                ...doc.data(),
-                                stages: mainStage
-                            })
-
-                            this.gear = userGears
                         })
                     })
-
-
-                    
+                    this.mats = amount
                 })
+
+                // db.collection("users").doc(this.uid).onSnapshot((doc) => {
+                //     this.mats = doc.data().mats.map((mat: any) => (
+                //         {
+                //             ...mat,
+                //             totalAmount: mat.totalAmount ? mat.totalAmount : 0
+                //         }
+                //     ));
+                //     this.calculateTotalPrice();
+                //     this.calculateTotalCost();
+                // })
+
+                // db.collection("users").doc(this.uid).onSnapshot((doc) => {
+                //     const userGears: any = []
+                //     const userStages: any = [];
+
+                //     doc.data().gears.map((gear: any) => {
+                //         gear.stages.map((stage: any) => {
+                //             userStages.push(stage)
+                //         })
+
+                //         db.collection("gears").doc(gear.id).onSnapshot((doc) => {
+                //             const mainStage: any = [];
+
+                //             userStages.map((userStage: any) => {
+                //                 doc.data().stages.map((stage: any) => {
+                //                     if (stage.name == userStage.name) {
+                //                         mainStage.push(stage)
+                //                     }
+                //                 })
+                //             })
+
+                //             userGears.push({
+                //                 ...doc.data(),
+                //                 stages: mainStage
+                //             })
+
+                //             this.gear = userGears
+                //         })
+                //     })
+                // })
             }
         })
         db.collection("mats").onSnapshot((querySnapshot) => {
@@ -179,6 +201,7 @@ class gearContext {
     toogleEditMode = () => {
         this.isMarketEditMode = !this.isMarketEditMode
         this.isGodMode = false;
+        this.goodAmount = false;
     }
     toogleGodMode = () => {
         this.isGodMode = !this.isGodMode

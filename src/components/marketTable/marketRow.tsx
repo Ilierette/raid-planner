@@ -106,7 +106,7 @@ export const MarketRow = observer(({ item, index, trade }: props) => {
         isGodMode &&
         <td>
           {
-            mats.map((mat: any, id:any) => {
+            mats.map((mat: any, id: any) => {
               if (item.id == mat.id) {
                 return (
                   <span key={id}>

@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite';
 import gearContext from '../../store/gearContext';
 
 export const Marketplace = observer(() => {
-    const { tierList, isMarketEditMode, marketMats, handleTierChange, toogleEditMode, isGodMode, toogleGodMode } = React.useContext(gearContext);
+    const { isMarketEditMode, marketMats, toogleEditMode, isGodMode, toogleGodMode, handleSaveMats, goodAmount } = React.useContext(gearContext);
     return (
         <div className="content-wrapper">
             <PageHeader title="Marketplace" />
@@ -13,30 +13,16 @@ export const Marketplace = observer(() => {
                 <div className="card">
                     <div className="card-body">
                         <div className="row mb-2">
-                            <div className="col-8">
-                                <form>
-                                    {tierList.map((tier: any) => (
-                                        <div className="form-check form-check-inline" key={tier.name}>
-                                            <input
-                                                className="form-check-input"
-                                                type="checkbox"
-                                                value={tier.name}
-                                                onClick={(e) => handleTierChange(e)}
-                                                defaultChecked={tier.show}
-                                            />
-                                            <label className="form-check-label" htmlFor={tier.name}>{tier.name}</label>
-                                        </div>
-                                    ))}
-                                </form>
-                            </div>
-                            <div className="col-4 text-right">
+                            <div className="col text-right">
                                 {isGodMode ?
                                     <button className="btn btn-success btn-sm mr-3" onClick={() => toogleGodMode()}>Save changes</button> :
                                     <button className="btn btn-danger btn-sm mr-3" onClick={() => toogleGodMode()}>Edit mats</button>
                                 }
                                 {isMarketEditMode ?
-                                    <button className="btn btn-success btn-sm" onClick={() => toogleEditMode()}>Save changes</button> :
-                                    <button className="btn btn-primary btn-sm" onClick={() => toogleEditMode()}>Edit</button>
+                                    goodAmount ?
+                                        < button className="btn btn-success btn-sm" onClick={(e) => handleSaveMats(e)}>Save changes</button> :
+                                        < button className="btn btn-secondary btn-sm" onClick={() => toogleEditMode()}>Cancel</button> :
+                                    <button className="btn btn-primary btn-sm" onClick={() => toogleEditMode()}>Change amount</button>
                                 }
                             </div>
                         </div>
@@ -99,8 +85,10 @@ export const Marketplace = observer(() => {
 
                     </div>
                 </div>
+
+
             </div>
-        </div>
+        </div >
     );
 })
 
