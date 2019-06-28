@@ -24,7 +24,7 @@ export const Schedule = observer(() => {
     db.collection("raids").add({
       id: "",
       maxMembers: createRaid.maxMembers,
-      minMembers: 4,
+      minMembers: 6,
       raidLeaderId: uid,
       ratio: "",
       timestamp: "",
@@ -88,7 +88,7 @@ export const Schedule = observer(() => {
                 </div>
               <div className="card-body">
                 <div className="form-group row">
-                  <label htmlFor="token" className="col-3 col-form-label text-right">Raid Token</label>
+                  <label htmlFor="token" className="col-3 col-form-label text-right">Token</label>
                   <div className="col-6">
                     <input type="text" className="form-control" value={joinToRaid.token} onChange={(e) => joinToRaid.token = e.target.value} />
                   </div>
@@ -106,18 +106,18 @@ export const Schedule = observer(() => {
                 </div>
               <div className="card-body">
                 <div className="form-group row">
-                  <label htmlFor="raid" className="col-3 col-form-label text-right">Raid type</label>
+                  <label htmlFor="raid" className="col-3 col-form-label text-right">Type</label>
                   <select className="form-control col-8" onChange={(e) => createRaid.type = e.target.value}>
-                    <option value="BT">BT</option>
-                    <option value="VT">VT</option>
-                    <option value="BT">TT</option>
                     <option value="VT">ET</option>
+                    <option value="BT">TT</option>
+                    <option value="VT">VT</option>
+                    <option value="BT">BT</option>
+                    <option value="Hard mode">Hard Mode Dungeon</option>
                   </select>
-                  <label htmlFor="raid" className="col-3 col-form-label text-right">Raid size</label>
+                  <label htmlFor="raid" className="col-3 col-form-label text-right">Size</label>
                   <select className="form-control col-8" onChange={(e) => createRaid.maxMembers = parseInt(e.target.value)}>
                     <option value="12">12</option>
                     <option value="6">6</option>
-                    <option value="4">4</option>
                   </select>
                   <label htmlFor="raid" className="col-3 col-form-label text-right">Loot</label>
                   <select className="form-control col-8">

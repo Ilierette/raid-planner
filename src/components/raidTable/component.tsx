@@ -14,11 +14,10 @@ import RaidStore from '../../store/raidContext'
 import { initDays } from '../../models/data';
 
 interface props {
-    raid: any,
-    index: number
+    raid: any
 }
 
-export const RaidTable = observer(({ raid, index }: props) => {
+export const RaidTable = observer(({ raid }: props) => {
     const { uid, isLoadingUsers, users } = React.useContext(RaidStore);
 
     const raidData = useObservable({
@@ -133,7 +132,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
     const getSuggestions = (e: any) => {
         const suggest = users.filter((user: any) => (
             e.target.value.length > 0 && user.name.toLowerCase().includes(e.target.value.toLowerCase()))
-        ).map((user:any) => {
+        ).map((user: any) => {
             return user
         });
 
@@ -210,25 +209,26 @@ export const RaidTable = observer(({ raid, index }: props) => {
     return (
         <div className="card mb-3">
             <div className="card-body">
-                <div className="row">
-                    <div className="col-4 my-auto">
-                        {raid.isLeader &&
-                            <span>
-                                <FontAwesomeIcon icon="crown" /> <strong>Raid leader </strong>
-                            </span>
-                        }
-                    </div>
-                    {raid.isLeader &&
-                        <div className="col-8">
+                {raid.isLeader ?
+                    <div className="row">
+                        <div className="col-2 my-auto">
+                            <h5><FontAwesomeIcon icon="crown" /> <strong>Raid leader </strong></h5>
+                        </div>
+                        <div className="col-10">
                             <div className="form-group row">
-                                <label htmlFor="token" className="col-2 col-form-label px-0 text-right">{raidData.type} - Raid Token</label>
-                                <div className="col-10">
+                                <label htmlFor="token" className="col-8 col-form-label px-0 text-right">{raidData.type} token</label>
+                                <div className="col-4">
                                     <input type="text" readOnly id="token" className="form-control" value={raid.id} />
                                 </div>
                             </div>
                         </div>
-                    }
-                </div>
+                    </div> :
+                    <div className="row">
+                        <div className="col text-center mb-1">
+                            <h5>{raidData.type}</h5>
+                        </div>
+                    </div>
+                }
 
                 <div className="table-responsive">
                     <table className="table table-sm text-center">
@@ -349,33 +349,31 @@ export const RaidTable = observer(({ raid, index }: props) => {
                                 </button>
                         }
                     </div>
-                    <div className="col text-right">
-                        {raid.isLeader &&
+                    {raid.isLeader &&
+                        <div className="col text-right">
                             <button className="btn btn-primary btn-sm ml-1" >Set raid time</button>
-                        }
-                        {raid.isLeader &&
                             <button className="btn btn-outline-secondary btn-sm ml-1" >
                                 Recruit players
                                 <Badge color="secondary" pill className="ml-1">0</Badge>
                             </button>
-                        }
-                        {
-                            raidControls.isAddMode ?
-                                !raidControls.goodPlayer ?
-                                    <button className="btn btn-success btn-sm ml-1" onClick={() => addUser()} >
-                                        Save player
+
+                            {
+                                raidControls.isAddMode ?
+                                    !raidControls.goodPlayer ?
+                                        <button className="btn btn-success btn-sm ml-1" onClick={() => addUser()} >
+                                            Save player
                                             </button> :
-                                    <button className="btn btn-secondary btn-sm ml-1" onClick={() => { raidControls.isAddMode = false }}>
-                                        Cancel
+                                        <button className="btn btn-secondary btn-sm ml-1" onClick={() => { raidControls.isAddMode = false }}>
+                                            Cancel
                                             </button> :
-                                <button className="btn btn-success btn-sm ml-1" onClick={() => addUserRow()} >
-                                    Add player
+                                    <button className="btn btn-success btn-sm ml-1" onClick={() => addUserRow()} >
+                                        Add player
                                 </button>
-                        }
-                        {raid.isLeader &&
+                            }
+
                             <button className="btn btn-danger btn-sm ml-1" onClick={() => removeRaid()} >Remove raid</button>
-                        }
-                    </div>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
