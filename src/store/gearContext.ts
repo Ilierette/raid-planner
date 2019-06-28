@@ -1,10 +1,10 @@
 import { createContext } from "react";
-import { observable, toJS } from "mobx";
+import { observable } from "mobx";
 import { UserMats, Mats, Tiers, Gears } from "../models/interfaces";
 import axios from 'axios';
-import { db, auth } from "./config";
+import { db, auth } from "./firebase";
 
-class GearStore {
+class gearContext {
     @observable mats: any = [];
     @observable gear: any = [];
 
@@ -187,4 +187,4 @@ class GearStore {
     }
 }
 
-export default createContext(new GearStore())
+export default createContext(new gearContext())

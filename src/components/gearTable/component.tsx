@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { observer } from 'mobx-react-lite';
 import { Gears, Stages } from '../../models/interfaces';
-import GearStore from '../../store/gearStore'
+import gearContext from '../../store/gearContext'
 
 export const GearTable = observer(() => {
-  const { gear, mats, marketMats } = React.useContext(GearStore)
+  const { gear, mats, marketMats } = React.useContext(gearContext)
   return (
     <div className="card">
       <div className="card-body">

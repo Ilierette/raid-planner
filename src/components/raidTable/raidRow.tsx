@@ -5,8 +5,8 @@ import { Input, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CharacterDataSearch } from '../../components/characterDataSearch';
 import { Day } from '../../models/interfaces';
-import RaidStore from '../../store/raidStore'
-import { db } from '../../store/config';
+import { db } from '../../store/firebase';
+import RaidStore from '../../store/raidContext'
 
 interface props {
     isLeader: boolean

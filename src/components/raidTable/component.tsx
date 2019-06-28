@@ -6,11 +6,12 @@ import { RaidHeader as Header } from './raidHeader';
 import { RaidRow as Row } from './raidRow';
 import { HourInput } from './hourInput';
 import '../../scss/table.scss';
-import RaidStore from '../../store/raidStore';
-import { db } from '../../store/config';
+import { db } from '../../store/firebase';
 import { toJS } from 'mobx';
 import { RaidFooter as Footer } from './raidFooter';
 import * as moment from 'moment';
+import { initDays } from '../../data/character';
+import RaidStore from '../../store/raidContext'
 
 interface props {
     raid: any,
@@ -18,11 +19,7 @@ interface props {
 }
 
 export const RaidTable = observer(({ raid, index }: props) => {
-    const {
-        getSuggestions, selectedCharId, selectedCharName, suggestions, selectChar,
-        selectedCharClass, selectedCharIsMain, selectedCharIsStatic, selectIfStatic,
-        selectedCharHours, uid, isLoadingUsers
-    } = React.useContext(RaidStore);
+    const { uid, isLoadingUsers, users } = React.useContext(RaidStore);
 
     const raidData = useObservable({
         id: "",
@@ -40,7 +37,18 @@ export const RaidTable = observer(({ raid, index }: props) => {
         isAddMode: false,
         isEditMode: false,
         isLoading: true,
-        goodHours: true
+        goodHours: true,
+        goodPlayer: true
+    })
+
+    const suggestion = useObservable({
+        suggestions: null,
+        selectedCharName: null,
+        selectedCharId: null,
+        selectedCharClass: null,
+        selectedCharIsMain: null,
+        selectedCharIsStatic: null,
+        selectedCharHours: null,
     })
 
     const addUserRow = () => {
@@ -70,7 +78,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
     }
 
     const checkHours = (dayId: any) => {
-        raidControls.goodHours = true
+        raidControls.goodHours = false
         raidData.currentMember.map((member: any) => {
             if (member.id == uid) {
                 let max = member.days[dayId].max
@@ -81,14 +89,15 @@ export const RaidTable = observer(({ raid, index }: props) => {
                     let maxHour = max.split(':')
                     maxMoment = moment().day(dayId + 3).hour(maxHour[0]).minute(maxHour[1]).second(0)
                 }
-
                 if (min) {
                     let minHour = min.split(':')
                     minMoment = moment().day(dayId + 3).hour(minHour[0]).minute(minHour[1]).second(0)
                 }
-
                 if (moment(maxMoment).isAfter(minMoment)) {
                     raidControls.goodHours = false
+                }
+                if (!max || !min) {
+                    raidControls.goodHours = true
                 }
             }
         })
@@ -105,14 +114,14 @@ export const RaidTable = observer(({ raid, index }: props) => {
     }
 
     const addUser = () => {
-        let id = selectedCharId
+        let id = suggestion.selectedCharId
         raidControls.isAddMode = false;
         db.collection("raids").doc(raid.id).collection("members").doc(id).set({
-            id: selectedCharId,
+            id: suggestion.selectedCharId,
             isConfirmed: false,
-            isStatic: selectedCharIsStatic,
+            isStatic: suggestion.selectedCharIsStatic,
             notes: "",
-            days: selectedCharHours
+            days: suggestion.selectedCharHours
         }).then(() => {
             db.collection("users").doc(id).collection("raids").doc(raid.id).set({
                 id: raid.id,
@@ -120,6 +129,44 @@ export const RaidTable = observer(({ raid, index }: props) => {
             })
         })
     }
+
+    const getSuggestions = (e: any) => {
+        const suggest = users.filter((user: any) => (
+            e.target.value.length > 0 && user.name.toLowerCase().includes(e.target.value.toLowerCase()))
+        ).map((user:any) => {
+            return user
+        });
+
+        suggestion.selectedCharName = e.target.value;
+        suggestion.suggestions = suggest.length == 0 ? null : suggest;
+        suggestion.selectedCharId = null;
+        suggestion.selectedCharClass = null;
+        suggestion.selectedCharIsMain = null;
+        suggestion.selectedCharIsStatic = null;
+        suggestion.selectedCharHours = null
+    }
+
+    const selectChar = (e: any, item: any) => {
+        e.preventDefault();
+        suggestion.selectedCharName = item.name;
+        suggestion.suggestions = null;
+        suggestion.selectedCharId = item.id;
+        suggestion.selectedCharClass = item.class;
+        suggestion.selectedCharIsMain = item.isMain;
+        suggestion.selectedCharIsStatic = true;
+        suggestion.selectedCharHours = initDays;
+        raidControls.goodPlayer = false
+    }
+
+    const selectIfStatic = (e: any) => {
+        if (e.target.value == "Static") {
+            suggestion.selectedCharIsStatic = true
+        }
+        else {
+            suggestion.selectedCharIsStatic = false
+        }
+    }
+
     const removeUser = (id: any) => {
         db.collection("raids").doc(raid.id).collection("members").doc(id).delete()
         db.collection("users").doc(id).collection("raids").doc(raid.id).delete()
@@ -185,7 +232,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
 
                 <div className="table-responsive">
                     <table className="table table-sm text-center">
-                        <Header raid={raid} addUserRow={addUserRow} editHours={editHours} raidControls={raidControls} />
+                        <Header raid={raid} />
                         {
                             raidControls.isAddMode &&
                             <tbody>
@@ -197,12 +244,12 @@ export const RaidTable = observer(({ raid, index }: props) => {
                                             name="chars"
                                             className="form-control"
                                             onChange={(e) => getSuggestions(e)}
-                                            value={selectedCharName || ""}
+                                            value={suggestion.selectedCharName || ""}
                                         />
                                         {
-                                            !isLoadingUsers && suggestions &&
+                                            !isLoadingUsers && suggestion.suggestions &&
                                             <div className="suggestions-box">
-                                                {suggestions.map((suggestion: any, id: any) => (
+                                                {suggestion.suggestions.map((suggestion: any, id: any) => (
                                                     <a href="" onClick={(e) => selectChar(e, suggestion)} key={id}>{suggestion.name}<br /></a>
                                                 ))}
                                             </div>
@@ -210,15 +257,15 @@ export const RaidTable = observer(({ raid, index }: props) => {
                                         }
                                     </td>
                                     <td>
-                                        {selectedCharClass}
+                                        {suggestion.selectedCharClass}
                                     </td>
                                     <td colSpan={7}></td>
                                     <td>
-                                        {selectedCharIsStatic != null ?
+                                        {suggestion.selectedCharIsStatic != null ?
                                             <select
                                                 className="form-control"
                                                 onChange={(e) => selectIfStatic(e)}
-                                                defaultValue={selectedCharIsStatic ? "static" : "sub"}
+                                                defaultValue={suggestion.selectedCharIsStatic ? "static" : "sub"}
                                             >
                                                 <option value="static"> Static </option>
                                                 <option value="sub"> Sub </option>
@@ -227,7 +274,7 @@ export const RaidTable = observer(({ raid, index }: props) => {
                                         }
                                     </td>
                                     <td>
-                                        {selectedCharIsMain != null ? selectedCharIsMain ? "Main" : "Alt" : ""}
+                                        {suggestion.selectedCharIsMain != null ? suggestion.selectedCharIsMain ? "Main" : "Alt" : ""}
                                     </td>
                                 </tr>
                             </tbody>
@@ -282,36 +329,52 @@ export const RaidTable = observer(({ raid, index }: props) => {
             </div>
             <div className="card-footer">
                 <div className="row">
-                    <div className="col-2 my-auto">
-                        {raidData.members.length}/{raidData.maxMembers}
+                    <div className="col">
+                        {
+                            raidControls.isEditMode ?
+                                <div>
+                                    {
+                                        !raidControls.goodHours ?
+                                            <button className="btn btn-success btn-sm mr-3" onClick={() => saveHours()} >
+                                                Save hours
+                                            </button> :
+                                            <button className="btn btn-secondary btn-sm mr-3" onClick={() => { raidControls.isEditMode = false }}>
+                                                Cancel
+                                            </button>
+                                    }
+                                </div> :
+                                <button className="btn btn-success btn-sm mr-3"
+                                    onClick={() => editHours()} >
+                                    Edit hours
+                                </button>
+                        }
                     </div>
                     <div className="col text-right">
                         {raid.isLeader &&
-                            <button className="btn btn-outline-secondary btn-sm mr-2" >
-                                Recruit players
-                                    <Badge color="secondary" pill className="ml-1">0</Badge>
-                            </button>
+                            <button className="btn btn-primary btn-sm ml-1" >Set raid time</button>
                         }
                         {raid.isLeader &&
-                            <button className="btn btn-primary btn-sm" >Set raid time</button>
+                            <button className="btn btn-outline-secondary btn-sm ml-1" >
+                                Recruit players
+                                <Badge color="secondary" pill className="ml-1">0</Badge>
+                            </button>
                         }
                         {
                             raidControls.isAddMode ?
-                                <button className="btn btn-success btn-sm ml-1" onClick={() => addUser()} >
-                                    Add user
-                                </button> :
-                                raidControls.isEditMode &&
-                                <button
-                                    className="btn btn-success btn-sm ml-1"
-                                    disabled={raidControls.goodHours}
-                                    onClick={() => saveHours()} >
-                                    Save hours
+                                !raidControls.goodPlayer ?
+                                    <button className="btn btn-success btn-sm ml-1" onClick={() => addUser()} >
+                                        Save player
+                                            </button> :
+                                    <button className="btn btn-secondary btn-sm ml-1" onClick={() => { raidControls.isAddMode = false }}>
+                                        Cancel
+                                            </button> :
+                                <button className="btn btn-success btn-sm ml-1" onClick={() => addUserRow()} >
+                                    Add player
                                 </button>
                         }
                         {raid.isLeader &&
                             <button className="btn btn-danger btn-sm ml-1" onClick={() => removeRaid()} >Remove raid</button>
                         }
-
                     </div>
                 </div>
             </div>

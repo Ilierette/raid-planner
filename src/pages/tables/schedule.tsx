@@ -6,9 +6,9 @@ import { observer, useObservable } from 'mobx-react-lite';
 import { Raid } from '../../models/interfaces';
 import { RaidRecruitTable } from '../../components/raidTable/raidRecruitTable';
 import { Alert } from 'reactstrap';
-import RaidStore from '../../store/raidStore'
-import { db } from '../../store/config';
+import { db } from '../../store/firebase';
 import { initDays } from '../../data/character';
+import RaidStore from '../../store/raidContext'
 
 export const Schedule = observer(() => {
   const { raids, uid, isLoading } = React.useContext(RaidStore);

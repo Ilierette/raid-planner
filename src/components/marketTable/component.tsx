@@ -2,7 +2,7 @@ import * as React from 'react';
 import { observer } from 'mobx-react-lite';
 import { MarketRow } from './marketRow'
 import { Mats, Tiers } from '../../models/interfaces';
-import GearStore from '../../store/gearStore'
+import gearContext from '../../store/gearContext'
 
 interface props {
   title: string,
@@ -11,7 +11,7 @@ interface props {
 }
 
 export const MarketTable = observer(({ title, items, trade }: props) => {
-  const { tierList, totalCost, isGodMode } = React.useContext(GearStore);
+  const { tierList, totalCost, isGodMode } = React.useContext(gearContext);
   return (
     <div className="table-responsive">
       <table className="table table-sm text-center">

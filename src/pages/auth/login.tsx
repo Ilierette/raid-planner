@@ -2,7 +2,7 @@ import * as React from 'react';
 import '../../scss/auth.scss';
 import { Link } from 'react-router-dom';
 import { observer, useObservable } from 'mobx-react-lite';
-import { auth } from '../../store/config';
+import { auth } from '../../store/firebase';
 
 export const Login = observer(() => {
   const state = useObservable({

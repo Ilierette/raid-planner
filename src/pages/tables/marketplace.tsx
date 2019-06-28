@@ -3,10 +3,10 @@ import { PageHeader } from '../../components/pageHeader';
 import { MarketTable } from '../../components/marketTable/component';
 import { observer } from 'mobx-react-lite';
 import { Tiers } from '../../models/interfaces';
-import GearStore from '../../store/gearStore';
+import gearContext from '../../store/gearContext';
 
 export const Marketplace = observer(() => {
-    const { tierList, isMarketEditMode, marketMats, handleTierChange, toogleEditMode, isGodMode, toogleGodMode } = React.useContext(GearStore);
+    const { tierList, isMarketEditMode, marketMats, handleTierChange, toogleEditMode, isGodMode, toogleGodMode } = React.useContext(gearContext);
     return (
         <div className="content-wrapper">
             <PageHeader title="Marketplace" />

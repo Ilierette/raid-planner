@@ -1,6 +1,6 @@
 import * as firebase from 'firebase';
 
-const firebaseConfig =  {
+const firebasefirebase =  {
     apiKey: "AIzaSyAYmtwSekzGtfGwWIOCXkimRzZL5eJIaGY",
     authDomain: "game-tools-b5a6d.firebaseapp.com",
     databaseURL: "https://game-tools-b5a6d.firebaseio.com",
@@ -10,7 +10,7 @@ const firebaseConfig =  {
     appId: "1:573871543925:web:e8037bddb28b819b"
   };
 
-firebase.initializeApp(firebaseConfig)
+firebase.initializeApp(firebasefirebase)
 
 export const auth = firebase.auth();
 export const db = firebase.firestore();

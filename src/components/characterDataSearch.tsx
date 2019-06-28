@@ -3,7 +3,7 @@ import "../scss/characterData.scss";
 import { CharacterData } from '../components/characterData/component';
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
-import GlobalStore from '../store/globalStore';
+import GlobalContext from '../store/globalContext';
 
 interface CharacterDataProps {
   name: string,
@@ -13,7 +13,7 @@ interface CharacterDataProps {
 }
 
 export const CharacterDataSearch = observer(({ name, region, isBadge, isMain }: CharacterDataProps) => {
-  const { searchChar, searchLoading, callApi } = React.useContext(GlobalStore)
+  const { searchChar, searchLoading, callApi } = React.useContext(GlobalContext)
   useEffect(()=>{
     callApi(name, region, true);
   },[])

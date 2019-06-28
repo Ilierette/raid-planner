@@ -1,7 +1,7 @@
 import * as React from 'react';
 import '../../scss/auth.scss';
 import { Link } from 'react-router-dom';
-import { auth, db } from '../../store/config';
+import { auth, db } from '../../store/firebase';
 import { useObservable, observer } from 'mobx-react-lite';
 
 const initNeeds = [{

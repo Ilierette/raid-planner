@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { observer } from 'mobx-react-lite';
 import { UserMats, Mats } from '../../models/interfaces';
-import GearStore from '../../store/gearStore'
+import gearContext from '../../store/gearContext'
 
 interface props {
   item: any,
@@ -10,7 +10,7 @@ interface props {
 }
 
 export const MarketRow = observer(({ item, index, trade }: props) => {
-  const { mats, isMarketEditMode, handleInputChange, isGodMode } = React.useContext(GearStore)
+  const { mats, isMarketEditMode, handleInputChange, isGodMode } = React.useContext(gearContext)
   return (
     <tr key={item.id}>
       {!trade && !isGodMode && index == 0 ?

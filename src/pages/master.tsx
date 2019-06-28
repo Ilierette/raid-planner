@@ -28,9 +28,9 @@ import { Marketplace } from '../pages/tables/marketplace';
 
 import "../scss/navigation.scss"
 
-import GlobalStore from '../store/globalStore';
-import GearStore from '../store/gearStore';
-import RaidStore from '../store/raidStore';
+import GlobalContext from '../store/globalContext';
+import gearContext from '../store/gearContext';
+import RaidStore from '../store/raidContext'
 
 
 library.add(
@@ -44,8 +44,8 @@ library.add(
 
 
 export const MasterPage = observer(() => {
-  const { isLoading, isAuthUser, authListener, logout } = React.useContext(GlobalStore)
-  const { getData } = React.useContext(GearStore)
+  const { isLoading, isAuthUser, authListener, logout } = React.useContext(GlobalContext)
+  const { getData } = React.useContext(gearContext)
   const { getRaidData } = React.useContext(RaidStore)
 
   useEffect(() => {

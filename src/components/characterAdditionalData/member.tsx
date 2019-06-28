@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { observer, useObservable } from 'mobx-react-lite';
-import { db } from '../../store/config';
-import RaidStore from '../../store/raidStore';
-import { toJS } from 'mobx';
-
+import { db } from '../../store/firebase';
+import RaidStore from '../../store/raidContext'
+ 
 interface props {
     raid: any
 }

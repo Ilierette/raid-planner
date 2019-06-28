@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useObservable, observer } from 'mobx-react-lite';
 import * as moment from 'moment';
-import { db } from '../../store/config';
+import { db } from '../../store/firebase';
 
 interface props {
     raid: any
@@ -17,21 +17,30 @@ export const RaidFooter = observer(({ raid }: props) => {
         const allHours: any = [];
         for (let i = 0; i < 7; i++) {
             const max: any = [];
-            const min: any = []
+            const min: any = [];
+            let lastMin: any;
             state.members.map((member) => {
                 max.push(member.days[i].max)
                 min.push(member.days[i].min)
             })
-            const maxHour = max.filter((max: any) => { return max }).map((max: any) => {
-                if (max) {
-                    const hour = max.split(':')
+            const minHour = min.filter((min: any) => { return min }).map((min: any) => {
+                if (min) {
+                    const hour = min.split(':');
+                    lastMin = moment().day(i + 3).hour(hour[0]).minute(hour[1]).second(0)
                     return moment().day(i + 3).hour(hour[0]).minute(hour[1]).second(0)
                 }
             })
-            const minHour = min.filter((min: any) => { return min }).map((min: any) => {
-                if (min) {
-                    const hour = min.split(':')
-                    return moment().day(i + 3).hour(hour[0]).minute(hour[1]).second(0)
+            const maxHour = max.filter((max: any) => { return max }).map((max: any) => {
+                if (max) {
+                    const hour = max.split(':')
+                    let lastMax = moment().day(i + 3).hour(hour[0]).minute(hour[1]).second(0)
+                    if (lastMin) {
+                        if (!moment(lastMax).isAfter(lastMin)) {
+                            lastMax = moment().day(i + 4).hour(hour[0]).minute(hour[1]).second(0)
+                        }
+                    }
+
+                    return lastMax
                 }
             })
 
@@ -41,6 +50,7 @@ export const RaidFooter = observer(({ raid }: props) => {
             })
         }
         state.hours = allHours
+
     }
 
     React.useEffect(() => {
@@ -60,7 +70,9 @@ export const RaidFooter = observer(({ raid }: props) => {
             {
                 !state.isLoading &&
                 <tr>
-                    <td colSpan={raid.isLeader ? 3 : 2}></td>
+                    <td colSpan={raid.isLeader ? 3 : 2} className="text-right">
+                        Available hours
+                    </td>
                     {
                         state.hours && state.hours.map((day) => (
                             <td>
@@ -82,7 +94,9 @@ export const RaidFooter = observer(({ raid }: props) => {
             {
                 !state.isLoading &&
                 <tr>
-                    <td colSpan={raid.isLeader ? 3 : 2}></td>
+                    <td colSpan={raid.isLeader ? 3 : 2}  className="text-right">
+                        Available time
+                    </td>
                     {state.hours && state.hours.map((day) => (
                         <td>
                             {

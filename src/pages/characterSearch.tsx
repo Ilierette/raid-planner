@@ -12,10 +12,10 @@ import { Parse } from '../components/characterAdditionalData/parse';
 import { Member, Leader } from '../components/characterAdditionalData/member';
 import { Needs } from '../components/characterAdditionalData/needs';
 
-import GlobalStore from '../store/globalStore';
+import GlobalContext from '../store/globalContext';
 
 export const CharacterSearch = observer(() => {
-  const { char, isLoadingData, needs, isMain } = React.useContext(GlobalStore)
+  const { char, isLoadingData, needs, isMain } = React.useContext(GlobalContext)
 
   const state = useObservable({
     searchName: "",

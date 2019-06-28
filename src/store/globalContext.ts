@@ -1,11 +1,11 @@
 import { createContext } from "react";
 import { observable } from "mobx";
-import { auth, db } from './config';
+import { auth, db } from './firebase';
 import { character } from "../data/character";
 import axios from 'axios';
 import { Equipments } from "../models/interfaces";
 
-class GlobalStore {
+class GlobalContext {
     @observable isAuthUser = false;
     @observable isLoading = true;
     @observable user: any = null;
@@ -296,4 +296,4 @@ class GlobalStore {
     }
 }
 
-export default createContext(new GlobalStore())
+export default createContext(new GlobalContext())

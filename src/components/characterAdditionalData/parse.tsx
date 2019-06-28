@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useObservable, observer } from 'mobx-react-lite';
-import GlobalStore from '../../store/globalStore';
-import { db } from '../../store/config';
+import GlobalContext from '../../store/globalContext';
+import { db } from '../../store/firebase';
 
 export const Parse = observer(() => {
-    const { uid } = React.useContext(GlobalStore)
+    const { uid } = React.useContext(GlobalContext)
     const state = useObservable({
         isEditMode: false,
         dpsCount: null,
