@@ -24,6 +24,7 @@ class gearContext {
     @observable marketMats: any = [];
 
     @observable goodAmount = true;
+    @observable isLoading = true;
 
     handleInputChange = (e: any, id: any) => {
         let matList = this.mats.map((mat: any) => {
@@ -38,12 +39,12 @@ class gearContext {
 
         this.mats = matList
         this.goodAmount = true;
-        
+
     }
 
-    handleSaveMats = (e:any) => {
+    handleSaveMats = (e: any) => {
         e.preventDefault()
-        this.mats.map((mat:any)=>{
+        this.mats.map((mat: any) => {
             db.collection("users").doc(this.uid).collection("mats").doc(mat.id).update({
                 amount: mat.amount
             })
@@ -84,46 +85,35 @@ class gearContext {
                     this.mats = amount
                 })
 
-                // db.collection("users").doc(this.uid).onSnapshot((doc) => {
-                //     this.mats = doc.data().mats.map((mat: any) => (
+                // db.collection("users").doc(this.uid).collection("gears").doc("EarringBT").set({
+                //     id: "EarringBT",
+                //     stages: [
                 //         {
-                //             ...mat,
-                //             totalAmount: mat.totalAmount ? mat.totalAmount : 0
+                //             id: "Stage-10"
+                //         }, {
+                //             id: "Awakened-1"
+                //         }, {
+                //             id: "Awakened-2"
+                //         }, {
+                //             id: "Awakened-3"
                 //         }
-                //     ));
-                //     this.calculateTotalPrice();
-                //     this.calculateTotalCost();
+                //     ]
                 // })
 
-                // db.collection("users").doc(this.uid).onSnapshot((doc) => {
-                //     const userGears: any = []
-                //     const userStages: any = [];
-
-                //     doc.data().gears.map((gear: any) => {
-                //         gear.stages.map((stage: any) => {
-                //             userStages.push(stage)
-                //         })
-
-                //         db.collection("gears").doc(gear.id).onSnapshot((doc) => {
-                //             const mainStage: any = [];
-
-                //             userStages.map((userStage: any) => {
-                //                 doc.data().stages.map((stage: any) => {
-                //                     if (stage.name == userStage.name) {
-                //                         mainStage.push(stage)
-                //                     }
-                //                 })
-                //             })
-
-                //             userGears.push({
-                //                 ...doc.data(),
-                //                 stages: mainStage
-                //             })
-
-                //             this.gear = userGears
-                //         })
-                //     })
-                // })
+                db.collection("users").doc(this.uid).collection("gears").onSnapshot((snap) => {
+                    const userGears: any = [];
+                    snap.forEach((doc) => {
+                        this.isLoading = true
+                        userGears.push(doc.data())
+                    })
+                    userGears.map((gear: any) => {
+                        db.collection("gears").doc(gear.id).get().then((doc) => {
+                            this.gear.push({ ...doc.data(), stages: gear.stages })
+                        }).then(() => {
+                            this.isLoading = false
+                        })
+                    })
+                })
             }
         })
         db.collection("mats").onSnapshot((querySnapshot) => {
@@ -157,8 +147,8 @@ class gearContext {
         })
         Promise.all([allItems]).then((value: any) => {
             this.marketMats = value[0];
-            this.calculateTotalPrice();
-            this.calculateTotalCost();
+            //this.calculateTotalPrice();
+            //this.calculateTotalCost();
         })
     }
 

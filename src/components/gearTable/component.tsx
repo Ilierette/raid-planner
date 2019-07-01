@@ -4,6 +4,9 @@ import gearContext from '../../store/gearContext'
 
 export const GearTable = observer(() => {
   const { gear, mats, marketMats } = React.useContext(gearContext)
+  React.useEffect(()=>{
+    console.log(gear[0].stages)
+  })
   return (
     <div className="card">
       <div className="card-body">
@@ -15,8 +18,8 @@ export const GearTable = observer(() => {
                 <th rowSpan={2} className="text-right" style={{ width: 220 }}>
                   Mats
                   </th>
-                {gear.map((item: any, id:number) => (
-                  <th colSpan={item.stages.length} key={item.name +""+id}>
+                {gear && gear.map((item: any, id: number) => (
+                  <th colSpan={item.stages.length} key={item.name + "" + id}>
                     {item.name}
                   </th>
                 ))}
@@ -25,15 +28,15 @@ export const GearTable = observer(() => {
                 <th rowSpan={2} style={{ width: 90 }} >Left</th>
               </tr>
               <tr>
-                {gear.map((item: any) => (
-                  item.stages.map((stage: any) => (
-                    <th key={item.name +" - "+ stage.name}>{stage.name}</th>
+                {gear && gear.map((gear: any) => (
+                  gear.stages.map((stage: any) => (
+                    <th>{stage.name}</th>
                   ))
                 ))}
               </tr>
             </thead>
             <tbody>
-              {
+              {/* {
                 marketMats.map((trade: any) => (
                   mats.map((mat: any, id:any) => {
                     if (mat.id == trade.id && mat.totalAmount != 0) {
@@ -61,8 +64,8 @@ export const GearTable = observer(() => {
                     }
                   })
                 ))
-              }
-              
+              } */}
+
             </tbody>
           </table>
         </div>
