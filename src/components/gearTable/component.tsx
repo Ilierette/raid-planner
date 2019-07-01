@@ -4,9 +4,6 @@ import gearContext from '../../store/gearContext'
 
 export const GearTable = observer(() => {
   const { gear, mats, marketMats } = React.useContext(gearContext)
-  React.useEffect(()=>{
-    console.log(gear[0].stages)
-  })
   return (
     <div className="card">
       <div className="card-body">
@@ -36,18 +33,18 @@ export const GearTable = observer(() => {
               </tr>
             </thead>
             <tbody>
-              {/* {
+              {
                 marketMats.map((trade: any) => (
-                  mats.map((mat: any, id:any) => {
+                  mats.map((mat: any, id: any) => {
                     if (mat.id == trade.id && mat.totalAmount != 0) {
                       return (
-                        <tr key={trade.name+""+id}>
+                        <tr key={trade.name + "" + id}>
                           <td className="text-right">
                             {trade.name}
                           </td>
                           {gear.map((item: any) => (
-                            item.stages.map((stage: any,id:number) => (
-                              <td key={item.name+stage.name+id}>{stage[trade.id]}</td>
+                            item.stages.map((stage: any, id: number) => (
+                              <td key={item.name + stage.name + id}>{stage[trade.id]}</td>
                             ))
                           ))}
                           <td>
@@ -64,7 +61,7 @@ export const GearTable = observer(() => {
                     }
                   })
                 ))
-              } */}
+              }
 
             </tbody>
           </table>

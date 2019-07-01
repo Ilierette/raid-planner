@@ -25,6 +25,7 @@ class gearContext {
 
     @observable goodAmount = true;
     @observable isLoading = true;
+    @observable isLoadingMats = true;
 
     handleInputChange = (e: any, id: any) => {
         let matList = this.mats.map((mat: any) => {
@@ -102,30 +103,39 @@ class gearContext {
 
                 db.collection("users").doc(this.uid).collection("gears").onSnapshot((snap) => {
                     const userGears: any = [];
+                    const userStages: any = []
                     snap.forEach((doc) => {
                         this.isLoading = true
                         userGears.push(doc.data())
                     })
                     userGears.map((gear: any) => {
+                        gear.stages.map((stage: any) => {
+                            db.collection("gears").doc(gear.id).collection("stages").doc(stage.id).get().then((doc) => {
+                                userStages.push(doc.data())
+                            })
+                        })
                         db.collection("gears").doc(gear.id).get().then((doc) => {
-                            this.gear.push({ ...doc.data(), stages: gear.stages })
+                            this.gear.push({ ...doc.data(), stages: userStages })
+                            db.collection("mats").onSnapshot((querySnapshot) => {
+                                const comp = this;
+                                let items: any = [];
+                    
+                                querySnapshot.forEach(function (doc) {
+                                    comp.isLoadingMats = true;
+                                    items.push(doc.data())
+                                });
+                                this.marketMats = items;
+                                comp.isLoadingMats = false
+                            })
                         }).then(() => {
-                            this.isLoading = false
+                            this.isLoading = false;
+                            this.getStoreData()
                         })
                     })
                 })
             }
         })
-        db.collection("mats").onSnapshot((querySnapshot) => {
-            let items: any = [];
-
-            querySnapshot.forEach(function (doc) {
-                items.push(doc.data())
-            });
-
-            this.marketMats = items
-            this.getStoreData()
-        })
+        
     }
 
     getStoreData = () => {
@@ -147,8 +157,8 @@ class gearContext {
         })
         Promise.all([allItems]).then((value: any) => {
             this.marketMats = value[0];
-            //this.calculateTotalPrice();
-            //this.calculateTotalCost();
+            this.calculateTotalPrice();
+            this.calculateTotalCost();
         })
     }
 

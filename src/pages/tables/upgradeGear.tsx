@@ -5,13 +5,13 @@ import gearContext from '../../store/gearContext'
 import { observer } from 'mobx-react-lite';
 
 export const Gear = observer(() => {
-  const {isLoading} = React.useContext(gearContext)
+  const { isLoading, isLoadingMats } = React.useContext(gearContext)
   return (
     <div className="content-wrapper">
       <PageHeader title="Gear upgrade chart" />
       <div className="content">
         {
-          !isLoading &&
+          !isLoading && !isLoadingMats &&
           <GearTable />
         }
       </div>
