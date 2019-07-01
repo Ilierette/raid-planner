@@ -1,9 +1,13 @@
 import * as React from 'react';
 import { observer } from 'mobx-react-lite';
 import gearContext from '../../store/gearContext'
+import { toJS } from 'mobx';
 
 export const GearTable = observer(() => {
   const { gear, mats, marketMats } = React.useContext(gearContext)
+  React.useEffect(()=>{
+    console.log(toJS(gear))
+  })
   return (
     <div className="card">
       <div className="card-body">

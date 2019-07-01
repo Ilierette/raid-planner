@@ -86,29 +86,15 @@ class gearContext {
                     this.mats = amount
                 })
 
-                // db.collection("users").doc(this.uid).collection("gears").doc("EarringBT").set({
-                //     id: "EarringBT",
-                //     stages: [
-                //         {
-                //             id: "Stage-10"
-                //         }, {
-                //             id: "Awakened-1"
-                //         }, {
-                //             id: "Awakened-2"
-                //         }, {
-                //             id: "Awakened-3"
-                //         }
-                //     ]
-                // })
-
                 db.collection("users").doc(this.uid).collection("gears").onSnapshot((snap) => {
                     const userGears: any = [];
-                    const userStages: any = []
+                    
                     snap.forEach((doc) => {
                         this.isLoading = true
                         userGears.push(doc.data())
                     })
                     userGears.map((gear: any) => {
+                        const userStages: any = []
                         gear.stages.map((stage: any) => {
                             db.collection("gears").doc(gear.id).collection("stages").doc(stage.id).get().then((doc) => {
                                 userStages.push(doc.data())
