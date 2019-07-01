@@ -27,10 +27,10 @@ export const MarketTable = observer(({ title, items, trade }: props) => {
             {!trade && !isGodMode &&
               <th style={{ width: "30px" }}>Tier</th>
             }
-            <th className={isGodMode ? "" : "text-right"}>Name</th>
-            {!isGodMode && <th style={{ width: "100px" }}>All</th>}
-            {!isGodMode && <th style={{ width: "100px" }}>Owned</th>}
-            {!isGodMode && <th style={{ width: "100px" }}>Rest</th>}
+            <th className={isGodMode ? "" : "text-right"} style={{ width: "150px" }}>Name</th>
+            {!isGodMode && <th style={{ width: "50px" }}>All</th>}
+            {!isGodMode && <th style={{ width: "50px" }}>Owned</th>}
+            {!isGodMode && <th style={{ width: "50px" }}>Rest</th>}
             {trade && <th style={{ width: "100px" }}>Market price</th>}
             {trade && <th style={{ width: "250px" }} className="text-left">Total Price</th>}
             {isGodMode && <th style={{ width: "250px" }} className="text-left">Delete</th>}

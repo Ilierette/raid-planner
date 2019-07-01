@@ -12,6 +12,7 @@ export const Marketplace = observer(() => {
     const mat = useObservable({
         id: "",
         name: "",
+        shortName: "",
         tradeable: "",
         tier: "other",
         goodMats: true
@@ -19,9 +20,9 @@ export const Marketplace = observer(() => {
     const addMat = (e: any) => {
         e.preventDefault()
 
-        let tradeBool = false;
-        if (mat.tradeable == "true") {
-            tradeBool = true
+        let tradeBool = true;
+        if (mat.tradeable == "false") {
+            tradeBool = false
         }
 
         db.collection("mats").doc(mat.id).set({
@@ -30,6 +31,7 @@ export const Marketplace = observer(() => {
             isOutdated: false,
             isTradeable: tradeBool,
             name: mat.name,
+            shortName: mat.shortName,
             tier: mat.tier
         }).then(() => {
             users.map((user: any) => {
@@ -89,6 +91,16 @@ export const Marketplace = observer(() => {
                                                 value={mat.name}
                                                 onChange={(e) => { mat.name = e.target.value; mat.goodMats = false }}
                                                 placeholder="Mat name"
+                                            />
+                                        </div>
+                                        <div className="col">
+                                            <input
+                                                className="form-control form-control-sm"
+                                                type="text"
+                                                name="name"
+                                                value={mat.shortName}
+                                                onChange={(e) => { mat.shortName = e.target.value; mat.goodMats = false }}
+                                                placeholder="Mat display name"
                                             />
                                         </div>
                                         <div className="col">
