@@ -31,7 +31,7 @@ export const MarketRow = observer(({ item, index, trade }: props) => {
         </td>
       }
       <td className={isGodMode ? "" : "text-right"}>
-        {item.name}
+        {item.shortName}
       </td>
       {
         !isGodMode &&

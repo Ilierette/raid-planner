@@ -5,9 +5,6 @@ import { toJS } from 'mobx';
 
 export const GearTable = observer(() => {
   const { gear, mats, marketMats } = React.useContext(gearContext)
-  React.useEffect(()=>{
-    console.log(toJS(gear))
-  })
   return (
     <div className="card">
       <div className="card-body">
@@ -16,7 +13,7 @@ export const GearTable = observer(() => {
           <table className="table table-sm text-center">
             <thead>
               <tr>
-                <th rowSpan={2} className="text-right" style={{ width: 220 }}>
+                <th rowSpan={2} className="text-right">
                   Mats
                   </th>
                 {gear && gear.map((item: any, id: number) => (
@@ -24,14 +21,14 @@ export const GearTable = observer(() => {
                     {item.name}
                   </th>
                 ))}
-                <th rowSpan={2} style={{ width: 90 }} >All</th>
-                <th rowSpan={2} style={{ width: 90 }} >Owned</th>
-                <th rowSpan={2} style={{ width: 90 }} >Left</th>
+                <th rowSpan={2}>All</th>
+                <th rowSpan={2}>Owned</th>
+                <th rowSpan={2}>Left</th>
               </tr>
               <tr>
                 {gear && gear.map((gear: any) => (
                   gear.stages.map((stage: any) => (
-                    <th>{stage.name}</th>
+                    <th key={gear.id + "-" + stage.id} >{stage.name}</th>
                   ))
                 ))}
               </tr>
@@ -44,7 +41,7 @@ export const GearTable = observer(() => {
                       return (
                         <tr key={trade.name + "" + id}>
                           <td className="text-right">
-                            {trade.name}
+                            {trade.shortName}
                           </td>
                           {gear.map((item: any) => (
                             item.stages.map((stage: any, id: number) => (
