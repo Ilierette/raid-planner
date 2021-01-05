@@ -29,7 +29,7 @@
     "@types/reactstrap": "^8.5.1",
     "assets-webpack-plugin": "^5.1.2",
     "autoprefixer": "^9.8.6",
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "babel-core": "^6.26.0",
     "babel-loader": "^8.1.0",
     "babel-preset-env": "^1.6.1",
